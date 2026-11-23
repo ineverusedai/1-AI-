@@ -21,6 +21,7 @@ PAGES = {
 STATIC_DIRS = {
     "/static/": ROOT / "common" / "web",
     "/data/m1/images/": ROOT / "data" / "m1" / "images",
+    "/m1/": ROOT / "missions" / "m1_captcha" / "web",
 }
 
 GAMES = {}

@@ -3,12 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0c0f">
 <title>미션 1 · 글자 캡차</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-<div class="page">
+<div class="vignette" id="vignette"></div>
+
+<main class="stage">
   <section class="card">
     <div class="status">
       <div>
@@ -17,175 +20,46 @@
       </div>
       <div class="streakbox">
         <div class="label">연속 정답</div>
-        <div class="num"><b id="streak">0</b><span>/<span id="target">10</span></span></div>
+        <div class="streak"><b id="streakNum">0</b><span>/<span id="target">10</span></span></div>
       </div>
     </div>
     <div class="timebar" id="timebar"><i id="timefill"></i></div>
     <div class="segs" id="segs"></div>
+    <div class="fx" id="fx"></div>
   </section>
 
   <section class="card qcard" id="qcard">
-    <img class="qimg" id="img" alt="캡차 이미지" draggable="false">
-    <input class="field" id="answer" placeholder="보이는 글자를 입력하세요" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" maxlength="12" disabled>
-    <button class="btn wide" id="submit" disabled>확인</button>
+    <img class="qimg" id="img" alt="" draggable="false">
+    <div class="inputrow">
+      <input class="field" id="answer" placeholder="보이는 글자를 입력하세요" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" maxlength="12" disabled>
+      <button class="btn" id="submit" disabled>확인</button>
+    </div>
   </section>
+</main>
 
-  <p class="hint">대문자와 숫자만 나와요. 소문자로 입력해도 괜찮아요.<br>
-    가끔 헷갈리는 글자가 하나씩 섞여요 &nbsp;<code>0</code> 숫자 영 · <code>O</code> 대문자 오 · <code>1</code> 숫자 일 · <code>I</code> 대문자 아이</p>
-</div>
-
-<div class="toast" id="toast"><span class="dot" id="toastDot"></span><span id="toastText"></span></div>
-
-<div class="screen" id="startScreen">
-  <div class="page">
-    <div><span class="chip">미션 1 · 글자 캡차</span></div>
-    <h1 class="head" id="startHead">60초 안에<br>10문제 연속으로 맞혀 보세요</h1>
-    <p class="desc">찌그러진 글자를 보고 그대로 입력하면 돼요.</p>
-    <div class="card rules">
-      <ul>
-        <li><span class="n">1</span><span id="rule1"></span></li>
-        <li><span class="n">2</span><span>틀리면 연속 기록이 <b>0</b>이 돼요. 시간은 계속 흘러요.</span></li>
-        <li><span class="n">3</span><span>Enter 키로 바로 제출할 수 있어요.</span></li>
-      </ul>
-    </div>
-    <div class="actions"><button class="btn wide" id="startBtn">시작하기</button></div>
-    <div class="subactions">
-      <button class="btn text" id="resetBtn">처음 문제부터 다시 풀기</button>
-      <a class="btn text" href="/">미션 목록</a>
-    </div>
+<div class="screen enter" id="startScreen">
+  <div class="inner">
+    <div><span class="chip">MISSION 1</span></div>
+    <h1 class="head" id="startHead"></h1>
+    <button class="btn wide" id="startBtn">시작하기</button>
   </div>
 </div>
 
 <div class="screen" id="resultScreen" hidden>
-  <div class="page center">
-    <svg class="result-icon" id="resultIcon" viewBox="0 0 88 88"><circle cx="44" cy="44" r="44"/><path id="resultPath" d="M26 45 L39 58 L62 32"/></svg>
+  <div class="inner result">
+    <svg class="result-icon" id="resultIcon" viewBox="0 0 180 180"></svg>
     <h1 class="head" id="resultTitle"></h1>
-    <p class="desc" id="resultSub"></p>
     <div class="stats">
       <div><span>걸린 시간</span><strong id="rTime">-</strong></div>
       <div><span>최고 연속</span><strong id="rStreak">-</strong></div>
     </div>
-    <div class="actions">
-      <button class="btn wide" id="retryBtn">다시 도전하기</button>
-      <a class="btn wide gray" href="/">미션 목록</a>
-    </div>
+    <button class="btn wide" id="retryBtn">다시 도전하기</button>
   </div>
 </div>
 
-<script>
-const $ = (id) => document.getElementById(id);
-const api = (action, body = {}) =>
-  fetch(`/api/m1/${action}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }).then(r => r.json());
-let info = null, attemptId = null, t0 = 0, limitMs = 60000, target = 10, ticking = null, busy = false, running = false, toastTimer = null;
+<div class="note" id="note"></div>
 
-function setSegs(n) {
-  const s = $("segs");
-  if (s.children.length !== target) s.innerHTML = "<i></i>".repeat(target);
-  Array.prototype.forEach.call(s.children, (el, i) => el.classList.toggle("on", i < n));
-  $("streak").textContent = n;
-}
-function showTimer(ms) {
-  const left = Math.max(0, limitMs - ms);
-  const cls = left <= 10000 ? "crit" : left <= 20000 ? "low" : "";
-  $("timer").innerHTML = (left / 1000).toFixed(1) + "<small>초</small>";
-  $("timer").className = "timer " + cls;
-  $("timebar").className = "timebar " + cls;
-  $("timefill").style.transform = `scaleX(${left / limitMs})`;
-}
-function showToast(kind, text, ms) {
-  $("toast").className = "toast show " + kind;
-  $("toastDot").textContent = kind === "ok" ? "✓" : kind === "bad" ? "✕" : "";
-  $("toastDot").style.display = kind ? "" : "none";
-  $("toastText").textContent = text;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { $("toast").className = "toast"; }, ms);
-}
-function feedback(ok) {
-  if (ok) return showToast("ok", "정답이에요", 700);
-  showToast("bad", "틀렸어요. 연속 기록이 0이 됐어요", 1200);
-  const c = $("qcard"), s = $("segs");
-  c.classList.remove("shake"); s.classList.remove("reset"); void c.offsetWidth;
-  c.classList.add("shake"); s.classList.add("reset");
-  setTimeout(() => s.classList.remove("reset"), 400);
-}
-async function loadInfo(resetHud = true) {
-  info = await fetch("/api/m1/info").then(r => r.json());
-  limitMs = info.time_limit_sec * 1000; target = info.streak_target;
-  $("target").textContent = target;
-  $("startHead").innerHTML = `${info.time_limit_sec}초 안에<br>${target}문제 연속으로 맞혀 보세요`;
-  $("rule1").innerHTML = `<b>${info.time_limit_sec}초</b> 안에 <b>${target}문제를 연속으로</b> 맞히면 인증 성공이에요.`;
-  if (resetHud) { setSegs(0); showTimer(0); }
-}
-function setQuestion(q) { $("img").src = q.image; }
-
-async function start() {
-  if (running || busy) return;
-  busy = true;
-  const r = await api("start");
-  busy = false;
-  if (r.error) { alert(r.error); return; }
-  attemptId = r.attempt_id;
-  setSegs(0); setQuestion(r.question);
-  $("startScreen").hidden = true; $("resultScreen").hidden = true;
-  $("answer").disabled = false; $("submit").disabled = false;
-  $("answer").value = ""; $("answer").focus();
-  running = true;
-  t0 = performance.now();
-  clearInterval(ticking);
-  ticking = setInterval(async () => {
-    const ms = performance.now() - t0;
-    showTimer(ms);
-    if (ms >= limitMs && running) {
-      running = false; clearInterval(ticking);
-      finish(await api("end", { attempt_id: attemptId }));
-    }
-  }, 50);
-}
-
-async function submit() {
-  if (!running || busy) return;
-  const val = $("answer").value.trim();
-  if (!val) return;
-  busy = true;
-  const r = await api("answer", { attempt_id: attemptId, answer: val });
-  busy = false;
-  if (r.error) return;
-  if ("correct" in r) feedback(r.correct);
-  $("answer").value = "";
-  if (r.done) { running = false; clearInterval(ticking); finish(r); return; }
-  setSegs(r.streak);
-  setQuestion(r.question);
-}
-
-function finish(r) {
-  $("answer").disabled = true; $("submit").disabled = true;
-  setSegs(r.success ? target : (r.streak || 0));
-  showTimer(r.success ? r.total_ms : limitMs);
-  $("resultTitle").innerHTML = r.success ? "인간 인증에<br>성공했어요" : "인증에<br>실패했어요";
-  $("resultSub").textContent = r.success ? `${target}문제를 연속으로 맞혔어요`
-    : r.reason === "timeout" ? "시간이 다 됐어요. 다시 도전해 보세요" : "준비된 문제를 모두 풀었어요";
-  $("rTime").textContent = (r.total_ms / 1000).toFixed(1) + "초";
-  $("rStreak").textContent = r.max_streak + "문제";
-  setTimeout(() => {
-    const old = $("resultIcon"), icon = old.cloneNode(true);
-    icon.setAttribute("class", "result-icon" + (r.success ? "" : " bad"));
-    icon.querySelector("path").setAttribute("d", r.success ? "M26 45 L39 58 L62 32" : "M31 31 L57 57 M57 31 L31 57");
-    old.replaceWith(icon);
-    $("resultScreen").hidden = false;
-    $("retryBtn").focus();
-  }, r.success ? 500 : 250);
-  loadInfo(false);
-}
-
-$("startBtn").onclick = start;
-$("retryBtn").onclick = start;
-$("submit").onclick = submit;
-$("resetBtn").onclick = async () => { await api("reset"); await loadInfo(); showToast("", "1번 문제부터 다시 나와요", 1400); };
-$("answer").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submit(); } });
-document.addEventListener("keydown", e => {
-  if (e.key === "Enter" && !running && document.activeElement !== $("answer") && e.target.tagName !== "A") { e.preventDefault(); start(); }
-});
-loadInfo();
-</script>
+<script src="/m1/ui.js"></script>
+<script src="/m1/engine.js"></script>
 </body>
 </html>

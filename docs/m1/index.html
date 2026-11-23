@@ -3,12 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0c0f">
 <title>미션 1 · 글자 캡차</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<div class="page">
+<div class="vignette" id="vignette"></div>
+
+<main class="stage">
   <section class="card">
     <div class="status">
       <div>
@@ -17,208 +20,49 @@
       </div>
       <div class="streakbox">
         <div class="label">연속 정답</div>
-        <div class="num"><b id="streak">0</b><span>/<span id="target">10</span></span></div>
+        <div class="streak"><b id="streakNum">0</b><span>/<span id="target">10</span></span></div>
       </div>
     </div>
     <div class="timebar" id="timebar"><i id="timefill"></i></div>
     <div class="segs" id="segs"></div>
+    <div class="fx" id="fx"></div>
   </section>
 
   <section class="card qcard" id="qcard">
-    <img class="qimg" id="img" alt="캡차 이미지" draggable="false">
-    <input class="field" id="answer" placeholder="보이는 글자를 입력하세요" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" maxlength="12" disabled>
-    <button class="btn wide" id="submit" disabled>확인</button>
+    <img class="qimg" id="img" alt="" draggable="false">
+    <div class="inputrow">
+      <input class="field" id="answer" placeholder="보이는 글자를 입력하세요" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" maxlength="12" disabled>
+      <button class="btn" id="submit" disabled>확인</button>
+    </div>
   </section>
+</main>
 
-  <p class="hint">대문자와 숫자만 나와요. 소문자로 입력해도 괜찮아요.<br>
-    가끔 헷갈리는 글자가 하나씩 섞여요 &nbsp;<code>0</code> 숫자 영 · <code>O</code> 대문자 오 · <code>1</code> 숫자 일 · <code>I</code> 대문자 아이</p>
-</div>
-
-<div class="toast" id="toast"><span class="dot" id="toastDot"></span><span id="toastText"></span></div>
-
-<div class="screen" id="startScreen">
-  <div class="page">
-    <div><span class="chip">미션 1 · 글자 캡차</span></div>
-    <h1 class="head" id="startHead">60초 안에<br>10문제 연속으로 맞혀 보세요</h1>
-    <p class="desc">찌그러진 글자를 보고 그대로 입력하면 돼요.</p>
-    <div class="card rules">
-      <ul>
-        <li><span class="n">1</span><span id="rule1"></span></li>
-        <li><span class="n">2</span><span>틀리면 연속 기록이 <b>0</b>이 돼요. 시간은 계속 흘러요.</span></li>
-        <li><span class="n">3</span><span>Enter 키로 바로 제출할 수 있어요.</span></li>
-      </ul>
-    </div>
-    <div class="actions"><button class="btn wide" id="startBtn">시작하기</button></div>
-    <div class="subactions">
-      <button class="btn text" id="resetBtn">처음 문제부터 다시 풀기</button>
-      <button class="btn text dl">기록 내려받기</button>
-      <button class="btn text clr">기록 지우기</button>
-      <a class="btn text" href="../index.html">미션 목록</a>
-    </div>
+<div class="screen enter" id="startScreen">
+  <div class="inner">
+    <div><span class="chip">MISSION 1</span></div>
+    <h1 class="head" id="startHead"></h1>
+    <button class="btn wide" id="startBtn">시작하기</button>
   </div>
 </div>
 
 <div class="screen" id="resultScreen" hidden>
-  <div class="page center">
-    <svg class="result-icon" id="resultIcon" viewBox="0 0 88 88"><circle cx="44" cy="44" r="44"/><path id="resultPath" d="M26 45 L39 58 L62 32"/></svg>
+  <div class="inner result">
+    <svg class="result-icon" id="resultIcon" viewBox="0 0 180 180"></svg>
     <h1 class="head" id="resultTitle"></h1>
-    <p class="desc" id="resultSub"></p>
     <div class="stats">
       <div><span>걸린 시간</span><strong id="rTime">-</strong></div>
       <div><span>최고 연속</span><strong id="rStreak">-</strong></div>
     </div>
-    <div class="actions">
-      <button class="btn wide" id="retryBtn">다시 도전하기</button>
-      <a class="btn wide gray" href="../index.html">미션 목록</a>
-    </div>
-    <div class="subactions"><button class="btn text dl">기록 내려받기</button></div>
+    <button class="btn wide" id="retryBtn">다시 도전하기</button>
   </div>
 </div>
+
+<div class="note" id="note"></div>
 
 <script src="../hmac.js"></script>
 <script src="../records.js"></script>
 <script src="data.js"></script>
-<script>
-const $ = (id) => document.getElementById(id);
-const D = window.M1_DATA, R = HV.records, MISSION = "m1";
-const limitMs = D.time_limit_sec * 1000, target = D.streak_target;
-const state = R.state(MISSION);
-let a = null, ticking = null, running = false, toastTimer = null;
-
-/* ---------- 화면 표시 ---------- */
-function setSegs(n) {
-  const s = $("segs");
-  if (s.children.length !== target) s.innerHTML = "<i></i>".repeat(target);
-  Array.prototype.forEach.call(s.children, (el, i) => el.classList.toggle("on", i < n));
-  $("streak").textContent = n;
-}
-function showTimer(ms) {
-  const left = Math.max(0, limitMs - ms);
-  const cls = left <= 10000 ? "crit" : left <= 20000 ? "low" : "";
-  $("timer").innerHTML = (left / 1000).toFixed(1) + "<small>초</small>";
-  $("timer").className = "timer " + cls;
-  $("timebar").className = "timebar " + cls;
-  $("timefill").style.transform = `scaleX(${left / limitMs})`;
-}
-function showToast(kind, text, ms) {
-  $("toast").className = "toast show " + kind;
-  $("toastDot").textContent = kind === "ok" ? "✓" : kind === "bad" ? "✕" : "";
-  $("toastDot").style.display = kind ? "" : "none";
-  $("toastText").textContent = text;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { $("toast").className = "toast"; }, ms);
-}
-function feedback(ok) {
-  if (ok) return showToast("ok", "정답이에요", 700);
-  showToast("bad", "틀렸어요. 연속 기록이 0이 됐어요", 1200);
-  const c = $("qcard"), s = $("segs");
-  c.classList.remove("shake"); s.classList.remove("reset"); void c.offsetWidth;
-  c.classList.add("shake"); s.classList.add("reset");
-  setTimeout(() => s.classList.remove("reset"), 400);
-}
-function refreshStart(resetHud) {
-  $("target").textContent = target;
-  $("startHead").innerHTML = `${D.time_limit_sec}초 안에<br>${target}문제 연속으로 맞혀 보세요`;
-  $("rule1").innerHTML = `<b>${D.time_limit_sec}초</b> 안에 <b>${target}문제를 연속으로</b> 맞히면 인증 성공이에요.`;
-  if (resetHud) { setSegs(0); showTimer(0); }
-}
-function setQuestion(qNo) {
-  $("img").src = "images/" + D.questions[qNo - 1].file;
-  const next = D.questions[qNo];  // 다음 이미지 미리 불러오기
-  if (next) new Image().src = "images/" + next.file;
-}
-
-/* ---------- 게임 ---------- */
-function start() {
-  if (running) return;
-  if (state.next_q > D.questions.length) { alert("문제를 모두 풀었어요. '처음 문제부터 다시 풀기'를 눌러 주세요."); return; }
-  state.attempt += 1; R.saveState();
-  a = { attempt: state.attempt, q: state.next_q, streak: 0, maxStreak: 0, answered: 0, correct: 0,
-        first10: [], t0: performance.now(), tLast: performance.now() };
-  setSegs(0); setQuestion(a.q);
-  $("startScreen").hidden = true; $("resultScreen").hidden = true;
-  $("answer").disabled = false; $("submit").disabled = false;
-  $("answer").value = ""; $("answer").focus();
-  running = true;
-  clearInterval(ticking);
-  ticking = setInterval(() => {
-    const ms = performance.now() - a.t0;
-    showTimer(ms);
-    if (ms >= limitMs && running) finish(false, limitMs, "timeout");
-  }, 50);
-}
-
-function submit() {
-  if (!running) return;
-  const val = $("answer").value.trim();
-  if (!val) return;
-  const now = performance.now();
-  const totalMs = Math.round(now - a.t0);
-  if (totalMs > limitMs) { finish(false, limitMs, "timeout"); return; }
-  const qNo = a.q;
-  const ok = HV.answerHash(D.key, MISSION, qNo, val.toUpperCase()) === D.questions[qNo - 1].hash;
-  const qMs = Math.round(now - a.tLast);
-  a.tLast = now; a.answered += 1; a.correct += ok ? 1 : 0;
-  a.streak = ok ? a.streak + 1 : 0; a.maxStreak = Math.max(a.maxStreak, a.streak);
-  if (a.first10.length < 10) a.first10.push([ok ? 1 : 0, totalMs]);
-  R.logAnswer({ who: "human", mission: MISSION, mode: "human", attempt: a.attempt, q_no: qNo,
-                submitted: val, correct: ok ? 1 : 0, question_ms: qMs, total_ms: totalMs });
-  state.next_q = qNo + 1; R.saveState();
-  a.q = qNo + 1;
-  feedback(ok);
-  $("answer").value = "";
-  setSegs(a.streak);
-  if (a.streak >= target) return finish(true, totalMs, "success");
-  if (a.q > D.questions.length) return finish(false, totalMs, "out_of_questions");
-  setQuestion(a.q);
-}
-
-function finish(success, totalMs, reason) {
-  if (!running) return;
-  running = false; clearInterval(ticking);
-  const f10 = a.first10;
-  R.logSummary({ who: "human", mission: MISSION, mode: "human", attempt: a.attempt,
-    success: success ? 1 : 0, answered: a.answered, correct: a.correct, max_streak: a.maxStreak,
-    total_ms: totalMs, first10_correct: f10.length === 10 ? f10.reduce((s, x) => s + x[0], 0) : "",
-    first10_ms: f10.length === 10 ? f10[9][1] : "", correct_in_limit: a.correct,
-    note: success ? "성공" : reason === "timeout" ? "시간 초과" : "문제 소진" });
-  $("answer").disabled = true; $("submit").disabled = true;
-  showTimer(success ? totalMs : limitMs);
-  showResult(success, totalMs, a.maxStreak, reason);
-  refreshStart(false);
-}
-
-function showResult(success, totalMs, maxStreak, reason) {
-  $("resultTitle").innerHTML = success ? "인간 인증에<br>성공했어요" : "인증에<br>실패했어요";
-  $("resultSub").textContent = success ? `${target}문제를 연속으로 맞혔어요`
-    : reason === "timeout" ? "시간이 다 됐어요. 다시 도전해 보세요" : "준비된 문제를 모두 풀었어요";
-  $("rTime").textContent = (totalMs / 1000).toFixed(1) + "초";
-  $("rStreak").textContent = maxStreak + "문제";
-  setTimeout(() => {
-    const old = $("resultIcon"), icon = old.cloneNode(true);  // 애니메이션 다시 재생
-    icon.setAttribute("class", "result-icon" + (success ? "" : " bad"));
-    icon.querySelector("path").setAttribute("d", success ? "M26 45 L39 58 L62 32" : "M31 31 L57 57 M57 31 L31 57");
-    old.replaceWith(icon);
-    $("resultScreen").hidden = false;
-    $("retryBtn").focus();
-  }, success ? 500 : 250);
-}
-
-$("startBtn").onclick = start;
-$("retryBtn").onclick = start;
-$("submit").onclick = submit;
-$("resetBtn").onclick = () => { state.next_q = 1; R.saveState(); refreshStart(true); showToast("", "1번 문제부터 다시 나와요", 1400); };
-document.querySelectorAll(".dl").forEach(b => b.onclick = () => R.downloadAll());
-document.querySelectorAll(".clr").forEach(b => b.onclick = () => {
-  if (confirm("이 브라우저에 저장된 기록을 모두 지울까요? 먼저 기록을 내려받아 두세요.")) {
-    R.clearAll(); location.reload();
-  }
-});
-$("answer").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submit(); } });
-document.addEventListener("keydown", e => {
-  if (e.key === "Enter" && !running && document.activeElement !== $("answer") && e.target.tagName !== "A") { e.preventDefault(); start(); }
-});
-refreshStart(true);
-</script>
+<script src="ui.js"></script>
+<script src="engine.js"></script>
 </body>
 </html>

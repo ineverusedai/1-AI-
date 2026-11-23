@@ -1,4 +1,4 @@
-"""정적 웹 버전(docs/) 만들기. GitHub Pages나 파일 더블클릭으로 열 수 있다.
+"""정적 웹 버전(docs/)과 Python 서버용 화면 만들기. docs/ 는 GitHub Pages나 파일 더블클릭으로 열 수 있다.
 
 실행: python -m tools.build_web
 
@@ -21,7 +21,26 @@ SRC = ROOT / "web_static"
 OUT = ROOT / "docs"
 
 
+STATIC_SCRIPTS = """<script src="../hmac.js"></script>
+<script src="../records.js"></script>
+<script src="data.js"></script>
+<script src="ui.js"></script>
+<script src="engine.js"></script>"""
+
+
+def build_server_page() -> None:
+    """Python 서버(run.py)용 미션 1 화면을 같은 원본에서 만든다. 채점 스크립트만 서버용으로 바꿈."""
+    web = ROOT / "missions" / "m1_captcha" / "web"
+    html = (SRC / "m1" / "index.html").read_text(encoding="utf-8")
+    assert STATIC_SCRIPTS in html, "web_static/m1/index.html 의 script 태그가 예상과 다릅니다"
+    html = html.replace('href="../style.css"', 'href="/static/style.css"')
+    html = html.replace(STATIC_SCRIPTS, '<script src="/m1/ui.js"></script>\n<script src="/m1/engine.js"></script>')
+    (web / "index.html").write_text(html, encoding="utf-8")
+    shutil.copy2(SRC / "m1" / "ui.js", web / "ui.js")
+
+
 def main() -> None:
+    build_server_page()
     if OUT.exists():
         shutil.rmtree(OUT)
     shutil.copytree(SRC, OUT)
