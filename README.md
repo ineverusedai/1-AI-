@@ -28,6 +28,22 @@ python run.py
 브라우저에서 http://127.0.0.1:8000 이 열린다. 미션을 고르고 `Enter`로 시작.
 끄려면 터미널에서 `Ctrl+C`.
 
+## 설치 없이 브라우저로 바로 하기 (Windows·Mac·iPhone, Safari·Chrome·Edge)
+`docs/` 폴더는 Python 없이 브라우저만으로 돌아가는 버전이다.
+
+- **GitHub Pages로 열기:** 저장소 **Settings → Pages → Build and deployment**에서
+  Source를 **Deploy from a branch**로, Branch를 `mission-1-captcha` / `/docs`로 고르고 **Save**.
+  1~2분 뒤 `https://ineverusedai.github.io/1-ai-/` 에서 열린다.
+  (비공개 저장소에서 Pages를 쓰려면 GitHub Pro 이상이 필요하다.)
+- **파일로 열기:** 저장소를 내려받아 `docs/index.html`을 더블클릭해도 된다.
+
+정적 버전은 `results/` 폴더에 직접 쓸 수 없어서 기록을 브라우저 안에 저장한다.
+시작 화면이나 결과 화면의 **기록 CSV 받기** 버튼으로 `answers.csv`, `summary.csv`를 받아 `results/`에 넣으면 된다.
+같은 브라우저에서는 새로고침해도 기록과 진행 상황이 남는다.
+
+`docs/`는 자동 생성물이다. 문제나 화면을 바꾼 뒤에는 `python -m tools.build_web`으로 다시 만든다.
+정적 버전은 브라우저 안에서 채점해야 해서 채점 키가 `docs/m1/data.js`에 들어 있다. AI 테스트에는 `docs/`를 주지 않는다.
+
 ## 미션 1: 글자 캡차
 - 60초 안에 10문제 연속 정답이면 성공. 틀리면 연속 카운트 0, 시간은 계속 흐름.
 - 다시 도전하면 이미 본 문제는 건너뛰고 다음 번호부터 나온다. 문제 #1부터 다시 하려면 시작 화면의 **처음 문제(#1)부터** 버튼.
@@ -56,7 +72,9 @@ common/                해시·결과 기록·공통 화면
 missions/m1_captcha/   문제 생성기, 게임 로직, 화면
 data/m1/               생성된 문제 이미지 + 해시 목록
 ai_test/               AI용 문제지 + 제출기
-tools/                 AI 문제지 내보내기, AI 채점
+tools/                 AI 문제지 내보내기, AI 채점, 웹 버전 빌드
+web_static/            브라우저 버전 원본 (빌드하면 docs/ 로 복사)
+docs/                  브라우저 버전 (GitHub Pages 배포용, 자동 생성)
 results/               CSV 결과
 audio/originals/       미션 3 원본 음성 (나중에)
 ```
