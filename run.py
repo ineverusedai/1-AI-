@@ -10,6 +10,7 @@ import threading
 import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib.parse import parse_qs
 
 ROOT = Path(__file__).resolve().parent
 
@@ -71,7 +72,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self._file(target)
         if p.startswith("/api/") and p.endswith("/info"):
             g = GAMES.get(p.split("/")[2])
-            return self._json(g.info()) if g else self._json({"error": "no mission"}, 404)
+            qs = parse_qs(self.path.split("?", 1)[1]) if "?" in self.path else {}
+            return self._json(g.info(qs.get("who", ["human"])[0])) if g else self._json({"error": "no mission"}, 404)
         self._send(404, b"not found", "text/plain")
 
     def do_POST(self):
@@ -82,13 +84,13 @@ class Handler(BaseHTTPRequestHandler):
         n = int(self.headers.get("Content-Length") or 0)
         body = json.loads(self.rfile.read(n) or b"{}")
         if action == "start":
-            return self._json(g.start())
+            return self._json(g.start(str(body.get("who", "human")), str(body.get("mode", "human"))))
         if action == "answer":
             return self._json(g.answer(body.get("attempt_id", ""), str(body.get("answer", ""))))
         if action == "end":
             return self._json(g.end(body.get("attempt_id", "")))
         if action == "reset":
-            return self._json(g.reset())
+            return self._json(g.reset(str(body.get("who", "human"))))
         self._json({"error": "bad action"}, 404)
 
 

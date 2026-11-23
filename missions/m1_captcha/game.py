@@ -17,6 +17,8 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data" / "m1"
 STATE = ROOT / "results" / ".state_m1.json"
 MISSION = "m1"
+WHO = ("human", "claude")          # 누가 플레이하는지
+MODES = ("human", "A", "B")        # human = 사람, A = AI가 직접 보고, B = AI가 코드로
 
 
 class CaptchaGame:
@@ -29,58 +31,66 @@ class CaptchaGame:
         self.attempts: dict[str, dict] = {}
         self.state = self._load_state()
 
-    # ---------- 진행 상태 (다음 문제 번호, 도전 횟수) ----------
+    # ---------- 진행 상태 (다음 문제 번호, 도전 횟수) — 사람/AI 따로 ----------
     def _load_state(self) -> dict:
-        if STATE.exists():
-            return json.loads(STATE.read_text())
-        return {"next_q": 1, "attempt": 0}
+        st = json.loads(STATE.read_text()) if STATE.exists() else {}
+        if "next_q" in st:  # 예전 형식(사람 하나뿐)
+            st = {"human": st}
+        for w in WHO:
+            st.setdefault(w, {"next_q": 1, "attempt": 0})
+        return st
 
     def _save_state(self) -> None:
         STATE.parent.mkdir(exist_ok=True)
         STATE.write_text(json.dumps(self.state))
 
-    def info(self) -> dict:
+    def info(self, who: str = "human") -> dict:
+        st = self.state[who if who in WHO else "human"]
         return {
             "title": self.cfg["title"],
             "time_limit_sec": self.cfg["time_limit_sec"],
             "streak_target": self.cfg["streak_target"],
-            "next_q": self.state["next_q"],
-            "next_attempt": self.state["attempt"] + 1,
+            "next_q": st["next_q"],
+            "next_attempt": st["attempt"] + 1,
             "pool_size": len(self.qs),
             "answer_rule": self.manifest["answer_rule"],
         }
 
-    def reset(self) -> dict:
+    def reset(self, who: str = "human") -> dict:
+        who = who if who in WHO else "human"
         with self.lock:
-            self.state["next_q"] = 1
+            self.state[who]["next_q"] = 1
             self._save_state()
-        return self.info()
+        return self.info(who)
 
     def _question(self, q_no: int) -> dict:
         return {"q_no": q_no, "image": f"/data/m1/images/{self.qs[q_no]['file']}"}
 
     # ---------- 도전 ----------
-    def start(self) -> dict:
+    def start(self, who: str = "human", mode: str = "human") -> dict:
+        who = who if who in WHO else "human"
+        mode = mode if mode in MODES else ("human" if who == "human" else "B")
         with self.lock:
-            if self.state["next_q"] > len(self.qs):
-                return {"error": "문제를 모두 사용했습니다. '처음 문제부터'를 누르세요."}
-            self.state["attempt"] += 1
+            st = self.state[who]
+            if st["next_q"] > len(self.qs):
+                return {"error": "문제를 모두 사용했어요. Shift+R을 누르면 처음부터 시작해요."}
+            st["attempt"] += 1
             self._save_state()
             aid = uuid.uuid4().hex
             now = time.monotonic()
             self.attempts[aid] = {
-                "id": aid, "attempt": self.state["attempt"], "t0": now, "t_last": now,
-                "q_no": self.state["next_q"], "streak": 0, "max_streak": 0,
+                "id": aid, "who": who, "mode": mode, "attempt": st["attempt"], "t0": now, "t_last": now,
+                "q_no": st["next_q"], "streak": 0, "max_streak": 0,
                 "answered": 0, "correct": 0, "first10": [], "done": False,
             }
-            return {"attempt_id": aid, "attempt": self.state["attempt"],
-                    **self.info(), "question": self._question(self.state["next_q"])}
+            return {"attempt_id": aid, "attempt": st["attempt"],
+                    **self.info(who), "question": self._question(st["next_q"])}
 
     def _finish(self, a: dict, success: bool, total_ms: int, note: str) -> None:
         a["done"] = True
         f10 = a["first10"]
         results.log_summary({
-            "who": "human", "mission": MISSION, "mode": "human", "attempt": a["attempt"],
+            "who": a["who"], "mission": MISSION, "mode": a["mode"], "attempt": a["attempt"],
             "success": int(success), "answered": a["answered"], "correct": a["correct"],
             "max_streak": a["max_streak"], "total_ms": total_ms,
             "first10_correct": sum(c for c, _ in f10) if len(f10) == 10 else "",
@@ -117,12 +127,12 @@ class CaptchaGame:
             if len(a["first10"]) < 10:
                 a["first10"].append((int(ok), total_ms))
             results.log_answer({
-                "who": "human", "mission": MISSION, "mode": "human", "attempt": a["attempt"],
+                "who": a["who"], "mission": MISSION, "mode": a["mode"], "attempt": a["attempt"],
                 "q_no": q_no, "submitted": submitted, "correct": int(ok),
                 "question_ms": q_ms, "total_ms": total_ms,
             })
 
-            self.state["next_q"] = q_no + 1
+            self.state[a["who"]]["next_q"] = q_no + 1
             self._save_state()
             a["q_no"] = q_no + 1
 

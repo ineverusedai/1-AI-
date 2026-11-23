@@ -3,13 +3,16 @@
   const api = (action, body = {}) =>
     fetch(`/api/m1/${action}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }).then((r) => r.json());
   let attemptId = null, busy = false, active = false;
+  // 주소에 ?who=claude&mode=B 가 붙으면 AI 플레이로 기록 (사람은 그냥 /m1/)
+  const params = new URLSearchParams(location.search);
+  const who = params.get("who") || "human", mode = params.get("mode") || "human";
 
-  fetch("/api/m1/info").then((r) => r.json()).then((info) => UI.config({ limitSec: info.time_limit_sec, streakTarget: info.streak_target }));
+  fetch("/api/m1/info?who=" + encodeURIComponent(who)).then((r) => r.json()).then((info) => UI.config({ limitSec: info.time_limit_sec, streakTarget: info.streak_target }));
 
   UI.on("start", async () => {
     if (busy || active) return;
     busy = true;
-    const r = await api("start");
+    const r = await api("start", { who, mode });
     busy = false;
     if (r.error) { UI.note(r.error); return; }
     attemptId = r.attempt_id;
@@ -40,6 +43,6 @@
     UI.setQuestion(r.question.image);
   });
 
-  UI.on("reset", async () => { await api("reset"); UI.note("1번 문제부터 다시 시작해요"); });
+  UI.on("reset", async () => { await api("reset", { who }); UI.note("1번 문제부터 다시 시작해요"); });
   UI.on("download", () => UI.note("기록은 results/ 폴더에 자동으로 저장돼요"));
 })();
