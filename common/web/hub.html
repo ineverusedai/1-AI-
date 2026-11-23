@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>인간 인증 24시간</title>
+<link rel="stylesheet" href="/static/style.css">
+<style>
+  .wrap { max-width: 980px; margin: 0 auto; padding: 60px 24px; }
+  h1 { font-size: 56px; margin: 0 0 8px; }
+  .lead { color: var(--muted); font-size: 22px; margin: 0 0 40px; }
+  .list { display: grid; gap: 16px; }
+  .m { display: flex; align-items: center; gap: 24px; padding: 26px 30px; background: var(--panel);
+       border: 2px solid var(--line); border-radius: 18px; text-decoration: none; color: var(--text); }
+  a.m:hover { border-color: var(--accent); }
+  .m .no { font-size: 40px; font-weight: 800; color: var(--accent); width: 60px; }
+  .m .t { font-size: 28px; font-weight: 700; }
+  .m .d { color: var(--muted); font-size: 18px; margin-top: 4px; }
+  .m.off { opacity: .4; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>24시간 안에 인간임을 인증하기</h1>
+  <p class="lead">미션을 골라 시작하세요.</p>
+  <div class="list">
+    <a class="m" href="/m1/"><div class="no">1</div><div><div class="t">글자 캡차</div><div class="d">60초 안에 10문제 연속 정답. 틀리면 연속 카운트 0</div></div></a>
+    <div class="m off"><div class="no">2</div><div><div class="t">착시 캡차</div><div class="d">준비 중</div></div></div>
+    <div class="m off"><div class="no">3</div><div><div class="t">소리 착시 캡차</div><div class="d">준비 중</div></div></div>
+    <div class="m off"><div class="no">4</div><div><div class="t">움직여야 보이는 캡차</div><div class="d">준비 중</div></div></div>
+    <div class="m off"><div class="no">5</div><div><div class="t">ARC-AGI-3</div><div class="d">준비 중 (별도 실행 스크립트)</div></div></div>
+  </div>
+</div>
+</body>
+</html>

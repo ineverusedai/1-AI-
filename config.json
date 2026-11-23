@@ -1,0 +1,13 @@
+{
+  "server": {"host": "127.0.0.1", "port": 8000},
+  "m1": {
+    "title": "글자 캡차",
+    "time_limit_sec": 60,
+    "streak_target": 10,
+    "pool_size": 200,
+    "length": 5,
+    "min_confusables": 2,
+    "width": 280,
+    "height": 90
+  }
+}
