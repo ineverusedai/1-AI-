@@ -27,11 +27,11 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "data" / "m1"
 MISSION = "m1"
 
-# 헷갈리는 글자: 숫자 0 / 대문자 O / 숫자 1 / 소문자 l(엘) / 대문자 I(아이)
-CONFUSABLES = "0O1lI"
-# 나머지 글자: 대문자 + 숫자. 소문자는 l 하나만 나온다 (대소문자 구분)
+# 헷갈리는 글자: 숫자 0 / 대문자 O / 숫자 1 / 대문자 I(아이). 가끔 하나씩만 나온다.
+CONFUSABLES = "0O1I"
+# 나머지 글자: 대문자 + 숫자 (소문자 없음, 입력은 대소문자 상관없음)
 OTHERS = "".join(c for c in string.ascii_uppercase + string.digits if c not in CONFUSABLES)
-CHARSET_DESC = "대문자 A-Z, 숫자 0-9, 소문자는 l(엘) 하나만. 대소문자 구분."
+CHARSET_DESC = "대문자 A-Z, 숫자 0-9. 소문자 없음 (소문자로 입력해도 정답 처리)."
 
 
 class SeededSecrets:
@@ -50,8 +50,13 @@ class SeededSecrets:
         return self._r.choice(seq)
 
 
-def make_text(rng: random.Random, length: int, min_conf: int) -> str:
-    n_conf = rng.randint(min_conf, min(length, min_conf + 1))
+def normalize(answer: str) -> str:
+    """채점 전에 답을 정리: 앞뒤 공백 제거 + 대문자로."""
+    return answer.strip().upper()
+
+
+def make_text(rng: random.Random, length: int, rate: float, max_conf: int) -> str:
+    n_conf = rng.randint(1, max_conf) if rng.random() < rate else 0
     chars = [rng.choice(CONFUSABLES) for _ in range(n_conf)]
     chars += [rng.choice(OTHERS) for _ in range(length - n_conf)]
     rng.shuffle(chars)
@@ -62,7 +67,7 @@ def iter_problems(seed: int, cfg: dict):
     """(문제 번호, 정답, 이미지 난수 시드)를 순서대로 돌려준다. 정답은 메모리에만 존재."""
     text_rng = random.Random(f"m1-text-{seed}")
     for q in range(1, cfg["pool_size"] + 1):
-        yield q, make_text(text_rng, cfg["length"], cfg["min_confusables"]), f"m1-img-{seed}-{q}"
+        yield q, make_text(text_rng, cfg["length"], cfg["confusable_rate"], cfg["max_confusables"]), f"m1-img-{seed}-{q}"
 
 
 def load_cfg_and_seed():

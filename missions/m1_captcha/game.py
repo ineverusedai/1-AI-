@@ -11,6 +11,7 @@ from pathlib import Path
 
 from common import results
 from common.answer_hash import check, load_key
+from missions.m1_captcha.generate import normalize
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data" / "m1"
@@ -104,7 +105,7 @@ class CaptchaGame:
                 self._finish(a, False, limit_ms, "시간 초과")
                 return self._summary(a, False, limit_ms, "timeout")
 
-            submitted = submitted.strip()
+            submitted = normalize(submitted)
             q_no = a["q_no"]
             ok = check(self.key, MISSION, q_no, submitted, self.qs[q_no]["hash"])
             q_ms = int((now - a["t_last"]) * 1000)

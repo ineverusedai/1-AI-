@@ -50,11 +50,11 @@
   <div class="card" id="card"><img id="img" alt="캡차 이미지" draggable="false"></div>
   <div class="feedback" id="feedback"></div>
   <div class="inputrow">
-    <input id="answer" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" maxlength="12" disabled>
+    <input id="answer" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" maxlength="12" disabled>
     <button id="submit" disabled>확인</button>
   </div>
-  <div class="hint">대소문자 구분 · 소문자는 <code>l</code>(엘) 하나만 나옵니다<br>
-    <code>0</code> 숫자 영 &nbsp; <code>O</code> 대문자 오 &nbsp; <code>1</code> 숫자 일 &nbsp; <code>l</code> 소문자 엘 &nbsp; <code>I</code> 대문자 아이</div>
+  <div class="hint">대문자와 숫자만 나옵니다 · 소문자로 입력해도 됩니다<br>
+    가끔 헷갈리는 글자가 하나씩 섞여요: <code>0</code> 숫자 영 &nbsp; <code>O</code> 대문자 오 &nbsp; <code>1</code> 숫자 일 &nbsp; <code>I</code> 대문자 아이</div>
 </main>
 
 <div class="overlay" id="startScreen">
@@ -163,7 +163,7 @@ function submit() {
   const totalMs = Math.round(now - a.t0);
   if (totalMs > limitMs) { finish(false, limitMs, "timeout"); return; }
   const qNo = a.q;
-  const ok = HV.answerHash(D.key, MISSION, qNo, val) === D.questions[qNo - 1].hash;
+  const ok = HV.answerHash(D.key, MISSION, qNo, val.toUpperCase()) === D.questions[qNo - 1].hash;
   const qMs = Math.round(now - a.tLast);
   a.tLast = now; a.answered += 1; a.correct += ok ? 1 : 0;
   a.streak = ok ? a.streak + 1 : 0; a.maxStreak = Math.max(a.maxStreak, a.streak);

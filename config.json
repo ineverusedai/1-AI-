@@ -6,7 +6,8 @@
     "streak_target": 10,
     "pool_size": 200,
     "length": 5,
-    "min_confusables": 2,
+    "confusable_rate": 0.33,
+    "max_confusables": 1,
     "width": 280,
     "height": 90
   }

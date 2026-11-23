@@ -10,6 +10,7 @@ from pathlib import Path
 
 from common import results
 from common.answer_hash import check, load_key
+from missions.m1_captcha.generate import normalize
 
 ROOT = Path(__file__).resolve().parents[1]
 LOG_DIR = ROOT / "ai_test" / "_log"
@@ -46,7 +47,7 @@ def grade_m1(mode: str, run_no: int, rows: list[dict], write: bool) -> dict:
     graded = []
     for r in answers:
         q = r["q"]
-        ok = q in hashes and check(key, "m1", q, str(r["answer"]).strip(), hashes[q])
+        ok = q in hashes and check(key, "m1", q, normalize(str(r["answer"])), hashes[q])
         total_ms = int((r["t"] - t0) * 1000)
         q_ms = int((r["t"] - prev_t) * 1000)
         prev_t = r["t"]

@@ -7,7 +7,7 @@
   const SUMMARY_FIELDS = ["timestamp", "who", "mission", "mode", "attempt", "success",
     "answered", "correct", "max_streak", "total_ms",
     "first10_correct", "first10_ms", "correct_in_limit", "note"];
-  const KEY = "hv24.records.v1";
+  const KEY = "hv24.records.v2";  // v2: 문제 세트 변경 (헷갈리는 글자 줄임)
   let mem = { answers: [], summary: [], state: {} };  // 저장소가 막혀 있어도 이번 화면에서는 동작
 
   function load() {
