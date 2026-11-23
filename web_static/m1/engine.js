@@ -2,7 +2,10 @@
 (function () {
   const D = window.M1_DATA, R = HV.records, MISSION = "m1";
   const limitMs = D.time_limit_sec * 1000, target = D.streak_target, total = D.questions.length;
-  const state = R.state(MISSION);
+  const params = new URLSearchParams(location.search);
+  const WHO = params.get("who") === "claude" ? "claude" : "human";
+  const MODE = WHO === "claude" ? (["A", "B"].includes(params.get("mode")) ? params.get("mode") : "B") : "human";
+  const state = R.state(WHO === "human" ? MISSION : `${MISSION}:${WHO}:${MODE}`);
   const src = (q) => "images/" + D.questions[q - 1].file;
   let a = null;
 
@@ -27,7 +30,7 @@
     a.answered += 1; a.correct += ok ? 1 : 0;
     a.streak = ok ? a.streak + 1 : 0; a.maxStreak = Math.max(a.maxStreak, a.streak);
     if (a.first10.length < 10) a.first10.push([ok ? 1 : 0, totalMs]);
-    R.logAnswer({ who: "human", mission: MISSION, mode: "human", attempt: a.attempt, q_no: qNo,
+    R.logAnswer({ who: WHO, mission: MISSION, mode: MODE, attempt: a.attempt, q_no: qNo,
                   submitted: val, correct: ok ? 1 : 0, question_ms: totalMs - a.lastMs, total_ms: totalMs });
     a.lastMs = totalMs;
     state.next_q = qNo + 1; R.saveState();
@@ -44,7 +47,7 @@
     a.done = true;
     UI.stopClock(totalMs);
     const f10 = a.first10;
-    R.logSummary({ who: "human", mission: MISSION, mode: "human", attempt: a.attempt,
+    R.logSummary({ who: WHO, mission: MISSION, mode: MODE, attempt: a.attempt,
       success: success ? 1 : 0, answered: a.answered, correct: a.correct, max_streak: a.maxStreak,
       total_ms: totalMs, first10_correct: f10.length === 10 ? f10.reduce((s, x) => s + x[0], 0) : "",
       first10_ms: f10.length === 10 ? f10[9][1] : "", correct_in_limit: a.correct,

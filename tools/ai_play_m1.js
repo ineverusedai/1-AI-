@@ -1,31 +1,39 @@
-/* AI가 실제 게임 화면(Python 서버 버전)에서 미션 1을 플레이하고 그 화면을 녹화한다.
+/* AI가 실제 게임 화면에서 미션 1을 플레이하고, 그 화면을 1920×1200 60fps 로 녹화한다.
  *
  * 이 스크립트는 AI의 "손과 눈"만 맡는다:
- *   화면의 캡차 이미지를 가져와 → AI가 만든 solver.py 에 넘기고 → 돌아온 답을 입력칸에 치고 Enter.
- * 채점은 서버가 하고, 결과는 results/ 에 who=claude 로 기록된다.
- * 서버 버전을 쓰는 이유: 정답 해시와 키가 서버에만 있어서 페이지 소스로는 답을 알 수 없다.
+ *   화면에 뜬 캡차 이미지를 가져와 → AI가 만든 solver.py 에 넘기고 → 돌아온 답을 입력칸에 치고 Enter.
+ *   solver.py 는 이미지 바이트만 받는다 (정답·시드·키·페이지 소스를 모름).
  *
- * 실행 (프로젝트 폴더에서):
- *   node tools/ai_play_m1.js --solver <solver.py 폴더> --out <영상 저장 폴더> [--mode B] [--font <pretendard 패키지 폴더>]
+ * 녹화 방식 (프레임 정확 녹화):
+ *   게임 페이지의 시계(타이머·애니메이션)를 이 스크립트가 쥐고 1/60초씩 넘기며 매 프레임을 찍는다.
+ *   AI가 문제를 보고 답을 내기까지 실제로 걸린 시간만큼 페이지 시계도 흘려보낸다.
+ *   → 컴퓨터 성능과 상관없이 끊김 없는 60fps, 영상 속 시간 = 실제 AI가 걸린 시간.
+ *
+ * 화면 크기: 맥북 기본(1440×900, 16:10)으로 배치하고 1920×1200 으로 찍는다.
+ * 결과: <out>/m1_claude_<방식>_<시각>.mp4 (+ 프레임별 기록 .json), results/ 에 who=claude 로 기록.
+ *
+ * 실행 (프로젝트 폴더에서, 먼저 python -m tools.build_web):
+ *   node tools/ai_play_m1.js --solver <solver.py 폴더> [--out results/videos] [--mode B] [--font <pretendard 패키지 폴더>]
  */
 const { chromium } = require("playwright");
 const { spawn, execFileSync } = require("child_process");
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
 const readline = require("readline");
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((acc, v, i, a) => (v.startsWith("--") ? acc.concat([[v.slice(2), a[i + 1]]]) : acc), []));
 const ROOT = path.resolve(__dirname, "..");
-const PORT = Number(args.port || 8770);
+const PORT = Number(args.port || 8780);
 const MODE = args.mode || "B";
 const OUT = path.resolve(args.out || path.join(ROOT, "results", "videos"));
-const W = 1600, H = 900;
+const FPS = Number(args.fps || 60);
+const CSS_W = 1440, CSS_H = 900, OUT_W = Number(args.width || 1920);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-function startServer() {
-  const p = spawn("python3", ["run.py", "--port", String(PORT), "--no-browser"], { cwd: ROOT, stdio: "ignore" });
-  return p;
-}
+const children = [];
+process.on("exit", () => children.forEach((c) => { try { c.kill(); } catch {} }));
+process.on("SIGINT", () => process.exit(130));
 
 function startSolver() {
   const p = spawn("python3", ["-I", path.join(ROOT, "tools", "solver_bridge.py"), path.resolve(args.solver)], { stdio: ["pipe", "pipe", "inherit"] });
@@ -37,26 +45,17 @@ function startSolver() {
   return { proc: p, ready: next(), ask };
 }
 
-const children = [];
-const cleanup = () => children.forEach((c) => { try { c.kill(); } catch {} });
-process.on("exit", cleanup);
-process.on("SIGINT", () => process.exit(130));
-
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
-  const server = startServer();
+  const web = spawn("python3", ["-m", "http.server", String(PORT), "--bind", "127.0.0.1", "--directory", path.join(ROOT, "docs")], { stdio: "ignore" });
   const solver = startSolver();
-  children.push(server, solver.proc);
+  children.push(web, solver.proc);
   await solver.ready;
-  // 모델 예열 (게임 시작 전에 한 번 돌려서 첫 문제가 느리지 않게)
-  const warm = fs.readFileSync(path.join(ROOT, "data", "m1", "images", "q200.png"));
-  await solver.ask(warm);
-  await sleep(1200);
+  await solver.ask(fs.readFileSync(path.join(ROOT, "data", "m1", "images", "q200.png")));  // 모델 예열 (게임 밖)
 
   const browser = await chromium.launch();
-  const tmpVideo = fs.mkdtempSync(path.join(OUT, ".rec-"));
-  const ctx = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: 1, recordVideo: { dir: tmpVideo, size: { width: W, height: H } } });
-  if (args.font) {  // 글꼴 사이트가 막힌 환경에서도 같은 글꼴로 녹화
+  const ctx = await browser.newContext({ viewport: { width: CSS_W, height: CSS_H }, deviceScaleFactor: OUT_W / CSS_W });
+  if (args.font) {  // 글꼴 사이트가 막힌 환경에서도 실제와 같은 글꼴로
     const base = path.resolve(args.font, "dist", "web", "variable");
     await ctx.route(/cdn\.jsdelivr\.net\/gh\/orioncactus\/pretendard@v1\.3\.9\/dist\/web\/variable\/(.*)$/, (route) => {
       const rel = route.request().url().split("/dist/web/variable/")[1].split("?")[0];
@@ -66,51 +65,89 @@ process.on("SIGINT", () => process.exit(130));
     });
   }
   const page = await ctx.newPage();
-  const url = `http://127.0.0.1:${PORT}/m1/?who=claude&mode=${MODE}`;
-  for (let i = 0; i < 20; i++) { try { await page.goto(url); break; } catch { await sleep(300); } }
-  await page.evaluate(() => document.fonts.ready);
-  await sleep(2500);                       // 시작 화면 잠깐 보여주기
+  await page.clock.install({ time: Date.now() });
+  // CSS·WAAPI 애니메이션도 페이지 시계에 맞춰 멈췄다가 프레임마다 정확한 위치로 옮긴다
+  await page.addInitScript(() => {
+    const starts = new WeakMap();
+    window.__syncAnimations = () => {
+      const now = performance.now();
+      for (const a of document.getAnimations()) {
+        if (!starts.has(a)) { starts.set(a, now); a.pause(); }
+        a.currentTime = (now - starts.get(a)) * (a.playbackRate || 1);
+      }
+    };
+  });
+
+  const framesDir = fs.mkdtempSync(path.join(os.tmpdir(), "m1-frames-"));
+  let vt = 0, frame = 0;  // vt: 페이지 시계 (ms, 녹화 시작부터)
+  const frameAt = (k) => Math.round((k * 1000) / FPS);
+  async function shoot() {
+    await page.evaluate(() => window.__syncAnimations());
+    await page.screenshot({ path: path.join(framesDir, String(frame).padStart(6, "0") + ".png"), caret: "hide" });
+    frame += 1;
+  }
+  async function advanceTo(T) {  // 페이지 시계를 T까지 넘기면서 그 사이 프레임을 모두 찍는다
+    T = Math.round(T);
+    while (frameAt(frame) <= T) {
+      const target = frameAt(frame);
+      if (target > vt) { await page.clock.runFor(target - vt); vt = target; }
+      await shoot();
+    }
+    if (T > vt) { await page.clock.runFor(T - vt); vt = T; }
+  }
+  async function until(fn, arg) {  // 실제 시간으로 기다림 (이미지 로딩 등). 페이지 시계는 멈춰 있음
+    for (let i = 0; i < 4000; i++) { const v = await page.evaluate(fn, arg); if (v) return v; await sleep(2); }
+    throw new Error("기다리다 시간 초과");
+  }
+
+  for (let i = 0; i < 50; i++) { try { await page.goto(`http://127.0.0.1:${PORT}/m1/index.html?who=claude&mode=${MODE}`); break; } catch { await sleep(200); } }
+  await page.evaluate(() => { try { localStorage.clear(); } catch {} });  // 이 녹화용 브라우저의 예전 기록 지우기
+  await page.reload();
+  await until(() => document.fonts.status === "loaded");
+  // 페이지 시계를 멈춘다. 이제부터 페이지 시간은 advanceTo 로만 흐른다
+  await page.clock.pauseAt((await page.evaluate(() => Date.now())) + 100);
+  await advanceTo(2500);                                   // 시작 화면
 
   const log = [];
-  await page.click("#startBtn");
-  await page.waitForSelector("#answer:not([disabled])");
-  const t0 = Date.now();
+  await page.keyboard.press("Enter");                    // 시작 화면에서 Enter = 시작하기 (클릭은 멈춘 시계와 충돌)
   let prevSrc = null;
   while (true) {
-    // 새 문제 이미지가 뜰 때까지 (또는 결과 화면이 뜰 때까지) 기다림
-    const state = await page.waitForFunction((prev) => {
-      if (!document.getElementById("resultScreen").hidden) return { done: true };
-      if (document.getElementById("answer").disabled) return false;  // 끝나는 중: 결과 화면을 기다림
+    const st = await until((prev) => {
+      if (document.getElementById("answer").disabled) return { done: true };
       const img = document.getElementById("img");
-      if (img.src && img.src !== prev && img.complete && img.naturalWidth) return { src: img.src };
-      return false;
-    }, prevSrc, { polling: 10, timeout: 70000 }).then((h) => h.jsonValue());
-    if (state.done) break;
-    prevSrc = state.src;
-    const png = Buffer.from(await (await ctx.request.get(state.src)).body());  // 화면에 뜬 그 이미지 그대로
+      return img.src && img.src !== prev && img.complete && img.naturalWidth ? { src: img.src } : false;
+    }, prevSrc);
+    if (st.done) break;
+    prevSrc = st.src;
+    // ---- 여기서부터 AI가 실제로 걸린 시간을 재서 그만큼 영상 시간을 흘린다 ----
+    const t0 = performance.now();
+    const png = Buffer.from(await (await ctx.request.get(st.src)).body());  // 화면에 뜬 그 이미지
     const r = await solver.ask(png);
-    try {
-      await page.fill("#answer", r.answer, { timeout: 2000 });
-      await page.press("#answer", "Enter", { timeout: 2000 });
-    } catch { continue; }  // 그 사이 시간이 끝난 경우
-    log.push({ t_ms: Date.now() - t0, image: state.src.split("/").pop(), answer: r.answer, solve_ms: r.ms });
+    const thinkMs = performance.now() - t0;
+    await advanceTo(vt + thinkMs);
+    const t1 = performance.now();
+    await page.fill("#answer", r.answer);
+    await page.press("#answer", "Enter");
+    const typeMs = performance.now() - t1;
+    log.push({ video_ms: vt, image: st.src.split("/").pop(), answer: r.answer, solve_ms: r.ms, think_ms: +thinkMs.toFixed(1), type_ms: +typeMs.toFixed(1) });
+    await advanceTo(vt + typeMs);
+    if (vt > 70000) break;
   }
-  await sleep(4500);                       // 결과 화면 애니메이션까지 녹화
+  await advanceTo(vt + 6500);                              // 결과 화면 + 꽃가루
+
   const result = await page.evaluate(() => ({
     title: document.getElementById("resultTitle").textContent.replace(/\s+/g, " ").trim(),
     time: document.getElementById("rTime").textContent, streak: document.getElementById("rStreak").textContent,
   }));
-  const video = await page.video().path();
-  await ctx.close(); await browser.close();
-  solver.proc.kill(); server.kill();
+  const records = await page.evaluate(() => HV.records.dump());
+  await browser.close();
 
   const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15);
   const base = path.join(OUT, `m1_claude_${MODE}_${stamp}`);
-  fs.renameSync(video, base + ".webm");
-  fs.rmSync(tmpVideo, { recursive: true, force: true });
-  try {
-    execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", base + ".webm", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18", "-r", "30", base + ".mp4"]);
-  } catch (e) { console.error("mp4 변환 실패:", e.message); }
-  fs.writeFileSync(base + ".json", JSON.stringify({ result, log }, null, 1));
-  console.log(JSON.stringify({ result, answered: log.length, video: base + ".mp4", log: base + ".json" }, null, 1));
+  execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-framerate", String(FPS), "-i", path.join(framesDir, "%06d.png"),
+    "-c:v", "libx264", "-preset", "slow", "-crf", "14", "-pix_fmt", "yuv420p", "-movflags", "+faststart", base + ".mp4"]);
+  fs.rmSync(framesDir, { recursive: true, force: true });
+  fs.writeFileSync(base + ".json", JSON.stringify({ result, fps: FPS, size: `${OUT_W}x${Math.round(OUT_W * CSS_H / CSS_W)}`, frames: frame, log, records }, null, 1));
+  execFileSync("python3", ["-m", "tools.import_web_records", base + ".json"], { cwd: ROOT, stdio: "inherit" });
+  console.log(JSON.stringify({ result, answered: log.length, frames: frame, video: base + ".mp4" }, null, 1));
 })().catch((e) => { console.error(e); process.exit(1); });

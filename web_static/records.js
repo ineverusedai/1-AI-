@@ -56,5 +56,6 @@
       setTimeout(() => download("summary.csv", csv(SUMMARY_FIELDS, mem.summary)), 400);
     },
     clearAll() { mem = { answers: [], summary: [], state: {} }; save(); },
+    dump() { return JSON.parse(JSON.stringify(mem)); },  // 녹화 도구가 기록을 꺼내 갈 때
   };
 })();

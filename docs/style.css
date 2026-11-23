@@ -59,12 +59,12 @@ a { color: inherit; text-decoration: none; }
 .card { background: var(--card); border-radius: var(--radius); padding: 32px; position: relative; }
 
 .status { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 16px; }
-.label { font-size: 20px; font-weight: 600; color: var(--text3); margin-bottom: 4px; }
+.label { font-size: 26px; font-weight: 700; color: var(--text2); margin-bottom: 6px; }
 .timer {
   font-size: 128px; font-weight: 800; line-height: 1; letter-spacing: -0.05em;
   font-variant-numeric: tabular-nums; transition: color .3s; transform-origin: left center;
 }
-.timer small { font-size: .3em; font-weight: 700; color: var(--text3); margin-left: 8px; letter-spacing: 0; }
+.timer small { font-size: .32em; font-weight: 700; color: var(--text2); margin-left: 8px; letter-spacing: 0; }
 .timer.low { color: var(--orange); }
 .timer.crit { color: var(--red); }
 .timer.pulse { animation: pulse .45s var(--ease); }
@@ -76,7 +76,7 @@ a { color: inherit; text-decoration: none; }
 .streak b.zero { animation: drop .45s var(--ease); color: var(--red); }
 @keyframes bump { 0% { transform: scale(1); } 35% { transform: scale(1.35) translateY(-6px); } 100% { transform: scale(1); } }
 @keyframes drop { 0% { transform: translateY(-14px); opacity: .3; } 100% { transform: none; opacity: 1; } }
-.streak span { color: #4e5968; font-size: .36em; font-weight: 700; margin-left: 10px; letter-spacing: 0; }
+.streak span { color: var(--text2); font-size: .46em; font-weight: 800; margin-left: 22px; letter-spacing: -0.02em; }
 
 .timebar { height: 14px; border-radius: 14px; background: var(--fill); margin-top: 28px; overflow: hidden; }
 .timebar i { display: block; height: 100%; width: 100%; border-radius: 14px; background: linear-gradient(90deg, #1b64da, var(--blue)); transform-origin: left; transition: background .3s, box-shadow .3s; }
@@ -100,16 +100,23 @@ a { color: inherit; text-decoration: none; }
 .qimg.swap { opacity: 0; }
 
 .inputrow { display: flex; gap: 14px; margin-top: 18px; }
+.fieldwrap { flex: 1; min-width: 0; position: relative; display: flex; }
+.ph {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none;
+  font-size: 30px; font-weight: 700; color: #8b95a1; letter-spacing: -0.02em; transition: opacity .12s;
+}
+.field:not(:placeholder-shown) + .ph { opacity: 0; }
 .field {
-  flex: 1; min-width: 0; height: 104px; border: 0; outline: none;
+  flex: 1; min-width: 0; height: 104px; border: 0; outline: none; padding: 0; line-height: 104px;
   border-radius: 22px; background: var(--fill); color: var(--text);
   font-family: var(--mono); font-size: 56px; font-weight: 700; text-align: center; letter-spacing: .2em;
   font-variant-numeric: slashed-zero; font-feature-settings: "zero" 1;
   box-shadow: inset 0 0 0 2px transparent; transition: box-shadow .2s, background .2s;
   -webkit-appearance: none; appearance: none;
 }
-.field::placeholder { color: #4e5968; font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; font-size: 26px; font-weight: 600; letter-spacing: -0.02em; }
+.field::placeholder { color: transparent; }
 .field:focus { box-shadow: inset 0 0 0 3px var(--blue); }
+.field:focus + .ph { color: #b0b8c1; }
 .inputrow .btn { height: 104px; width: 200px; font-size: 28px; border-radius: 22px; }
 
 /* ----- 정답/오답 효과 ----- */
@@ -188,13 +195,14 @@ a.row:hover { background: var(--fill); }
 @media (max-width: 700px) {
   .stage { width: auto; padding: 16px; gap: 12px; }
   .card { padding: 20px; border-radius: 22px; }
-  .label { font-size: 15px; }
+  .label { font-size: 17px; }
   .timer, .streak { font-size: 64px; }
   .timebar { height: 10px; margin-top: 18px; }
   .segs i { height: 10px; }
   .inputrow { flex-direction: column; gap: 10px; }
-  .field { height: 76px; font-size: 36px; letter-spacing: .12em; flex: none; width: 100%; }
-  .field::placeholder { font-size: 20px; }
+  .fieldwrap { flex: none; width: 100%; }
+  .field { height: 76px; line-height: 76px; font-size: 36px; letter-spacing: .12em; }
+  .ph { font-size: 22px; }
   .inputrow .btn { width: 100%; height: 64px; font-size: 22px; }
   .fx { top: 20px; height: 90px; padding-left: 40px; }
   .fx svg { width: 64px; height: 64px; }
