@@ -1,0 +1,12 @@
+N=10000 full=9972/10000=99.7200% char=99.9440% mean_ms=12.35 max_ms=42.7 p99_ms=30.2 first_ms=28.7
+confusions: [('O->0', 15), ('0->O', 6), ('B->3', 2), ('Z->2', 1), ('P->F', 1), ('V->X', 1), ('1->2', 1), ('B->8', 1)]
+errors: [('D0XA3', 'DOXA3'), ('YUB2F', 'YU32F'), ('UHWO9', 'UHW09'), ('ONX48', '0NX48'), ('4EZ2K', '4E22K'), ('3OZWL', '30ZWL'), ('UKXHO', 'UKXH0'), ('0NZDE', 'ONZDE'), ('GZDOT', 'GZD0T'), ('HRYGO', 'HRYG0'), ('G9FOH', 'G9F0H'), ('6JYBO', '6JYB0'), ('O3PM2', 'O3FM2'), ('S0KLZ', 'SOKLZ'), ('B0KH5', 'BOKH5'), ('2XO8J', '2X08J'), ('FL4MO', 'FL4M0'), ('WOLFM', 'W0LFM'), ('OPQ7E', '0PQ7E'), ('708AQ', '7O8AQ'), ('UTQVU', 'UTQXU'), ('51ZMB', '51ZM3'), ('UOAND', 'U0AND'), ('4LQWO', '4LQW0'), ('W0K6R', 'WOK6R'), ('71RSB', '72RSB'), ('NBIGN', 'N8IGN'), ('A27SO', 'A27S0')]
+example1_KKO54.png KKO54 OK
+example2_VQE8V.png VQE8V OK
+example3_6TVP9.png 6TVP9 OK
+example4_6EZM2.png 6EZM2 OK
+example5_PP9ZA.png PP9ZA OK
+example6_B2NQZ.png B2NQZ OK
+example7_6NT6K.png 6NT6K OK
+example8_TEJJQ.png TEJJQ OK
+examples 8/8

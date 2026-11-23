@@ -1,0 +1,3 @@
+﻿timestamp,who,mission,mode,attempt,success,answered,correct,max_streak,total_ms,first10_correct,first10_ms,correct_in_limit,note
+2026-11-23T14:57:49+00:00,claude,m1,B,1,1,200,199,153,154,10,154,199,1~10번 10/10 정답; ready 표시 후 60초 안에 199개 정답; ready까지 0ms
+2026-11-23T14:57:46+00:00,claude,m1,B,1,1,10,10,10,572,10,572,10,성공; 영상 m1_claude_B_20261123T145836.mp4
