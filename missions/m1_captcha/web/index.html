@@ -4,66 +4,71 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>미션 1 · 글자 캡차</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="/static/style.css">
-<style>
-  #img { display: block; width: 840px; max-width: 86vw; border-radius: 12px; background: #fff; user-select: none; -webkit-user-drag: none; }
-  #answer {
-    width: 520px; max-width: 86vw; font-family: var(--mono); font-size: 56px; font-weight: 700;
-    letter-spacing: 10px; text-align: center; padding: 14px 18px; border-radius: 14px;
-    border: 3px solid var(--line); background: #0b0d11; color: var(--text); outline: none;
-    font-variant-numeric: slashed-zero; font-feature-settings: "zero" 1;
-  }
-  #answer:focus { border-color: var(--accent); }
-  .inputrow { display: flex; gap: 16px; align-items: center; }
-</style>
 </head>
 <body>
-<header class="hud">
-  <div class="mission">MISSION 1 · 글자 캡차<small id="ruleLine">60초 안에 10문제 연속 정답</small></div>
-  <div class="timer" id="timer">60.0</div>
-  <div class="progress">
-    <div class="label">연속 정답</div>
-    <div class="count"><b id="streak">0</b><span> / <span id="target">10</span></span></div>
-    <div class="dots" id="dots"></div>
-  </div>
-</header>
-<div class="sub">도전 <b id="attemptNo">-</b> · 문제 <b id="qNo">-</b> · 맞힘 <b id="correct">0</b> / <b id="answered">0</b></div>
-
-<main>
-  <div class="card" id="card"><img id="img" alt="캡차 이미지" draggable="false"></div>
-  <div class="feedback" id="feedback"></div>
-  <div class="inputrow">
-    <input id="answer" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" maxlength="12" disabled>
-    <button id="submit" disabled>확인</button>
-  </div>
-  <div class="hint">대문자와 숫자만 나옵니다 · 소문자로 입력해도 됩니다<br>
-    가끔 헷갈리는 글자가 하나씩 섞여요: <code>0</code> 숫자 영 &nbsp; <code>O</code> 대문자 오 &nbsp; <code>1</code> 숫자 일 &nbsp; <code>I</code> 대문자 아이</div>
-</main>
-
-<div class="overlay" id="startScreen">
-  <div class="box">
-    <h1>MISSION 1<br>글자 캡차</h1>
-    <p id="startRule"></p>
-    <p>틀리면 연속 카운트가 <b>0</b>으로 돌아갑니다. 시간은 계속 흐릅니다.</p>
-    <p id="startFrom"></p>
-    <div class="row" style="margin-top:34px">
-      <button id="startBtn">시작 <kbd style="color:#fff;border-color:#fff8">Enter</kbd></button>
+<div class="page">
+  <section class="card">
+    <div class="status">
+      <div>
+        <div class="label">남은 시간</div>
+        <div class="timer" id="timer">60.0<small>초</small></div>
+      </div>
+      <div class="streakbox">
+        <div class="label">연속 정답</div>
+        <div class="num"><b id="streak">0</b><span>/<span id="target">10</span></span></div>
+      </div>
     </div>
-    <div class="row"><button class="ghost" id="resetBtn">처음 문제(#1)부터</button><a class="ghost" href="/" style="color:var(--muted);font-size:18px">미션 목록</a></div>
+    <div class="timebar" id="timebar"><i id="timefill"></i></div>
+    <div class="segs" id="segs"></div>
+  </section>
+
+  <section class="card qcard" id="qcard">
+    <img class="qimg" id="img" alt="캡차 이미지" draggable="false">
+    <input class="field" id="answer" placeholder="보이는 글자를 입력하세요" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" maxlength="12" disabled>
+    <button class="btn wide" id="submit" disabled>확인</button>
+  </section>
+
+  <p class="hint">대문자와 숫자만 나와요. 소문자로 입력해도 괜찮아요.<br>
+    가끔 헷갈리는 글자가 하나씩 섞여요 &nbsp;<code>0</code> 숫자 영 · <code>O</code> 대문자 오 · <code>1</code> 숫자 일 · <code>I</code> 대문자 아이</p>
+</div>
+
+<div class="toast" id="toast"><span class="dot" id="toastDot"></span><span id="toastText"></span></div>
+
+<div class="screen" id="startScreen">
+  <div class="page">
+    <div><span class="chip">미션 1 · 글자 캡차</span></div>
+    <h1 class="head" id="startHead">60초 안에<br>10문제 연속으로 맞혀 보세요</h1>
+    <p class="desc">찌그러진 글자를 보고 그대로 입력하면 돼요.</p>
+    <div class="card rules">
+      <ul>
+        <li><span class="n">1</span><span id="rule1"></span></li>
+        <li><span class="n">2</span><span>틀리면 연속 기록이 <b>0</b>이 돼요. 시간은 계속 흘러요.</span></li>
+        <li><span class="n">3</span><span>Enter 키로 바로 제출할 수 있어요.</span></li>
+      </ul>
+    </div>
+    <div class="actions"><button class="btn wide" id="startBtn">시작하기</button></div>
+    <div class="subactions">
+      <button class="btn text" id="resetBtn">처음 문제부터 다시 풀기</button>
+      <a class="btn text" href="/">미션 목록</a>
+    </div>
   </div>
 </div>
 
-<div class="overlay" id="resultScreen" hidden>
-  <div class="box">
-    <h1 id="resultTitle"></h1>
-    <p id="resultSub"></p>
+<div class="screen" id="resultScreen" hidden>
+  <div class="page center">
+    <svg class="result-icon" id="resultIcon" viewBox="0 0 88 88"><circle cx="44" cy="44" r="44"/><path id="resultPath" d="M26 45 L39 58 L62 32"/></svg>
+    <h1 class="head" id="resultTitle"></h1>
+    <p class="desc" id="resultSub"></p>
     <div class="stats">
-      <div><strong id="rTime">-</strong>걸린 시간</div>
-      <div><strong id="rCorrect">-</strong>맞힘 / 푼 문제</div>
-      <div><strong id="rStreak">-</strong>최고 연속</div>
+      <div><span>걸린 시간</span><strong id="rTime">-</strong></div>
+      <div><span>최고 연속</span><strong id="rStreak">-</strong></div>
     </div>
-    <div class="row"><button id="retryBtn">다시 도전 <kbd style="color:#fff;border-color:#fff8">Enter</kbd></button></div>
-    <div class="row"><a class="ghost" href="/" style="color:var(--muted);font-size:18px">미션 목록</a></div>
+    <div class="actions">
+      <button class="btn wide" id="retryBtn">다시 도전하기</button>
+      <a class="btn wide gray" href="/">미션 목록</a>
+    </div>
   </div>
 </div>
 
@@ -71,38 +76,47 @@
 const $ = (id) => document.getElementById(id);
 const api = (action, body = {}) =>
   fetch(`/api/m1/${action}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }).then(r => r.json());
+let info = null, attemptId = null, t0 = 0, limitMs = 60000, target = 10, ticking = null, busy = false, running = false, toastTimer = null;
 
-let info = null, attemptId = null, t0 = 0, limitMs = 60000, ticking = null, busy = false, running = false;
-
-function setDots(n, target) {
-  const d = $("dots");
-  if (d.children.length !== target) d.innerHTML = "<i></i>".repeat(target);
-  [...d.children].forEach((el, i) => el.classList.toggle("on", i < n));
+function setSegs(n) {
+  const s = $("segs");
+  if (s.children.length !== target) s.innerHTML = "<i></i>".repeat(target);
+  Array.prototype.forEach.call(s.children, (el, i) => el.classList.toggle("on", i < n));
   $("streak").textContent = n;
 }
-
 function showTimer(ms) {
   const left = Math.max(0, limitMs - ms);
-  const el = $("timer");
-  el.textContent = (left / 1000).toFixed(1);
-  el.classList.toggle("low", left <= 20000 && left > 10000);
-  el.classList.toggle("crit", left <= 10000);
+  const cls = left <= 10000 ? "crit" : left <= 20000 ? "low" : "";
+  $("timer").innerHTML = (left / 1000).toFixed(1) + "<small>초</small>";
+  $("timer").className = "timer " + cls;
+  $("timebar").className = "timebar " + cls;
+  $("timefill").style.transform = `scaleX(${left / limitMs})`;
 }
-
+function showToast(kind, text, ms) {
+  $("toast").className = "toast show " + kind;
+  $("toastDot").textContent = kind === "ok" ? "✓" : kind === "bad" ? "✕" : "";
+  $("toastDot").style.display = kind ? "" : "none";
+  $("toastText").textContent = text;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { $("toast").className = "toast"; }, ms);
+}
+function feedback(ok) {
+  if (ok) return showToast("ok", "정답이에요", 700);
+  showToast("bad", "틀렸어요. 연속 기록이 0이 됐어요", 1200);
+  const c = $("qcard"), s = $("segs");
+  c.classList.remove("shake"); s.classList.remove("reset"); void c.offsetWidth;
+  c.classList.add("shake"); s.classList.add("reset");
+  setTimeout(() => s.classList.remove("reset"), 400);
+}
 async function loadInfo(resetHud = true) {
   info = await fetch("/api/m1/info").then(r => r.json());
-  limitMs = info.time_limit_sec * 1000;
-  $("target").textContent = info.streak_target;
-  $("ruleLine").textContent = `${info.time_limit_sec}초 안에 ${info.streak_target}문제 연속 정답`;
-  $("startRule").innerHTML = `<b>${info.time_limit_sec}초</b> 안에 <b>${info.streak_target}문제 연속</b>으로 맞히면 인증 성공`;
-  $("startFrom").textContent = `도전 #${info.next_attempt} · 문제 #${info.next_q}부터 출제`;
-  if (resetHud) { setDots(0, info.streak_target); showTimer(0); }
+  limitMs = info.time_limit_sec * 1000; target = info.streak_target;
+  $("target").textContent = target;
+  $("startHead").innerHTML = `${info.time_limit_sec}초 안에<br>${target}문제 연속으로 맞혀 보세요`;
+  $("rule1").innerHTML = `<b>${info.time_limit_sec}초</b> 안에 <b>${target}문제를 연속으로</b> 맞히면 인증 성공이에요.`;
+  if (resetHud) { setSegs(0); showTimer(0); }
 }
-
-function setQuestion(q) {
-  $("img").src = q.image;
-  $("qNo").textContent = "#" + q.q_no;
-}
+function setQuestion(q) { $("img").src = q.image; }
 
 async function start() {
   if (running || busy) return;
@@ -111,11 +125,7 @@ async function start() {
   busy = false;
   if (r.error) { alert(r.error); return; }
   attemptId = r.attempt_id;
-  $("attemptNo").textContent = "#" + r.attempt;
-  $("correct").textContent = 0; $("answered").textContent = 0;
-  $("feedback").textContent = ""; $("feedback").className = "feedback";
-  setDots(0, r.streak_target);
-  setQuestion(r.question);
+  setSegs(0); setQuestion(r.question);
   $("startScreen").hidden = true; $("resultScreen").hidden = true;
   $("answer").disabled = false; $("submit").disabled = false;
   $("answer").value = ""; $("answer").focus();
@@ -132,15 +142,6 @@ async function start() {
   }, 50);
 }
 
-function flash(ok) {
-  const card = $("card"), fb = $("feedback");
-  card.classList.remove("flash-ok", "flash-bad"); void card.offsetWidth;
-  card.classList.add(ok ? "flash-ok" : "flash-bad");
-  fb.className = "feedback " + (ok ? "ok" : "bad");
-  fb.textContent = ok ? "정답!" : "틀림! 연속 0으로";
-  setTimeout(() => card.classList.remove("flash-ok", "flash-bad"), 350);
-}
-
 async function submit() {
   if (!running || busy) return;
   const val = $("answer").value.trim();
@@ -149,37 +150,40 @@ async function submit() {
   const r = await api("answer", { attempt_id: attemptId, answer: val });
   busy = false;
   if (r.error) return;
-  if ("correct" in r) flash(r.correct);
+  if ("correct" in r) feedback(r.correct);
   $("answer").value = "";
   if (r.done) { running = false; clearInterval(ticking); finish(r); return; }
-  setDots(r.streak, info.streak_target);
-  $("correct").textContent = r.correct_count; $("answered").textContent = r.answered;
+  setSegs(r.streak);
   setQuestion(r.question);
 }
 
 function finish(r) {
   $("answer").disabled = true; $("submit").disabled = true;
-  if (r.streak !== undefined) setDots(r.success ? info.streak_target : r.streak, info.streak_target);
+  setSegs(r.success ? target : (r.streak || 0));
   showTimer(r.success ? r.total_ms : limitMs);
-  const ok = r.success;
-  $("resultTitle").textContent = ok ? "인간 인증 성공 ✅" : "인증 실패 ❌";
-  $("resultTitle").className = ok ? "ok" : "bad";
-  $("resultSub").textContent = ok ? `${info.streak_target}문제 연속 정답!`
-    : r.reason === "timeout" ? "시간 초과" : "문제를 모두 사용했습니다";
+  $("resultTitle").innerHTML = r.success ? "인간 인증에<br>성공했어요" : "인증에<br>실패했어요";
+  $("resultSub").textContent = r.success ? `${target}문제를 연속으로 맞혔어요`
+    : r.reason === "timeout" ? "시간이 다 됐어요. 다시 도전해 보세요" : "준비된 문제를 모두 풀었어요";
   $("rTime").textContent = (r.total_ms / 1000).toFixed(1) + "초";
-  $("rCorrect").textContent = `${r.correct} / ${r.answered}`;
-  $("rStreak").textContent = r.max_streak;
-  setTimeout(() => { $("resultScreen").hidden = false; $("retryBtn").focus(); }, ok ? 400 : 200);
+  $("rStreak").textContent = r.max_streak + "문제";
+  setTimeout(() => {
+    const old = $("resultIcon"), icon = old.cloneNode(true);
+    icon.setAttribute("class", "result-icon" + (r.success ? "" : " bad"));
+    icon.querySelector("path").setAttribute("d", r.success ? "M26 45 L39 58 L62 32" : "M31 31 L57 57 M57 31 L31 57");
+    old.replaceWith(icon);
+    $("resultScreen").hidden = false;
+    $("retryBtn").focus();
+  }, r.success ? 500 : 250);
   loadInfo(false);
 }
 
 $("startBtn").onclick = start;
 $("retryBtn").onclick = start;
 $("submit").onclick = submit;
-$("resetBtn").onclick = async () => { await api("reset"); await loadInfo(); };
+$("resetBtn").onclick = async () => { await api("reset"); await loadInfo(); showToast("", "1번 문제부터 다시 나와요", 1400); };
 $("answer").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); submit(); } });
 document.addEventListener("keydown", e => {
-  if (e.key === "Enter" && !running && document.activeElement !== $("answer")) { e.preventDefault(); start(); }
+  if (e.key === "Enter" && !running && document.activeElement !== $("answer") && e.target.tagName !== "A") { e.preventDefault(); start(); }
 });
 loadInfo();
 </script>
