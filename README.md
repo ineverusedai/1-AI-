@@ -33,7 +33,7 @@ python run.py
 
 - **GitHub Pages로 열기:** 저장소 **Settings → Pages → Build and deployment**에서
   Source를 **Deploy from a branch**로, Branch를 `mission-1-captcha` / `/docs`로 고르고 **Save**.
-  1~2분 뒤 `https://ineverusedai.github.io/1-ai-/` 에서 열린다.
+  1~2분 뒤 `https://ineverusedai.github.io/1-AI-/` 에서 열린다.
   (비공개 저장소에서 Pages를 쓰려면 GitHub Pro 이상이 필요하다.)
 - **파일로 열기:** 저장소를 내려받아 `docs/index.html`을 더블클릭해도 된다.
 
