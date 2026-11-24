@@ -101,6 +101,16 @@ python run.py
 - Claude는 별도 서브에이전트가 `ai_test/` 만 보고 풀고, 답과 시각을 `ai_test/_log/` 에 남긴다.
   채점은 `python -m tools.grade_ai m1 A` 가 해시를 비교해서 `results/` 에 기록한다.
 
+## AI 테스트 다시 해 보기 (명령 모음)
+결과 요약: `results/REPORT.md`. AI가 만든 풀이 코드·기록: `ai_solutions/`.
+- 문제 복사: `python -m tools.export_ai_test m1` (m2, m3, m4)
+- 직접 보고 풀기(A) 채점: `python -m tools.grade_ai m1 A`, `m2 A-orig`, `m2 A-small`, `m4 A-still`, `m4 A-frames`
+- 코드 풀이기(B)로 1분 측정 + 채점:
+  `python -m tools.ai_throughput <solver 폴더> --mission m3 --mode B` → `python -m tools.grade_ai m3 B` (m1·m2·m4 도 같음, 미션 2 흐린 그림은 `--image small`)
+- 게임 화면 녹화 (1920×1200 60fps): `node tools/ai_play_m1.js --solver <폴더>` (m2, m3, m4 도 같음. 미션 3 은 소리 포함). 시험 녹화는 `--no-record`
+- 미션 5 AI 플레이: 작업 폴더에서 `python3 tools/arc_play.py status | act … | switch N` → 결과 기록 `python -m tools.grade_m5 <log.jsonl>`
+  → 리플레이 영상 `node tools/ai_play_m5.js --log <log.jsonl>`
+
 ## 폴더
 ```
 run.py                 로컬 서버 (표준 라이브러리만 사용)

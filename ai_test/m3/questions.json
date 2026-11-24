@@ -1,0 +1,266 @@
+[
+ {
+  "q": 1,
+  "dir": "q01",
+  "ref": "q01/ref.wav",
+  "options": [
+   "q01/opt1.wav",
+   "q01/opt2.wav",
+   "q01/opt3.wav",
+   "q01/opt4.wav"
+  ]
+ },
+ {
+  "q": 2,
+  "dir": "q02",
+  "ref": "q02/ref.wav",
+  "options": [
+   "q02/opt1.wav",
+   "q02/opt2.wav",
+   "q02/opt3.wav",
+   "q02/opt4.wav"
+  ]
+ },
+ {
+  "q": 3,
+  "dir": "q03",
+  "ref": "q03/ref.wav",
+  "options": [
+   "q03/opt1.wav",
+   "q03/opt2.wav",
+   "q03/opt3.wav",
+   "q03/opt4.wav"
+  ]
+ },
+ {
+  "q": 4,
+  "dir": "q04",
+  "ref": "q04/ref.wav",
+  "options": [
+   "q04/opt1.wav",
+   "q04/opt2.wav",
+   "q04/opt3.wav",
+   "q04/opt4.wav"
+  ]
+ },
+ {
+  "q": 5,
+  "dir": "q05",
+  "ref": "q05/ref.wav",
+  "options": [
+   "q05/opt1.wav",
+   "q05/opt2.wav",
+   "q05/opt3.wav",
+   "q05/opt4.wav"
+  ]
+ },
+ {
+  "q": 6,
+  "dir": "q06",
+  "ref": "q06/ref.wav",
+  "options": [
+   "q06/opt1.wav",
+   "q06/opt2.wav",
+   "q06/opt3.wav",
+   "q06/opt4.wav"
+  ]
+ },
+ {
+  "q": 7,
+  "dir": "q07",
+  "ref": "q07/ref.wav",
+  "options": [
+   "q07/opt1.wav",
+   "q07/opt2.wav",
+   "q07/opt3.wav",
+   "q07/opt4.wav"
+  ]
+ },
+ {
+  "q": 8,
+  "dir": "q08",
+  "ref": "q08/ref.wav",
+  "options": [
+   "q08/opt1.wav",
+   "q08/opt2.wav",
+   "q08/opt3.wav",
+   "q08/opt4.wav"
+  ]
+ },
+ {
+  "q": 9,
+  "dir": "q09",
+  "ref": "q09/ref.wav",
+  "options": [
+   "q09/opt1.wav",
+   "q09/opt2.wav",
+   "q09/opt3.wav",
+   "q09/opt4.wav"
+  ]
+ },
+ {
+  "q": 10,
+  "dir": "q10",
+  "ref": "q10/ref.wav",
+  "options": [
+   "q10/opt1.wav",
+   "q10/opt2.wav",
+   "q10/opt3.wav",
+   "q10/opt4.wav"
+  ]
+ },
+ {
+  "q": 11,
+  "dir": "q11",
+  "ref": "q11/ref.wav",
+  "options": [
+   "q11/opt1.wav",
+   "q11/opt2.wav",
+   "q11/opt3.wav",
+   "q11/opt4.wav"
+  ]
+ },
+ {
+  "q": 12,
+  "dir": "q12",
+  "ref": "q12/ref.wav",
+  "options": [
+   "q12/opt1.wav",
+   "q12/opt2.wav",
+   "q12/opt3.wav",
+   "q12/opt4.wav"
+  ]
+ },
+ {
+  "q": 13,
+  "dir": "q13",
+  "ref": "q13/ref.wav",
+  "options": [
+   "q13/opt1.wav",
+   "q13/opt2.wav",
+   "q13/opt3.wav",
+   "q13/opt4.wav"
+  ]
+ },
+ {
+  "q": 14,
+  "dir": "q14",
+  "ref": "q14/ref.wav",
+  "options": [
+   "q14/opt1.wav",
+   "q14/opt2.wav",
+   "q14/opt3.wav",
+   "q14/opt4.wav"
+  ]
+ },
+ {
+  "q": 15,
+  "dir": "q15",
+  "ref": "q15/ref.wav",
+  "options": [
+   "q15/opt1.wav",
+   "q15/opt2.wav",
+   "q15/opt3.wav",
+   "q15/opt4.wav"
+  ]
+ },
+ {
+  "q": 16,
+  "dir": "q16",
+  "ref": "q16/ref.wav",
+  "options": [
+   "q16/opt1.wav",
+   "q16/opt2.wav",
+   "q16/opt3.wav",
+   "q16/opt4.wav"
+  ]
+ },
+ {
+  "q": 17,
+  "dir": "q17",
+  "ref": "q17/ref.wav",
+  "options": [
+   "q17/opt1.wav",
+   "q17/opt2.wav",
+   "q17/opt3.wav",
+   "q17/opt4.wav"
+  ]
+ },
+ {
+  "q": 18,
+  "dir": "q18",
+  "ref": "q18/ref.wav",
+  "options": [
+   "q18/opt1.wav",
+   "q18/opt2.wav",
+   "q18/opt3.wav",
+   "q18/opt4.wav"
+  ]
+ },
+ {
+  "q": 19,
+  "dir": "q19",
+  "ref": "q19/ref.wav",
+  "options": [
+   "q19/opt1.wav",
+   "q19/opt2.wav",
+   "q19/opt3.wav",
+   "q19/opt4.wav"
+  ]
+ },
+ {
+  "q": 20,
+  "dir": "q20",
+  "ref": "q20/ref.wav",
+  "options": [
+   "q20/opt1.wav",
+   "q20/opt2.wav",
+   "q20/opt3.wav",
+   "q20/opt4.wav"
+  ]
+ },
+ {
+  "q": 21,
+  "dir": "q21",
+  "ref": "q21/ref.wav",
+  "options": [
+   "q21/opt1.wav",
+   "q21/opt2.wav",
+   "q21/opt3.wav",
+   "q21/opt4.wav"
+  ]
+ },
+ {
+  "q": 22,
+  "dir": "q22",
+  "ref": "q22/ref.wav",
+  "options": [
+   "q22/opt1.wav",
+   "q22/opt2.wav",
+   "q22/opt3.wav",
+   "q22/opt4.wav"
+  ]
+ },
+ {
+  "q": 23,
+  "dir": "q23",
+  "ref": "q23/ref.wav",
+  "options": [
+   "q23/opt1.wav",
+   "q23/opt2.wav",
+   "q23/opt3.wav",
+   "q23/opt4.wav"
+  ]
+ },
+ {
+  "q": 24,
+  "dir": "q24",
+  "ref": "q24/ref.wav",
+  "options": [
+   "q24/opt1.wav",
+   "q24/opt2.wav",
+   "q24/opt3.wav",
+   "q24/opt4.wav"
+  ]
+ }
+]

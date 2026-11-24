@@ -3,7 +3,7 @@
 실행: python -m tools.grade_ai m1 A          # 가장 최근 실행 채점
       python -m tools.grade_ai m1 B --run 2  # 2번째 실행 채점
       python -m tools.grade_ai m2 A-orig     # 미션 2: 방식-그림 (A-orig, A-small, B-orig, B-small)
-미션 2의 답은 선택지 번호(1~4)나 선택지 글자 그대로 낸다.
+미션 2의 답은 선택지 번호(1~4)나 선택지 글자 그대로, 미션 3은 소리 번호(1~4), 미션 4는 A~F(또는 1~6, 글자 그대로).
 같은 실행은 한 번만 기록된다 (--force 로 다시 기록).
 """
 import argparse
@@ -109,7 +109,69 @@ def grade_streak(mission: str, mode: str, run_no: int, rows: list[dict], write: 
     return summary
 
 
-GRADERS = {"m1": grade_streak, "m2": grade_streak}
+def _m3_answer(q: dict, ans: str) -> str:
+    return ans.strip()
+
+
+def _m4_answer(q: dict, ans: str) -> str:
+    a = ans.strip().upper()
+    if len(a) == 1 and a in "ABCDEF":
+        return q["options"]["ABCDEF".index(a)]
+    if a.isdigit() and 1 <= int(a) <= len(q["options"]):
+        return q["options"][int(a) - 1]
+    return a
+
+
+NORMALIZE.update({"m3": _m3_answer, "m4": _m4_answer})
+
+
+def grade_rounds(mission: str, mode: str, run_no: int, rows: list[dict], write: bool) -> dict:
+    """한 판 N문제를 모두 맞혀야 하는 규칙 (미션 3: 5문제·시간 제한 없음, 미션 4: 6문제·60초).
+    첫 판(1~N번)의 성공 여부와, 낸 답 전체의 정답 수를 기록한다."""
+    cfg = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))[mission]
+    manifest = json.loads((ROOT / "data" / mission / "manifest.json").read_text(encoding="utf-8"))
+    qinfo = {q["q"]: q for q in manifest["questions"]}
+    key = load_key()
+    per = cfg["questions_per_round"]
+    limit_ms = cfg.get("time_limit_sec", 0) * 1000
+    t0 = next(r["t"] for r in rows if r["event"] == "start")
+    answers = [r for r in rows if r["event"] == "answer"]
+    graded, prev_t, correct = [], t0, 0
+    round1 = {}
+    for r in answers:
+        q = r["q"]
+        ok = q in qinfo and check(key, mission, q, NORMALIZE[mission](qinfo[q], str(r["answer"])), qinfo[q]["hash"])
+        total_ms = int((r["t"] - t0) * 1000)
+        graded.append({"q_no": q, "submitted": r["answer"], "correct": int(ok),
+                       "question_ms": int((r["t"] - prev_t) * 1000), "total_ms": total_ms})
+        prev_t = r["t"]
+        correct += ok
+        if q <= per and q not in round1:
+            round1[q] = (ok, total_ms)
+    r1_ok = len(round1) == per and all(ok for ok, _ in round1.values())
+    r1_ms = max((ms for _, ms in round1.values()), default=0)
+    in_time = (not limit_ms) or r1_ms <= limit_ms
+    first_wrong = next((q for q in sorted(round1) if not round1[q][0]), None)
+    notes = [f"첫 판(1~{per}번) {sum(ok for ok, _ in round1.values())}/{len(round1)} 정답, {r1_ms / 1000:.1f}초"]
+    if first_wrong:
+        notes.append(f"{first_wrong}번에서 처음 틀림")
+    if limit_ms and not in_time:
+        notes.append(f"제한 {limit_ms // 1000}초 초과")
+    notes.append(f"전체 {correct}/{len(graded)} 정답")
+    summary = {
+        "who": "claude", "mission": mission, "mode": mode, "attempt": run_no,
+        "success": int(r1_ok and in_time), "answered": len(graded), "correct": correct,
+        "max_streak": sum(ok for ok, _ in round1.values()), "total_ms": r1_ms,
+        "first10_correct": "", "first10_ms": "", "correct_in_limit": correct, "note": "; ".join(notes),
+    }
+    if write:
+        for g in graded:
+            results.log_answer({"who": "claude", "mission": mission, "mode": mode, "attempt": run_no, **g})
+        results.log_summary(summary)
+    return summary
+
+
+GRADERS = {"m1": grade_streak, "m2": grade_streak, "m3": grade_rounds, "m4": grade_rounds}
 
 
 def main():

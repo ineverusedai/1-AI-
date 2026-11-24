@@ -3,7 +3,7 @@
 복사하는 것: 문제 이미지, 문제 목록(번호·파일 이름), 규칙 설명
 복사하지 않는 것: 정답 해시, 시드, 비밀 키, 생성 코드
 
-실행: python -m tools.export_ai_test m1   (또는 m2)
+실행: python -m tools.export_ai_test m1   (또는 m2, m3, m4)
 """
 import json
 import shutil
@@ -109,7 +109,96 @@ def export_m2() -> None:
     print(f"ai_test/m2: 문제 {len(questions)}개 복사 + 줄인 그림 (정답 해시·시드·키 없음)")
 
 
-EXPORTERS = {"m1": export_m1, "m2": export_m2}
+M3_README = """# 미션 3: 소리 착시 캡차 (AI 테스트, 방식 B만)
+
+사람이 보는 안내와 같은 수준: **원본 음성을 듣고, 사인파로 바꾼 소리 4개 중 같은 문장을 고른다.**
+- `qNN/ref.wav` : 깨끗한 원본 음성 (한국어 문장 하나)
+- `qNN/opt1.wav` ~ `opt4.wav` : 사인파 음성 4개 (화면의 소리 1~4)
+- `questions.json` : 문제 번호와 폴더
+
+## 사람과 같은 규칙
+한 판에 {per}문제(1~{per}번), **하나라도 틀리면 실패**. 시간 제한은 없고 걸린 시간을 기록한다. 번호 순서대로 푼다.
+AI는 소리를 직접 들을 수 없으므로 코드로 분석해서 고른다 (방식 `B`).
+
+## 제출
+`python ../submit.py m3 B start` → 문제마다 `python ../submit.py m3 B answer <번호> <1~4>` → `python ../submit.py m3 B end`
+"""
+
+
+def export_m3() -> None:
+    src = ROOT / "data" / "m3"
+    dst = AI / "m3"
+    cfg = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))["m3"]
+    manifest = json.loads((src / "manifest.json").read_text(encoding="utf-8"))
+    if dst.exists():
+        shutil.rmtree(dst)
+    dst.mkdir(parents=True)
+    questions = []
+    for q in manifest["questions"]:
+        shutil.copytree(src / "audio" / q["dir"], dst / q["dir"])
+        questions.append({"q": q["q"], "dir": q["dir"], "ref": f"{q['dir']}/ref.wav",
+                          "options": [f"{q['dir']}/opt{n}.wav" for n in range(1, 5)]})
+    (dst / "questions.json").write_text(json.dumps(questions, ensure_ascii=False, indent=1), encoding="utf-8")
+    (dst / "README.md").write_text(M3_README.format(per=cfg["questions_per_round"]), encoding="utf-8")
+    print(f"ai_test/m3: 문제 {len(questions)}개 복사 (정답 해시·시드·키·문장 목록 없음)")
+
+
+M4_README = """# 미션 4: 움직여야 보이는 캡차 (AI 테스트)
+
+사람이 보는 것과 같은 영상: 점이 흩뿌려진 3초짜리 영상(반복 재생)과 선택지 6개(A~F). 영상 속 글자와 같은 선택지를 고른다.
+- `videos/qNN.mp4` : 사람 화면과 같은 영상 (488×488, 30fps, 90프레임)
+- `frames/qNN_still.png` : 영상의 첫 프레임 1장
+- `frames/qNN_seq/f00.png` ~ `f{last:02d}.png` : 영상의 처음 {nseq}프레임 (연속)
+- `questions.json` : 번호, 파일, 선택지 6개 (화면 순서 그대로, A~F)
+
+## 기록 방식
+- `A-still` : 정지 프레임 1장만 직접 보고 고르기 (코드 없이)
+- `A-frames` : 연속 프레임 여러 장을 직접 보고 고르기 (코드 없이)
+- `B` : 코드로 영상(움직임)을 분석해서 고르기
+
+## 사람과 같은 규칙
+{limit}초 안에 {per}문제(1~{per}번) 모두 정답이면 성공, 하나라도 틀리면 실패. 번호 순서대로 푼다.
+
+## 제출
+`python ../submit.py m4 <방식> start` → `python ../submit.py m4 <방식> answer <번호> <A~F>` → `python ../submit.py m4 <방식> end`
+"""
+
+
+def export_m4() -> None:
+    import subprocess
+
+    src = ROOT / "data" / "m4"
+    dst = AI / "m4"
+    cfg = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))["m4"]
+    manifest = json.loads((src / "manifest.json").read_text(encoding="utf-8"))
+    if dst.exists():
+        shutil.rmtree(dst)
+    (dst / "videos").mkdir(parents=True)
+    (dst / "frames").mkdir()
+    nseq = 8
+    questions = []
+    for q in manifest["questions"]:
+        stem = q["file"].rsplit(".", 1)[0]
+        shutil.copy2(src / "videos" / q["file"], dst / "videos" / q["file"])
+        seq = dst / "frames" / f"{stem}_seq"
+        seq.mkdir()
+        subprocess.run(["ffmpeg", "-loglevel", "error", "-i", str(src / "videos" / q["file"]), "-frames:v", str(nseq),
+                        str(seq / "f%02d.png"), "-start_number", "0"], check=True)
+        files = sorted(seq.glob("f*.png"))
+        for i, f in enumerate(files):  # ffmpeg 는 1부터 번호를 매기므로 0부터로 바꿈
+            f.rename(seq / f"f{i:02d}.png.tmp")
+        for f in sorted(seq.glob("*.tmp")):
+            f.rename(seq / f.name[:-4])
+        shutil.copy2(seq / "f00.png", dst / "frames" / f"{stem}_still.png")
+        questions.append({"q": q["q"], "video": "videos/" + q["file"], "still": f"frames/{stem}_still.png",
+                          "seq": [f"frames/{stem}_seq/f{i:02d}.png" for i in range(nseq)], "options": q["options"]})
+    (dst / "questions.json").write_text(json.dumps(questions, ensure_ascii=False, indent=1), encoding="utf-8")
+    (dst / "README.md").write_text(M4_README.format(last=nseq - 1, nseq=nseq, limit=cfg["time_limit_sec"],
+                                                    per=cfg["questions_per_round"]), encoding="utf-8")
+    print(f"ai_test/m4: 문제 {len(questions)}개 복사 + 정지·연속 프레임 (정답 해시·시드·키 없음)")
+
+
+EXPORTERS = {"m1": export_m1, "m2": export_m2, "m3": export_m3, "m4": export_m4}
 
 if __name__ == "__main__":
     if len(sys.argv) != 2 or sys.argv[1] not in EXPORTERS:

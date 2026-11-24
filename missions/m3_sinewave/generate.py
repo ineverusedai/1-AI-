@@ -11,6 +11,8 @@ IllusionAudio (arXiv:2601.08516)에서 따른 것
 문제 방식(사용자 사양): 원본 음성을 듣고 → 사인파 음성 4개 중 같은 문장을 고른다. 5문제, 하나라도 틀리면 실패.
 오답 선택지는 정답 문장과 낱말이 겹치는 문장을 먼저 고른다 (예: 누나가 노래를 불러요 / 오리가 노래를 불러요).
 기본 문장 20개는 모두 9글자(3어절 × 3글자)라 길이로는 구별이 안 된다.
+소리 4개는 모두 같은 길이로 맞추고 앞 무음 길이를 무작위로 해서, 길이·위치로 정답이 드러나지 않게 했다
+(AI 테스트에서 '정답 소리만 원본과 길이가 같다'는 허점이 발견되어 고침).
 영상용 홍보 멘트 4개(구독/좋아요/댓글/알림 … 제 기분이 좋아져요)는 서로 오답 선택지가 되고, '구독' 문장은 첫 판 5번 문제로 고정.
 
 원본 음성: audio/originals/s01.wav ~ (sentences.txt 순서). 사용자의 컴퓨터 내장 한국어 TTS로 만든다:
@@ -110,6 +112,14 @@ def _group(i: int) -> str:
     return "promo" if SENTENCES[i].endswith("제 기분이 좋아져요") else "basic"
 
 
+def pad_to(w: np.ndarray, total: int, rng: random.Random, cfg: dict) -> np.ndarray:
+    """앞에 무작위 길이(0~pad_max_sec)의 무음을 넣고, 뒤를 무음으로 채워 total 표본 길이로 만든다."""
+    lead = rng.randint(0, max(0, min(total - len(w), int(SR * cfg["pad_max_sec"]))))
+    out = np.zeros(total)
+    out[lead:lead + len(w)] = w[:total - lead]
+    return out
+
+
 def pick_distractors(target: int, rng: random.Random, n: int = 3) -> list[int]:
     """정답 문장과 낱말이 겹치는 문장을 먼저, 모자라면 아무 문장."""
     words = set(SENTENCES[target].split())
@@ -152,9 +162,13 @@ def main() -> None:
         rng = random.Random(clip_seed)
         d = OUT / "audio" / f"q{q:02d}"
         d.mkdir(parents=True)
-        write_wav(d / "ref.wav", originals[target])
-        for n, s in enumerate(opts, 1):
-            write_wav(d / f"opt{n}.wav", sinewave(originals[s], cfg, rng))
+        # 길이로 정답이 드러나지 않게: 소리 4개를 모두 같은 길이로 맞추고, 앞 무음 길이를 무작위로 (원본도 따로 무작위)
+        clips = [sinewave(originals[s], cfg, rng) for s in opts]
+        total = max(len(c) for c in clips) + int(SR * cfg["pad_max_sec"])
+        for n, c in enumerate(clips, 1):
+            write_wav(d / f"opt{n}.wav", pad_to(c, total, rng, cfg))
+        ref = originals[target]
+        write_wav(d / "ref.wav", pad_to(ref, len(ref) + int(SR * cfg["pad_max_sec"]), rng, cfg))
         correct = opts.index(target) + 1
         questions.append({"q": q, "dir": f"q{q:02d}", "hash": answer_hash(key, "m3", q, str(correct))})
         print(f"  q{q:02d} 완료", flush=True)

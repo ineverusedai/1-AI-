@@ -36,8 +36,16 @@ def main() -> None:
 
     m, mode = args.mission, args.mode
     questions = json.loads((ROOT / "ai_test" / m / "questions.json").read_text(encoding="utf-8"))
-    images = [(q["q"], (ROOT / "ai_test" / m / q[args.image]).read_bytes(), q.get("choices")) for q in questions]
-    run = (lambda png, ch: solver.solve(png, ch)) if m == "m2" else (lambda png, ch: solver.solve(png))
+    base = ROOT / "ai_test" / m
+    if m == "m3":    # 원본 음성 + 사인파 4개 → 번호
+        images = [(q["q"], (base / q["ref"]).read_bytes(), [(base / o).read_bytes() for o in q["options"]]) for q in questions]
+        run = lambda ref, opts: solver.solve(ref, opts)
+    elif m == "m4":  # 영상 + 선택지 6개 → 선택지 글자
+        images = [(q["q"], (base / q["video"]).read_bytes(), q["options"]) for q in questions]
+        run = lambda vid, ch: solver.solve(vid, ch)
+    else:
+        images = [(q["q"], (base / q[args.image]).read_bytes(), q.get("choices")) for q in questions]
+        run = (lambda png, ch: solver.solve(png, ch)) if m == "m2" else (lambda png, ch: solver.solve(png))
     run(images[-1][1], images[-1][2])  # 예열
 
     record(m, mode, "start")

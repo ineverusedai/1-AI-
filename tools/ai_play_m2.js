@@ -140,7 +140,7 @@ function startSolver() {
     "-c:v", "libx264", "-preset", "slow", "-crf", "14", "-pix_fmt", "yuv420p", "-movflags", "+faststart", base + ".mp4"]);
   fs.rmSync(framesDir, { recursive: true, force: true });
   fs.writeFileSync(base + ".json", JSON.stringify({ result, fps: FPS, hover_ms: HOVER_MS, size: `${OUT_W}x${Math.round(OUT_W * CSS_H / CSS_W)}`, frames: frame, log, records }, null, 1));
-  execFileSync("python3", ["-m", "tools.import_web_records", base + ".json"], { cwd: ROOT, stdio: "inherit" });
+  if (!("no-record" in args)) execFileSync("python3", ["-m", "tools.import_web_records", base + ".json"], { cwd: ROOT, stdio: "inherit" });  // 시험 녹화는 --no-record
   console.log(JSON.stringify({ result, answered: log.length, frames: frame, video: base + ".mp4" }, null, 1));
   process.exit(0);  // 풀이 프로그램·웹 서버 자식 프로세스까지 정리하고 끝냄
 })().catch((e) => { console.error(e); process.exit(1); });

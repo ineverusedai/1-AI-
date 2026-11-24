@@ -28,8 +28,12 @@ def main() -> None:
         if not line:
             continue
         msg = json.loads(line)
-        png = base64.b64decode(msg["png_b64"])
         t = time.perf_counter()
+        if "ref_b64" in msg:  # 미션 3: 원본 음성 + 사인파 4개
+            answer = str(solver.solve(base64.b64decode(msg["ref_b64"]), [base64.b64decode(x) for x in msg["opts_b64"]]))
+            print(json.dumps({"answer": answer, "ms": round((time.perf_counter() - t) * 1000, 2)}), flush=True)
+            continue
+        png = base64.b64decode(msg["png_b64"])
         # 미션 2처럼 선택지가 있는 문제는 선택지도 넘긴다
         answer = str(solver.solve(png, msg["choices"]) if "choices" in msg else solver.solve(png))
         print(json.dumps({"answer": answer, "ms": round((time.perf_counter() - t) * 1000, 2)}), flush=True)
