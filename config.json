@@ -1,5 +1,8 @@
 {
-  "server": {"host": "127.0.0.1", "port": 8000},
+  "server": {
+    "host": "127.0.0.1",
+    "port": 8000
+  },
   "m1": {
     "title": "글자 캡차",
     "time_limit_sec": 60,
@@ -10,5 +13,22 @@
     "max_confusables": 1,
     "width": 280,
     "height": 90
+  },
+  "m2": {
+    "title": "착시 캡차",
+    "time_limit_sec": 60,
+    "streak_target": 10,
+    "pool_size": 200,
+    "width": 960,
+    "height": 600,
+    "text_height": 0.5,
+    "text_max_width": 0.82,
+    "font_weight": 800,
+    "sigma_low": 13,
+    "sigma_high": 3,
+    "sigma_base": 60,
+    "high_gain": 2.6,
+    "text_amp": 0.16,
+    "jpeg_quality": 90
   }
 }

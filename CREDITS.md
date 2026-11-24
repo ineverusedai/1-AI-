@@ -8,6 +8,14 @@
   - 시드 고정을 위해 생성 중에만 라이브러리 내부 난수(`secrets`)를 시드 난수로 바꿔 사용 (라이브러리 파일 자체는 수정하지 않음)
 - **Pillow** — HPND (MIT-CMU) 라이선스 — https://python-pillow.org
 
+## 미션 2: 착시 캡차
+- 방식 참고: Ding 외, **"IllusionCAPTCHA: A CAPTCHA based on Visual Illusion"**, arXiv:2502.05461 (2025) — https://arxiv.org/abs/2502.05461
+  (논문은 확산 모델로 착시 그림을 만들지만, 여기서는 아래 하이브리드 이미지로 코드만으로 만들었다. 선택지에 '눈에 바로 보이는 것'을 함정으로 넣는 방식을 따랐다.)
+- 하이브리드 이미지: Oliva, Torralba, Schyns, **"Hybrid Images"**, ACM SIGGRAPH 2006 (ACM Transactions on Graphics 25(3))
+- **OpenCV** (opencv-python-headless) — Apache License 2.0 — https://opencv.org
+- **NumPy** — BSD-3-Clause — https://numpy.org
+- 배경 그림(나뭇잎·숲·풀밭)은 OpenCV 도형 그리기로 직접 생성, 숨은 글자는 Pretendard 글꼴로 그림
+
 ## 공통
 - 로컬 서버·채점·기록: Python 표준 라이브러리 (`http.server`, `hmac`, `hashlib`, `csv`)
 - 브라우저 버전 채점: SHA-256/HMAC을 자바스크립트로 직접 구현 (외부 라이브러리 없음)

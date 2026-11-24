@@ -51,6 +51,14 @@ python run.py
 - 규칙 숫자는 `config.json` 의 `m1` 에서 바꿀 수 있다.
 - 문제는 이미 `data/m1/` 에 만들어져 있다. 다시 만들 때만: `python -m missions.m1_captcha.generate`
 
+## 미션 2: 착시 캡차
+- 그림을 가까이 보면 숲·나뭇잎·풀밭인데, **눈을 가늘게 뜨거나 화면에서 멀리 떨어지면** 숨은 글자가 보인다.
+- 선택지 4개 중 숨은 글자를 고른다: 클릭하거나 키보드 **1~4**. 선택지 중 하나는 가까이 보면 보이는 장면 설명(함정)이다.
+- 60초 안에 10문제 연속 정답이면 성공. 틀리면 연속 카운트 0. **Shift + R**(1번부터 다시), **Shift + D**(기록 내려받기)는 미션 1과 같다.
+- 미션 2는 브라우저 버전(GitHub Pages, `docs/m2/`)으로 한다.
+- 문제는 이미 `data/m2/` 에 있다. 다시 만들 때만: `python -m missions.m2_illusion.generate` (그 뒤 `python -m tools.build_web`)
+- 그림 만드는 숫자(글자 진하기 `text_amp`, 블러 정도 `sigma_low` 등)는 `config.json` 의 `m2`. `text_amp`를 올리면 글자가 더 잘 보인다.
+
 ## 결과 파일
 - `results/answers.csv` — 답 하나당 한 줄: 누가(`human`/`claude`), 미션, 방식, 도전 번호, 문제 번호, 제출한 답, 정답 여부, 그 문제에 걸린 시간(ms), 시작부터 누적 시간(ms)
 - `results/summary.csv` — 도전 하나당 한 줄: 성공 여부, 맞힌 수, 최고 연속, 1~10번 정답 수·시간, 제한 시간 안 정답 수
@@ -60,7 +68,7 @@ python run.py
 - 정답은 평문으로 저장하지 않는다. `data/*/manifest.json` 에는 **비밀 키로 만든 HMAC 해시**만 있다.
   (그냥 해시면 4지선다처럼 후보가 적은 문제는 후보를 다 대입해 정답을 알아낼 수 있어서 키를 섞었다.)
 - 비밀 키와 시드는 `secrets/` 에만 있다. **영상에 이 폴더 내용이 나오지 않게 조심.**
-- `ai_test/` 에는 문제 파일과 규칙만 복사된다 (`python -m tools.export_ai_test m1`).
+- `ai_test/` 에는 문제 파일과 규칙만 복사된다 (`python -m tools.export_ai_test m1`, `m2`).
 - Claude는 별도 서브에이전트가 `ai_test/` 만 보고 풀고, 답과 시각을 `ai_test/_log/` 에 남긴다.
   채점은 `python -m tools.grade_ai m1 A` 가 해시를 비교해서 `results/` 에 기록한다.
 

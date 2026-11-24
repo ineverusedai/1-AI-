@@ -184,6 +184,28 @@ a.row:hover { background: var(--fill); }
 .row.off .t { color: var(--text3); }
 .badge { font-size: 14px; font-weight: 700; color: var(--text3); background: var(--fill); border-radius: 8px; padding: 5px 9px; }
 
+/* ----- 미션 2: 그림 + 4지선다 ----- */
+.qcard.m2 { display: grid; grid-template-columns: 64fr 31fr; gap: 18px; align-items: stretch; }
+.qcard.m2 .qimg { aspect-ratio: 16 / 10; object-fit: cover; background: #1d2a1f; }
+.choices { display: grid; grid-template-rows: repeat(4, 1fr); gap: 12px; }
+.choice {
+  display: flex; align-items: center; gap: 16px; min-height: 0; padding: 0 22px;
+  font: inherit; font-size: 27px; font-weight: 700; letter-spacing: -0.03em; text-align: left;
+  color: var(--text); background: var(--fill); border: 0; border-radius: 20px; cursor: pointer;
+  transition: background .15s, transform .12s var(--ease);
+}
+.choice b {
+  flex: none; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+  font-size: 20px; font-weight: 800; color: var(--text2); background: rgba(255, 255, 255, .07);
+}
+.choice span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.choice:hover { background: #2c2c35; }
+.choice:active { transform: scale(.97); }
+.choice:focus { outline: none; }
+.choice.hit { animation: hit .28s var(--ease); background: var(--blue); }
+.choice.hit b { color: #fff; background: rgba(255, 255, 255, .2); }
+@keyframes hit { 0% { transform: scale(1); } 40% { transform: scale(.95); } 100% { transform: scale(1); } }
+
 /* ----- 작은 화면 ----- */
 @media (max-height: 820px) and (min-width: 701px) {
   .timer, .streak { font-size: 100px; }
@@ -204,6 +226,10 @@ a.row:hover { background: var(--fill); }
   .ph { font-size: 22px; }
   .inputrow .btn { width: 100%; height: 64px; font-size: 22px; }
   .fx .burst { width: 170px; height: 170px; }
+  .qcard.m2 { grid-template-columns: 1fr; gap: 12px; }
+  .choices { grid-template-columns: 1fr 1fr; grid-template-rows: none; gap: 10px; }
+  .choice { height: 64px; font-size: 20px; padding: 0 14px; gap: 10px; }
+  .choice b { width: 30px; height: 30px; font-size: 16px; border-radius: 9px; }
   .head, .result .head { font-size: 40px; }
   .result-icon { width: 120px; height: 120px; }
   .stats strong { font-size: 40px; }

@@ -2,6 +2,8 @@
 
 실행: python -m tools.grade_ai m1 A          # 가장 최근 실행 채점
       python -m tools.grade_ai m1 B --run 2  # 2번째 실행 채점
+      python -m tools.grade_ai m2 A-orig     # 미션 2: 방식-그림 (A-orig, A-small, B-orig, B-small)
+미션 2의 답은 선택지 번호(1~4)나 선택지 글자 그대로 낸다.
 같은 실행은 한 번만 기록된다 (--force 로 다시 기록).
 """
 import argparse
@@ -27,10 +29,26 @@ def load_log(mission: str, mode: str, run: int | None) -> tuple[int, list[dict]]
     return n, rows
 
 
-def grade_m1(mode: str, run_no: int, rows: list[dict], write: bool) -> dict:
-    cfg = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))["m1"]
-    manifest = json.loads((ROOT / "data" / "m1" / "manifest.json").read_text(encoding="utf-8"))
+def _m1_answer(q: dict, ans: str) -> str:
+    return normalize(ans)
+
+
+def _m2_answer(q: dict, ans: str) -> str:
+    ans = ans.strip()
+    if ans.isdigit() and 1 <= int(ans) <= len(q["choices"]):
+        return q["choices"][int(ans) - 1]
+    return ans
+
+
+NORMALIZE = {"m1": _m1_answer, "m2": _m2_answer}
+
+
+def grade_streak(mission: str, mode: str, run_no: int, rows: list[dict], write: bool) -> dict:
+    """제한 시간 안에 N문제 연속 정답 규칙 (미션 1, 2)."""
+    cfg = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))[mission]
+    manifest = json.loads((ROOT / "data" / mission / "manifest.json").read_text(encoding="utf-8"))
     hashes = {q["q"]: q["hash"] for q in manifest["questions"]}
+    qinfo = {q["q"]: q for q in manifest["questions"]}
     key = load_key()
     limit_ms, target = cfg["time_limit_sec"] * 1000, cfg["streak_target"]
 
@@ -47,7 +65,7 @@ def grade_m1(mode: str, run_no: int, rows: list[dict], write: bool) -> dict:
     graded = []
     for r in answers:
         q = r["q"]
-        ok = q in hashes and check(key, "m1", q, normalize(str(r["answer"])), hashes[q])
+        ok = q in hashes and check(key, mission, q, NORMALIZE[mission](qinfo[q], str(r["answer"])), hashes[q])
         total_ms = int((r["t"] - t0) * 1000)
         q_ms = int((r["t"] - prev_t) * 1000)
         prev_t = r["t"]
@@ -77,7 +95,7 @@ def grade_m1(mode: str, run_no: int, rows: list[dict], write: bool) -> dict:
     if out_of_order:
         notes.append(f"순서 어긋난 답 {out_of_order}개")
     summary = {
-        "who": "claude", "mission": "m1", "mode": mode, "attempt": run_no,
+        "who": "claude", "mission": mission, "mode": mode, "attempt": run_no,
         "success": int(success_ms is not None), "answered": len(graded), "correct": correct,
         "max_streak": max_streak,
         "total_ms": success_ms if success_ms is not None else (graded[-1]["total_ms"] if graded else 0),
@@ -86,12 +104,12 @@ def grade_m1(mode: str, run_no: int, rows: list[dict], write: bool) -> dict:
     }
     if write:
         for g in graded:
-            results.log_answer({"who": "claude", "mission": "m1", "mode": mode, "attempt": run_no, **g})
+            results.log_answer({"who": "claude", "mission": mission, "mode": mode, "attempt": run_no, **g})
         results.log_summary(summary)
     return summary
 
 
-GRADERS = {"m1": grade_m1}
+GRADERS = {"m1": grade_streak, "m2": grade_streak}
 
 
 def main():
@@ -106,7 +124,7 @@ def main():
     done = json.loads(GRADED.read_text()) if GRADED.exists() else []
     tag = f"{args.mission}/{args.mode}/{run_no}"
     write = args.force or tag not in done
-    s = GRADERS[args.mission](args.mode, run_no, rows, write)
+    s = GRADERS[args.mission](args.mission, args.mode, run_no, rows, write)
     if write and tag not in done:
         done.append(tag)
         GRADED.parent.mkdir(exist_ok=True)
