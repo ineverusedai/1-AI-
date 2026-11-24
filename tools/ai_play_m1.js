@@ -13,7 +13,7 @@
  * 결과: <out>/m1_claude_<방식>_<시각>.mp4 (+ 프레임별 기록 .json), results/ 에 who=claude 로 기록.
  *
  * 실행 (프로젝트 폴더에서, 먼저 python -m tools.build_web):
- *   node tools/ai_play_m1.js --solver <solver.py 폴더> [--out results/videos] [--mode B] [--char-ms 45] [--hold-ms 200]
+ *   node tools/ai_play_m1.js --solver <solver.py 폴더> [--out results/videos] [--mode B] [--char-ms 22] [--hold-ms 100]
  *
  * 입력 모습: 답을 낸 뒤 글자를 한 글자씩(--char-ms 간격) 입력칸에 치고, 다 친 답을 --hold-ms 동안 보여 준 뒤 Enter.
  *   AI의 실제 타자는 몇 밀리초라 영상에서 안 보이므로, 보는 사람이 읽을 수 있게 일부러 이만큼 천천히 친다.
@@ -32,7 +32,7 @@ const PORT = Number(args.port || 8780);
 const MODE = args.mode || "B";
 const OUT = path.resolve(args.out || path.join(ROOT, "results", "videos"));
 const FPS = Number(args.fps || 60);
-const CHAR_MS = Number(args["char-ms"] || 45), HOLD_MS = Number(args["hold-ms"] || 200);
+const CHAR_MS = Number(args["char-ms"] || 22), HOLD_MS = Number(args["hold-ms"] || 100);
 const CSS_W = 1440, CSS_H = 900, OUT_W = Number(args.width || 1920);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 

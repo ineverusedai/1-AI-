@@ -1,0 +1,242 @@
+{
+ "result": {
+  "title": "인간 인증성공",
+  "time": "3.1초",
+  "streak": "10문제"
+ },
+ "fps": 60,
+ "char_ms": 22,
+ "hold_ms": 100,
+ "size": "1920x1200",
+ "frames": 727,
+ "log": [
+  {
+   "video_ms": 2748,
+   "image": "q001.png",
+   "answer": "LLTQC",
+   "solve_ms": 18.74,
+   "think_ms": 37.6,
+   "type_ms": 210
+  },
+  {
+   "video_ms": 2992,
+   "image": "q002.png",
+   "answer": "YUTST",
+   "solve_ms": 12.71,
+   "think_ms": 17.3,
+   "type_ms": 210
+  },
+  {
+   "video_ms": 3809,
+   "image": "q003.png",
+   "answer": "WZQ20",
+   "solve_ms": 584.7,
+   "think_ms": 589.6,
+   "type_ms": 210
+  },
+  {
+   "video_ms": 4051,
+   "image": "q004.png",
+   "answer": "7RQCC",
+   "solve_ms": 10.66,
+   "think_ms": 15.4,
+   "type_ms": 210
+  },
+  {
+   "video_ms": 4304,
+   "image": "q005.png",
+   "answer": "OC34Z",
+   "solve_ms": 21.96,
+   "think_ms": 25.8,
+   "type_ms": 210
+  },
+  {
+   "video_ms": 4563,
+   "image": "q006.png",
+   "answer": "UZ8F6",
+   "solve_ms": 20.24,
+   "think_ms": 31.7,
+   "type_ms": 210
+  },
+  {
+   "video_ms": 4812,
+   "image": "q007.png",
+   "answer": "JGWYP",
+   "solve_ms": 15.87,
+   "think_ms": 22.4,
+   "type_ms": 210
+  },
+  {
+   "video_ms": 5081,
+   "image": "q008.png",
+   "answer": "O3V45",
+   "solve_ms": 33.9,
+   "think_ms": 41.5,
+   "type_ms": 210
+  },
+  {
+   "video_ms": 5350,
+   "image": "q009.png",
+   "answer": "5CY0S",
+   "solve_ms": 33.18,
+   "think_ms": 42.4,
+   "type_ms": 210
+  },
+  {
+   "video_ms": 5593,
+   "image": "q010.png",
+   "answer": "XNJH7",
+   "solve_ms": 10.69,
+   "think_ms": 15.7,
+   "type_ms": 210
+  }
+ ],
+ "records": {
+  "answers": [
+   {
+    "timestamp": "2026-11-24T07:14:21+00:00",
+    "who": "claude",
+    "mission": "m1",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 1,
+    "submitted": "LLTQC",
+    "correct": 1,
+    "question_ms": 248,
+    "total_ms": 248
+   },
+   {
+    "timestamp": "2026-11-24T07:14:22+00:00",
+    "who": "claude",
+    "mission": "m1",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 2,
+    "submitted": "YUTST",
+    "correct": 1,
+    "question_ms": 244,
+    "total_ms": 492
+   },
+   {
+    "timestamp": "2026-11-24T07:14:22+00:00",
+    "who": "claude",
+    "mission": "m1",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 3,
+    "submitted": "WZQ20",
+    "correct": 1,
+    "question_ms": 817,
+    "total_ms": 1309
+   },
+   {
+    "timestamp": "2026-11-24T07:14:23+00:00",
+    "who": "claude",
+    "mission": "m1",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 4,
+    "submitted": "7RQCC",
+    "correct": 1,
+    "question_ms": 242,
+    "total_ms": 1551
+   },
+   {
+    "timestamp": "2026-11-24T07:14:23+00:00",
+    "who": "claude",
+    "mission": "m1",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 5,
+    "submitted": "OC34Z",
+    "correct": 1,
+    "question_ms": 253,
+    "total_ms": 1804
+   },
+   {
+    "timestamp": "2026-11-24T07:14:23+00:00",
+    "who": "claude",
+    "mission": "m1",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 6,
+    "submitted": "UZ8F6",
+    "correct": 1,
+    "question_ms": 259,
+    "total_ms": 2063
+   },
+   {
+    "timestamp": "2026-11-24T07:14:23+00:00",
+    "who": "claude",
+    "mission": "m1",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 7,
+    "submitted": "JGWYP",
+    "correct": 1,
+    "question_ms": 249,
+    "total_ms": 2312
+   },
+   {
+    "timestamp": "2026-11-24T07:14:24+00:00",
+    "who": "claude",
+    "mission": "m1",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 8,
+    "submitted": "O3V45",
+    "correct": 1,
+    "question_ms": 269,
+    "total_ms": 2581
+   },
+   {
+    "timestamp": "2026-11-24T07:14:24+00:00",
+    "who": "claude",
+    "mission": "m1",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 9,
+    "submitted": "5CY0S",
+    "correct": 1,
+    "question_ms": 269,
+    "total_ms": 2850
+   },
+   {
+    "timestamp": "2026-11-24T07:14:24+00:00",
+    "who": "claude",
+    "mission": "m1",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 10,
+    "submitted": "XNJH7",
+    "correct": 1,
+    "question_ms": 243,
+    "total_ms": 3093
+   }
+  ],
+  "summary": [
+   {
+    "timestamp": "2026-11-24T07:14:24+00:00",
+    "who": "claude",
+    "mission": "m1",
+    "mode": "B",
+    "attempt": 1,
+    "success": 1,
+    "answered": 10,
+    "correct": 10,
+    "max_streak": 10,
+    "total_ms": 3093,
+    "first10_correct": 10,
+    "first10_ms": 3093,
+    "correct_in_limit": 10,
+    "note": "성공"
+   }
+  ],
+  "state": {
+   "m1:claude:B": {
+    "next_q": 11,
+    "attempt": 1
+   }
+  }
+ }
+}
