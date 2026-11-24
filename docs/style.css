@@ -199,7 +199,7 @@ a.row:hover { background: var(--fill); }
   font-size: 20px; font-weight: 800; color: var(--text2); background: rgba(255, 255, 255, .07);
 }
 .choice span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.choice:hover { background: #2c2c35; }
+.choice:hover { background: #31313c; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .14); }
 .choice:active { transform: scale(.97); }
 .choice:focus { outline: none; }
 .choice.hit { animation: hit .28s var(--ease); background: var(--blue); }

@@ -1,9 +1,10 @@
 """AI가 만든 solver.py 를 불러서 한 줄씩 문제를 풀어 주는 다리.
 
 AI의 코드(solver.py)는 `solve(png_bytes: bytes) -> str` 하나만 있으면 된다.
+(미션 2: `solve(image_bytes: bytes, choices: list[str]) -> str`, 입력에 "choices" 가 함께 온다)
 이 파일은 정답·시드·키를 전혀 모른다. 이미지를 넘기고 답을 돌려받을 뿐이다.
 
-입력(표준 입력, 한 줄에 하나): {"png_b64": "..."}
+입력(표준 입력, 한 줄에 하나): {"png_b64": "..."} 또는 {"png_b64": "...", "choices": [...]}
 출력(표준 출력, 한 줄에 하나):  {"answer": "...", "ms": 걸린 밀리초}
 실행: python -I tools/solver_bridge.py <solver.py가 있는 폴더>
 """
@@ -26,9 +27,11 @@ def main() -> None:
         line = line.strip()
         if not line:
             continue
-        png = base64.b64decode(json.loads(line)["png_b64"])
+        msg = json.loads(line)
+        png = base64.b64decode(msg["png_b64"])
         t = time.perf_counter()
-        answer = str(solver.solve(png))
+        # 미션 2처럼 선택지가 있는 문제는 선택지도 넘긴다
+        answer = str(solver.solve(png, msg["choices"]) if "choices" in msg else solver.solve(png))
         print(json.dumps({"answer": answer, "ms": round((time.perf_counter() - t) * 1000, 2)}), flush=True)
 
 
