@@ -1,0 +1,44 @@
+{
+ "status": {
+  "cur": 2,
+  "games": [
+   {
+    "id": "ls20",
+    "levels": 3,
+    "win": 7,
+    "state": "NOT_FINISHED",
+    "actions": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "count": 171
+   },
+   {
+    "id": "ft09",
+    "levels": 6,
+    "win": 6,
+    "state": "WIN",
+    "actions": [
+     6
+    ],
+    "count": 75
+   },
+   {
+    "id": "vc33",
+    "levels": 3,
+    "win": 7,
+    "state": "NOT_FINISHED",
+    "actions": [
+     6
+    ],
+    "count": 49
+   }
+  ]
+ },
+ "actions": 295,
+ "real_sec": 773.2428939342499,
+ "frames": 7386,
+ "show_ms": 400
+}
