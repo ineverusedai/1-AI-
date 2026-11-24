@@ -1,6 +1,6 @@
 {
  "mission": "m3",
- "voice": "espeak-ng",
+ "voice": "windows-ko-KR (사용자 윈도우 내장 한국어 음성)",
  "answer_rule": "원본(ref.wav)과 같은 문장의 사인파 음성 번호(1~4)를 고른다",
  "questions": [
   {

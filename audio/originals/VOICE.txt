@@ -1,1 +1,1 @@
-espeak-ng
+windows-ko-KR (사용자 윈도우 내장 한국어 음성)

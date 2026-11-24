@@ -68,7 +68,7 @@ python run.py
 - 한 판에 5문제, **하나라도 틀리면 실패**. 시간 제한은 없고 걸린 시간이 기록된다.
 - 기본 문장 20개는 모두 9글자(3어절 × 3글자)이고, 오답은 정답과 낱말이 겹치는 문장을 먼저 고른다.
 - 영상용 홍보 멘트 4개(구독·좋아요·댓글·알림 … 제 기분이 좋아져요)는 서로만 오답이 되고, "구독 눌러주시면 제 기분이 좋아져요"는 첫 판 5번 문제로 고정.
-- **원본 음성 바꾸기 (내 컴퓨터 목소리):** 지금 들어 있는 목소리는 임시(리눅스 espeak-ng)다.
+- **원본 음성:** 사용자 윈도우 내장 한국어 음성으로 만든 24개 (`audio/originals/`). 다시 만들 때:
   - 맥: 터미널에서 프로젝트 폴더로 가서 `bash tools/make_tts_mac.sh` (맥 내장 한국어 음성 Yuna)
   - 윈도우: PowerShell에서 `powershell -ExecutionPolicy Bypass -File tools\make_tts_windows.ps1` (윈도우 내장 한국어 음성)
   - 그다음 `python -m missions.m3_sinewave.generate` → `python -m tools.build_web`
