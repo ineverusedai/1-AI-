@@ -1,0 +1,7 @@
+미션 5 게임 출처 (모두 MIT License, Copyright (c) 2026 ARC Prize Foundation)
+- arc-agi 0.9.10 (PyPI, 공식 ARC-AGI-3 Toolkit): 게임을 받는 데 사용. arc_agi.Arcade().make("ls20" | "ft09" | "vc33")
+- arcengine 0.9.3 (PyPI): 게임 엔진. web_static/m5/py/arcengine/ 에 수정 없이 넣음
+- 게임 소스: ls20-9607627b, ft09-0d8bbf25, vc33-5430563c (toolkit 이 arcprize.org 에서 받은 파일 그대로, web_static/m5/games/)
+- 브라우저 실행: Pyodide 0.27.7 (MPL-2.0, web_static/m5/pyodide/, 라이선스 파일 포함) + numpy 2.0.2, pydantic 2.10.5, pydantic-core 2.27.2,
+  typing-extensions 4.11.0, annotated-types 0.6.0 (Pyodide 배포판 그대로)
+- web_static/m5/py/arcweb.py 만 이 프로젝트에서 새로 씀 (공식 LocalEnvironmentWrapper 와 같은 방식으로 게임을 불러 perform_action 호출)

@@ -35,6 +35,12 @@
   - 글꼴: DejaVu Sans Bold (공식 코드가 찾는 글꼴 중 리눅스에 있는 것)
 - **OpenCV**, **NumPy**, **Pillow**, **FFmpeg**(libx264) — 공식 코드가 쓰는 라이브러리
 
+## 미션 5: ARC-AGI-3
+- **ARC-AGI-3** — ARC Prize Foundation. 공식 Toolkit **arc-agi** 0.9.10, 엔진 **arcengine** 0.9.3, 게임 LS20·FT09·VC33 소스 — 모두 MIT License — https://arcprize.org
+- **Pyodide** 0.27.7 (브라우저 안 파이썬) — Mozilla Public License 2.0 — https://pyodide.org
+- Pyodide 배포판의 **NumPy** (BSD-3), **pydantic**·**pydantic-core** (MIT), **typing-extensions** (PSF), **annotated-types** (MIT)
+- 색상표: 공식 toolkit 의 COLOR_MAP 그대로
+
 ## 공통
 - 로컬 서버·채점·기록: Python 표준 라이브러리 (`http.server`, `hmac`, `hashlib`, `csv`)
 - 브라우저 버전 채점: SHA-256/HMAC을 자바스크립트로 직접 구현 (외부 라이브러리 없음)

@@ -244,6 +244,36 @@ a.row:hover { background: var(--fill); }
 .choices.m4 .choice { font-family: var(--mono); font-size: 32px; letter-spacing: .14em; }
 .choices.m4 .choice b { font-family: inherit; letter-spacing: 0; }
 
+/* ----- 미션 5: ARC-AGI-3 ----- */
+.stage.m5 { --w: max(560px, min(1180px, 96vw)); padding-top: 32px; }
+.arcboard { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: start; }
+.arcwrap { position: relative; width: min(744px, calc(100vh - 128px)); aspect-ratio: 1; }
+#arc { width: 100%; height: 100%; display: block; border-radius: 14px; image-rendering: pixelated; image-rendering: crisp-edges; cursor: crosshair; background: #000; }
+.arcover { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 10px; border-radius: 14px;
+  background: rgba(12, 12, 15, .72); font-size: 30px; font-weight: 800; pointer-events: none; }
+.arcover[hidden] { display: none; }
+.arcover b { width: 96px; height: 96px; border-radius: 50%; display: grid; place-items: center; font-size: 56px; color: #fff; }
+.arcover.won b { background: var(--green); }
+.arcover.lost b { background: var(--red); }
+.arcside { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+.timer.small, .streak.small { font-size: 84px; }
+.timer.small { transform-origin: left center; }
+.gtabs { display: grid; gap: 10px; }
+.gtab { display: flex; align-items: center; gap: 14px; height: 64px; padding: 0 18px; border: 0; border-radius: 18px; cursor: pointer;
+  font: inherit; font-size: 24px; font-weight: 800; color: var(--text); background: var(--fill); text-align: left; }
+.gtab b { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-size: 17px; color: var(--text2); background: rgba(255, 255, 255, .07); }
+.gtab span { flex: 1; letter-spacing: .04em; }
+.gtab em { font-style: normal; color: var(--text2); font-variant-numeric: tabular-nums; }
+.gtab.on { box-shadow: inset 0 0 0 3px var(--blue); background: var(--blue-soft); }
+.gtab.on b { background: var(--blue); color: #fff; }
+.gtab.won em { color: var(--green); }
+.gtab:focus { outline: none; }
+.keys { display: grid; gap: 8px; justify-items: center; margin-top: 4px; }
+.krow { display: flex; gap: 8px; }
+.key { min-width: 52px; height: 46px; padding: 0 14px; border-radius: 12px; display: grid; place-items: center; font-size: 18px; font-weight: 800;
+  color: var(--text); background: var(--fill); box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .35); }
+.key.off { opacity: .25; }
+
 /* ----- 작은 화면 ----- */
 @media (max-height: 820px) and (min-width: 701px) {
   .timer, .streak { font-size: 100px; }
@@ -266,6 +296,14 @@ a.row:hover { background: var(--fill); }
   .fx .burst { width: 170px; height: 170px; }
   .qcard.m2 { grid-template-columns: 1fr; gap: 12px; }
   .qcard.m4 { grid-template-columns: 1fr; gap: 12px; }
+  .arcboard { grid-template-columns: 1fr; gap: 16px; }
+  .arcwrap { width: 100%; }
+  .timer.small, .streak.small { font-size: 52px; }
+  .arcside { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .gtabs, .keys { grid-column: 1 / -1; }
+  .gtabs { grid-template-columns: repeat(3, 1fr); }
+  .gtab { height: 54px; font-size: 15px; padding: 0 8px; gap: 4px; }
+  .gtab b { display: none; }
   .qvid { width: 100%; height: auto; aspect-ratio: 1; }
   .choices.m4 { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; }
   .choices.m4 .choice { height: 58px; font-size: 22px; }
