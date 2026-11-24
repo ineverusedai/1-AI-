@@ -37,7 +37,7 @@
   "m3": {
     "title": "소리 착시 캡차",
     "questions_per_round": 5,
-    "pool_size": 20,
+    "pool_size": 24,
     "decimate": 2,
     "low": 250,
     "high": 3400,
@@ -45,7 +45,8 @@
     "overlap": 0.25,
     "order": 4,
     "bw_amp": 60,
-    "max_hold": 3
+    "max_hold": 3,
+    "fixed_q5_sentence": "구독 눌러주시면 제 기분이 좋아져요"
   },
   "m4": {
     "title": "움직여야 보이는 캡차",

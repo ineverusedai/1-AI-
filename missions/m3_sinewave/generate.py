@@ -10,7 +10,8 @@ IllusionAudio (arXiv:2601.08516)에서 따른 것
 
 문제 방식(사용자 사양): 원본 음성을 듣고 → 사인파 음성 4개 중 같은 문장을 고른다. 5문제, 하나라도 틀리면 실패.
 오답 선택지는 정답 문장과 낱말이 겹치는 문장을 먼저 고른다 (예: 누나가 노래를 불러요 / 오리가 노래를 불러요).
-모든 문장은 9글자(3어절 × 3글자)라 길이로는 구별이 안 된다.
+기본 문장 20개는 모두 9글자(3어절 × 3글자)라 길이로는 구별이 안 된다.
+영상용 홍보 멘트 4개(구독/좋아요/댓글/알림 … 제 기분이 좋아져요)는 서로 오답 선택지가 되고, '구독' 문장은 첫 판 5번 문제로 고정.
 
 원본 음성: audio/originals/s01.wav ~ (sentences.txt 순서). 사용자의 컴퓨터 내장 한국어 TTS로 만든다:
   맥: bash tools/make_tts_mac.sh   윈도우: powershell -ExecutionPolicy Bypass -File tools\\make_tts_windows.ps1
@@ -104,12 +105,18 @@ def write_wav(path: Path, w: np.ndarray, peak: float = 0.8) -> None:
     wavfile.write(path, SR, (w * 32767).astype(np.int16))
 
 
+def _group(i: int) -> str:
+    """기본 문장(9글자)과 홍보 멘트(… 제 기분이 좋아져요)는 서로 섞지 않는다 (길이로 티 나지 않게)."""
+    return "promo" if SENTENCES[i].endswith("제 기분이 좋아져요") else "basic"
+
+
 def pick_distractors(target: int, rng: random.Random, n: int = 3) -> list[int]:
     """정답 문장과 낱말이 겹치는 문장을 먼저, 모자라면 아무 문장."""
     words = set(SENTENCES[target].split())
-    share = [i for i in range(len(SENTENCES)) if i != target and words & set(SENTENCES[i].split())]
+    group = [i for i in range(len(SENTENCES)) if i != target and _group(i) == _group(target)]  # 길이가 같은 무리끼리만
+    share = [i for i in group if words & set(SENTENCES[i].split())]
     rng.shuffle(share)
-    rest = [i for i in range(len(SENTENCES)) if i != target and i not in share]
+    rest = [i for i in group if i not in share]
     rng.shuffle(rest)
     return (share + rest)[:n]
 
@@ -118,6 +125,11 @@ def iter_problems(seed: int, cfg: dict):
     rng = random.Random(seed)
     order = list(range(len(SENTENCES)))
     rng.shuffle(order)
+    # 영상용: '구독' 문장은 첫 판 마지막 문제(5번)로 고정
+    sub = SENTENCES.index(cfg["fixed_q5_sentence"]) if cfg.get("fixed_q5_sentence") in SENTENCES else None
+    if sub is not None:
+        order.remove(sub)
+        order.insert(cfg["questions_per_round"] - 1, sub)
     for q in range(1, cfg["pool_size"] + 1):
         target = order[(q - 1) % len(order)]
         opts = [target] + pick_distractors(target, rng)
