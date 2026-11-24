@@ -216,7 +216,9 @@ a.row:hover { background: var(--fill); }
 }
 .refbtn:hover { filter: brightness(1.08); }
 .refbtn:active { transform: scale(.98); }
-.refbtn:disabled { opacity: .4; cursor: default; }
+.refbtn:disabled { cursor: default; }
+.refbtn.dim:not(.playing) { filter: saturate(.35) brightness(.7); }
+.choice.snd.playing { box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .55); background: #2c2c35; }
 .refbtn:focus { outline: none; }
 .refbtn .play { width: 64px; height: 64px; border-radius: 50%; background: rgba(255, 255, 255, .2); display: grid; place-items: center; flex: none; }
 .refbtn .play svg { width: 30px; height: 30px; fill: #fff; margin-left: 4px; }

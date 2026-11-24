@@ -1,0 +1,136 @@
+{
+ "result": {
+  "title": "인간 인증성공",
+  "time": "71.4초",
+  "streak": "5문제"
+ },
+ "fps": 60,
+ "gap_ms": 250,
+ "size": "1920x1200",
+ "frames": 4825,
+ "log": [
+  {
+   "video_ms": 15678,
+   "question": "q01",
+   "answer": 2,
+   "solve_ms": 82.21,
+   "think_ms": 124.8
+  },
+  {
+   "video_ms": 28393,
+   "question": "q02",
+   "answer": 1,
+   "solve_ms": 75.66,
+   "think_ms": 104.4
+  },
+  {
+   "video_ms": 41537,
+   "question": "q03",
+   "answer": 3,
+   "solve_ms": 71.91,
+   "think_ms": 108.4
+  },
+  {
+   "video_ms": 54870,
+   "question": "q04",
+   "answer": 3,
+   "solve_ms": 67.37,
+   "think_ms": 93.1
+  },
+  {
+   "video_ms": 73889,
+   "question": "q05",
+   "answer": 3,
+   "solve_ms": 149.98,
+   "think_ms": 186.3
+  }
+ ],
+ "records": {
+  "answers": [
+   {
+    "timestamp": "2026-11-24T22:44:08+00:00",
+    "who": "claude",
+    "mission": "m3",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 1,
+    "submitted": "2",
+    "correct": 1,
+    "question_ms": 13178,
+    "total_ms": 13178
+   },
+   {
+    "timestamp": "2026-11-24T22:44:21+00:00",
+    "who": "claude",
+    "mission": "m3",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 2,
+    "submitted": "1",
+    "correct": 1,
+    "question_ms": 12715,
+    "total_ms": 25893
+   },
+   {
+    "timestamp": "2026-11-24T22:44:34+00:00",
+    "who": "claude",
+    "mission": "m3",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 3,
+    "submitted": "3",
+    "correct": 1,
+    "question_ms": 13144,
+    "total_ms": 39037
+   },
+   {
+    "timestamp": "2026-11-24T22:44:47+00:00",
+    "who": "claude",
+    "mission": "m3",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 4,
+    "submitted": "3",
+    "correct": 1,
+    "question_ms": 13333,
+    "total_ms": 52370
+   },
+   {
+    "timestamp": "2026-11-24T22:45:06+00:00",
+    "who": "claude",
+    "mission": "m3",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 5,
+    "submitted": "3",
+    "correct": 1,
+    "question_ms": 19019,
+    "total_ms": 71389
+   }
+  ],
+  "summary": [
+   {
+    "timestamp": "2026-11-24T22:45:06+00:00",
+    "who": "claude",
+    "mission": "m3",
+    "mode": "B",
+    "attempt": 1,
+    "success": 1,
+    "answered": 5,
+    "correct": 5,
+    "max_streak": 5,
+    "total_ms": 71389,
+    "first10_correct": "",
+    "first10_ms": "",
+    "correct_in_limit": 5,
+    "note": "성공"
+   }
+  ],
+  "state": {
+   "m3:claude:B": {
+    "next_q": 6,
+    "attempt": 1
+   }
+  }
+ }
+}

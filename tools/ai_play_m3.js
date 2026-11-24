@@ -1,7 +1,8 @@
 /* AI가 실제 게임 화면에서 미션 3(소리 착시 캡차)을 플레이하고, 화면과 소리를 함께 1920×1200 60fps 로 녹화한다.
  *
- * AI의 "손과 귀": 원본 듣기 버튼을 누르고(원본 길이만큼 재생) → 원본과 사인파 소리 4개의 파일을 solver.py 에 넘겨
- * 답(1~4)을 받고 → 그 소리를 눌러 끝까지 재생 → 확인. solver.py 는 소리 바이트만 받는다 (정답·시드·키를 모름).
+ * 화면은 문제마다 원본 → 소리 1 → 2 → 3 → 4 를 자동으로 차례로 튼다 (IllusionAudio 방식, 사람과 같음).
+ * AI의 "손과 귀": 차례 재생이 끝날 때까지 기다린 뒤 → 원본과 사인파 소리 4개의 파일을 solver.py 에 넘겨 답(1~4)을 받고
+ * → 그 소리 칸을 누르고 → 확인. solver.py 는 소리 바이트만 받는다 (정답·시드·키를 모름).
  * 소리: 페이지의 재생 요청을 시각과 함께 기록해 두었다가, 녹화가 끝난 뒤 같은 시각에 그 소리 파일을 깔아 영상에 합친다.
  * 영상 속 시간 = 실제로 재생한 소리 길이 + AI가 실제로 계산한 시간.
  *
@@ -61,6 +62,7 @@ function startSolver() {
     window.__plays = [];
     const key = (src) => src.slice(src.indexOf("audio/"));
     HTMLMediaElement.prototype.play = function () {
+      if (this.__rec && this.__rec.end === null) this.__rec.end = performance.now();
       const k = key(this.src), d = DUR[k] || 0;
       window.__plays.push({ src: k, t: performance.now(), end: null });
       this.__rec = window.__plays[window.__plays.length - 1];
@@ -123,31 +125,27 @@ function startSolver() {
   while (true) {
     const st = await until((prev) => {
       if (!document.getElementById("resultScreen").hidden || UI.locked()) return { done: true };
-      const tiles = [...document.querySelectorAll("#choices .choice")];
-      const key = tiles.map((t) => t.dataset.src).join("|");
-      const ref = document.getElementById("refBtn").dataset.src;
-      return tiles.length === 4 && key !== prev && ref ? { src: key, ref, opts: tiles.map((t) => t.dataset.src) } : false;
+      const q = UI.current && UI.current();
+      return q && q.ref !== prev ? { src: q.ref, ref: q.ref, opts: q.opts } : false;
     }, prevSrc);
     if (st.done) break;
     prevSrc = st.src;
     const center = async (sel) => page.evaluate((sel) => { const b = document.querySelector(sel).getBoundingClientRect(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; }, sel);
-    // 1) 원본 듣기: 끝까지 재생
-    let c = await center("#refBtn");
-    await page.mouse.move(c.x, c.y); await advanceTo(vt + GAP_MS);
-    await page.mouse.down(); await page.mouse.up();
-    await advanceTo(vt + DUR[st.ref] * 1000 + GAP_MS);
+    // 1) 화면이 원본 → 소리 1~4 를 차례로 다 틀 때까지 (페이지 시계로) 기다림
+    for (let i = 0; i < 6000 && !(await page.evaluate(() => window.__seqDone)); i++) await advanceTo(vt + 1000 / FPS);
+    await advanceTo(vt + GAP_MS);
     // 2) AI가 실제로 분석한 시간만큼
     const t0 = performance.now();
     const buf = async (u) => Buffer.from(await (await ctx.request.get(`http://127.0.0.1:${PORT}/m3/${u}`)).body());
     const r = await solver.ask(await buf(st.ref), await Promise.all(st.opts.map(buf)));
     const thinkMs = performance.now() - t0;
     await advanceTo(vt + thinkMs);
-    // 3) 고른 소리를 눌러 끝까지 재생 → 확인
+    // 3) 고른 소리 칸을 누르고 → 확인
     const n = Math.max(1, Math.min(4, parseInt(r.answer, 10) || 1));
-    c = await center(`#choices .choice:nth-child(${n})`);
+    let c = await center(`#choices .choice:nth-child(${n})`);
     await page.mouse.move(c.x, c.y); await advanceTo(vt + GAP_MS);
     await page.mouse.down(); await page.mouse.up();
-    await advanceTo(vt + DUR[st.opts[n - 1]] * 1000 + GAP_MS);
+    await advanceTo(vt + GAP_MS);
     c = await center("#submit");
     await page.mouse.move(c.x, c.y); await advanceTo(vt + GAP_MS);
     await page.mouse.down(); await page.mouse.up();

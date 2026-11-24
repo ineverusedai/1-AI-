@@ -1,5 +1,6 @@
 /* 미션 3 화면과 효과 (원본 듣기 → 사인파 음성 4개 중 고르기). 채점·기록은 engine.js 가 맡는다.
- * 조작: 원본 듣기 버튼 또는 Space, 소리 1~4 클릭 또는 키보드 1~4 (들으면서 고름), 확인 버튼 또는 Enter.
+ * 재생 순서 (IllusionAudio 방식): 문제가 나오면 깨끗한 원본 → 사인파 소리 1 → 2 → 3 → 4 가 자동으로 차례로 나온다.
+ * 조작: 소리 1~4 클릭 또는 키보드 1~4 로 고르기(고르기만, 재생 안 함), 확인 버튼 또는 Enter. 다 나온 뒤 '다시 듣기'(Space)로 처음부터 다시.
  * 시간 제한 없음: 걸린 시간이 올라간다.
  *
  * 숨은 단축키 (시작·결과 화면에서만)
@@ -80,35 +81,54 @@
   };
 
   /* ---------- 문제 ---------- */
-  let locked = true, selected = -1, player = null, playing = null, nOpts = 4;
+  let locked = true, selected = -1, cur = null, seqId = 0, seqTimer = 0;
   const BARS = '<span class="bars"><i></i><i></i><i></i><i></i></span>';
+  const audio = new Audio();  // 한 개를 계속 재사용 (사파리에서 첫 클릭 뒤 자동 재생이 막히지 않게)
+  audio.preload = "auto";
   UI.setQuestion = (q) => {  // q = { ref, opts: [4개 소리 주소] }
     stop();
-    selected = -1; nOpts = q.opts.length;
-    $("refBtn").dataset.src = q.ref;
-    $("refBtn").classList.remove("heard");
+    cur = q; selected = -1;
     const box = $("choices");
     box.innerHTML = q.opts.map((src, i) =>
-      `<button class="choice snd" data-i="${i}" data-src="${src}"><b>${i + 1}</b><span>소리 ${i + 1}</span>${BARS}</button>`).join("");
+      `<button class="choice snd" data-i="${i}"><b>${i + 1}</b><span>소리 ${i + 1}</span>${BARS}</button>`).join("");
     box.querySelectorAll(".choice").forEach((b) => { b.onclick = () => pick(+b.dataset.i); });
     $("submit").disabled = true;
     [q.ref, ...q.opts].forEach((src) => { const a = new Audio(); a.preload = "auto"; a.src = src; });  // 미리 받아 두기
+    if (!locked) startSeq();
   };
+  UI.current = () => cur;  // 녹화 도구용: 지금 문제의 소리 주소
+  function unmark() { document.querySelectorAll(".playing").forEach((e) => e.classList.remove("playing")); }
   function stop() {
-    if (player) { player.pause(); player = null; }
-    if (playing) playing.classList.remove("playing");
-    playing = null;
+    seqId += 1; clearTimeout(seqTimer);
+    audio.onended = audio.onerror = null;
+    audio.pause();
+    unmark();
   }
-  function play(el) {
+  function refLabel(t) { $("refBtn").querySelector(".t").textContent = t; }
+  function startSeq() {  // 원본 → 소리 1 → 2 → 3 → 4
+    if (!cur) return;
     stop();
-    player = new Audio(el.dataset.src);
-    playing = el;
-    el.classList.add("playing");
-    const done = () => { if (playing === el) { el.classList.remove("playing"); playing = null; } };
-    player.onended = done; player.onerror = done;
-    const p = player.play(); if (p && p.catch) p.catch(done);
+    const id = seqId, tiles = $("choices").children;
+    const items = [[$("refBtn"), cur.ref, "원본 소리"], ...cur.opts.map((src, i) => [tiles[i], src, `소리 ${i + 1} 나오는 중`])];
+    $("refBtn").disabled = true;
+    let k = 0;
+    const next = () => {
+      if (id !== seqId) return;
+      unmark();
+      if (k >= items.length) { refLabel("다시 듣기"); $("refBtn").classList.remove("dim"); $("refBtn").disabled = locked; window.__seqDone = true; return; }
+      const [el, src, label] = items[k++];
+      refLabel(label);
+      el.classList.add("playing");
+      if (k > 1) $("refBtn").classList.add("dim");
+      const after = () => { if (id !== seqId) return; el.classList.remove("playing"); seqTimer = setTimeout(next, k === 1 ? 700 : 450); };
+      audio.onended = after; audio.onerror = after;
+      audio.src = src;
+      const p = audio.play(); if (p && p.catch) p.catch(after);
+    };
+    window.__seqDone = false;
+    $("refBtn").classList.remove("dim");
+    next();
   }
-  UI.playRef = () => { if (locked) return; $("refBtn").classList.add("heard"); play($("refBtn")); };
 
   /* ---------- 라운드 ---------- */
   UI.beginRound = (onTimeout) => {
@@ -116,8 +136,8 @@
     renderStreak(0, false);
     locked = false;
     document.activeElement && document.activeElement.blur && document.activeElement.blur();
-    $("refBtn").disabled = false;
     startClock(onTimeout);
+    startSeq();  // 시작 버튼을 누른 그 순간에 첫 소리를 틀어야 사파리도 재생을 허락한다
   };
 
   /* ---------- 정답/오답 효과 ---------- */
@@ -238,14 +258,13 @@
 
   /* ---------- 고르기 ---------- */
   UI.locked = () => locked;
-  function pick(i) {  // 소리를 들려주면서 그 번호를 고른 상태로
+  function pick(i) {  // 고르기만 한다 (소리는 자동으로 차례로 나옴)
     if (locked) return;
     const tiles = $("choices").children;
     if (!tiles[i]) return;
     selected = i;
     for (let k = 0; k < tiles.length; k++) tiles[k].classList.toggle("sel", k === i);
     $("submit").disabled = false;
-    play(tiles[i]);
   }
   function submit() {
     if (locked || selected < 0) return;
@@ -256,7 +275,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     $("startBtn").onclick = () => emit("start");
     $("retryBtn").onclick = () => emit("start");
-    $("refBtn").onclick = () => UI.playRef();
+    $("refBtn").onclick = () => { if (!locked && !$("refBtn").disabled) startSeq(); };
     $("submit").onclick = () => submit();
     document.addEventListener("keydown", (e) => {
       if (screenOpen()) {
@@ -266,7 +285,7 @@
         return;
       }
       if (["1", "2", "3", "4"].includes(e.key)) { e.preventDefault(); pick(+e.key - 1); }
-      else if (e.key === " " || e.key === "0") { e.preventDefault(); UI.playRef(); }
+      else if (e.key === " " || e.key === "0") { e.preventDefault(); if (!$("refBtn").disabled) startSeq(); }
       else if (e.key === "Enter") { e.preventDefault(); submit(); }
     });
   });
