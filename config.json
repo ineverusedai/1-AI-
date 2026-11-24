@@ -24,11 +24,14 @@
     "text_height": 0.5,
     "text_max_width": 0.82,
     "font_weight": 800,
-    "sigma_low": 13,
+    "sigma_low": 10,
     "sigma_high": 3,
     "sigma_base": 60,
     "high_gain": 2.6,
-    "text_amp": 0.16,
-    "jpeg_quality": 90
+    "text_amp": 0.14,
+    "jpeg_quality": 90,
+    "camo": 0.4,
+    "candidates": 4,
+    "min_visibility": 0.68
   }
 }

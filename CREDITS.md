@@ -10,7 +10,8 @@
 
 ## 미션 2: 착시 캡차
 - 방식 참고: Ding 외, **"IllusionCAPTCHA: A CAPTCHA based on Visual Illusion"**, arXiv:2502.05461 (2025) — https://arxiv.org/abs/2502.05461
-  (논문은 확산 모델로 착시 그림을 만들지만, 여기서는 아래 하이브리드 이미지로 코드만으로 만들었다. 선택지에 '눈에 바로 보이는 것'을 함정으로 넣는 방식을 따랐다.)
+  - 따른 것: 숨은 내용은 짧고 익숙한 낱말, 선택지 4개 중 하나는 그림을 만들 때 쓴 장면 문구(함정), 후보 여러 장 중 숨은 내용이 가장 덜 드러나는 그림을 고름
+  - 다른 것: 논문은 확산 모델(ControlNet)로 그림을 만들지만 여기서는 아래 하이브리드 이미지로 코드만으로 만듦. 논문의 나머지 두 선택지(장면을 길게 설명한 문장) 대신 정답과 첫 글자가 같은 낱말 2개를 넣음
 - 하이브리드 이미지: Oliva, Torralba, Schyns, **"Hybrid Images"**, ACM SIGGRAPH 2006 (ACM Transactions on Graphics 25(3))
 - **OpenCV** (opencv-python-headless) — Apache License 2.0 — https://opencv.org
 - **NumPy** — BSD-3-Clause — https://numpy.org

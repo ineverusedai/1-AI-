@@ -5,7 +5,17 @@
   고주파 = 배경 그림 - 배경 그림의 블러    → 가까이서 보면 그림(숲·나뭇잎·풀밭)
   둘을 더해 한 장으로 만든다. 배경 그림은 저작권 걱정이 없도록 OpenCV로 직접 그린다.
 
-문제마다 4지선다: 숨은 글자(정답), 장면 설명 1개(가까이 보면 보이는 것), 오답 단어 2개.
+IllusionCAPTCHA (Ding 외, arXiv:2502.05461)에서 따른 것
+  - 숨은 내용은 짧고 익숙한 낱말 (논문: "day", "sun" 같은 영어 낱말 → 여기서는 두 글자 한국어 낱말)
+  - 선택지 4개, 그중 하나는 그림을 만들 때 쓴 장면 문구 (논문: "huge forest" 같은 프롬프트) = 가까이 보면 보이는 함정
+  - 후보 그림을 여러 장 만들어 숨은 내용이 가장 덜 드러나는 것을 고른다
+    (논문: 50장 중 원본과 코사인 유사도가 가장 낮은 것 → 여기서는 후보 N장 중 글자 모양과 상관이 가장 낮은 것)
+논문과 다른 점 (사용자 요청)
+  - 논문의 나머지 두 선택지는 '장면을 길게 설명한 문장'이라 낱말 선택지가 하나뿐이어서 사람에게는 너무 쉽다.
+    그래서 나머지 두 개는 정답과 첫 글자가 같은 두 글자 낱말(사과/사고/사자, 도끼/토끼 …)로 바꿨다.
+    흐릿하게 보이는 글자를 정말 읽어야만 고를 수 있다.
+  - 논문은 확산 모델(ControlNet)로 착시 그림을 만들지만, 외부 모델 없이 하이브리드 이미지로 만든다.
+
 정답은 평문으로 저장하지 않고 HMAC 해시로만 저장한다 (manifest.json).
 
 실행: python -m missions.m2_illusion.generate
@@ -24,13 +34,20 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "data" / "m2"
 FONT = ROOT / "common" / "web" / "fonts" / "PretendardVariable.woff2"
 
-# 숨은 글자로 쓰는 두세 글자 낱말 (장면과 상관없는 흔한 낱말)
-WORDS = """사과 바다 하늘 기차 우유 나비 모자 의자 시계 연필 가방 우산 구름 호수 노래 편지
-사진 거울 수박 포도 딸기 감자 양파 당근 토끼 사자 여우 고래 상어 오리 거북 하마
-버스 택시 열쇠 안경 양말 장갑 치즈 라면 김밥 만두 피자 빵집 커피 녹차 주스 사탕
-과자 별빛 달빛 눈사람 기린 낙타 판다 펭귄 고양이 강아지 다리 공원 학교 시장 은행
-병원 극장 도시 마을 항구 섬나라 바람 번개 무지개 태양 지구 우주 로봇 풍선 인형 북극
-남극 사막 화산 폭포 동굴 연못 등대 성벽 왕관 보물 지도 나침반 망원경 피아노 기타 드럼""".split()
+# 숨은 낱말: 첫 글자가 같은 두 글자 낱말 4개씩 한 묶음. 정답이 한 묶음에서 나오면 나머지 중 2개가 오답 선택지.
+WORD_SETS = [g.split() for g in """
+사과 사고 사자 사기 | 도끼 토끼 도기 토기 | 모자 모기 모래 모이 | 고래 고리 고기 고무
+나비 나무 나라 나이 | 기차 기자 기사 기와 | 우유 우주 우산 우비 | 시계 시간 시장 시소
+연필 연기 연못 연극 | 구름 구두 구멍 구슬 | 거울 거리 거미 거북 | 포도 포크 포장 포기
+수박 수건 수레 수염 | 감자 감기 감옥 감독 | 하마 하늘 하루 하품 | 버스 버섯 버터 버튼
+열쇠 열차 열매 열기 | 장갑 장미 장난 장화 | 피자 피리 피부 피망 | 커피 커튼 커플 커서
+마을 마음 마술 마차 | 공원 공기 공부 공장 | 지도 지구 지붕 지갑 | 보물 보리 보석 보트
+소리 소금 소풍 소원 | 오리 오이 오늘 오후 | 사탕 사슴 사진 사막 | 바다 바지 바람 바위
+가방 가게 가위 가지 | 도시 도로 도장 도마 | 노래 노을 노트 노인 | 주사 주소 주인 주말
+비누 비옷 비밀 비용 | 달력 달걀 달빛 달인
+""".replace("\n", "|").split("|") if g.strip()]
+WORDS = [w for g in WORD_SETS for w in g]
+assert all(len(g) == 4 for g in WORD_SETS) and len(set(WORDS)) == len(WORDS)
 
 # 가까이서 보면 보이는 장면 (선택지 중 '장면 설명')
 SCENES = {
@@ -139,10 +156,44 @@ def hybrid(word: str, scene: str, rng: random.Random, cfg: dict) -> np.ndarray:
     bg = SCENE_DRAW[scene](rng, w, h).astype(np.float32) / 255.0
     hi = bg - cv2.GaussianBlur(bg, (0, 0), cfg["sigma_high"])            # 배경 그림의 고주파
     base = cv2.GaussianBlur(bg, (0, 0), cfg["sigma_base"])               # 아주 흐린 색감만
-    t = cv2.GaussianBlur(text_mask(word, w, h, cfg), (0, 0), cfg["sigma_low"])  # 글자의 저주파
+    mask = text_mask(word, w, h, cfg)
+    # 글자 위치·기울기를 조금씩 흔든다
+    m = cv2.getRotationMatrix2D((w / 2, h / 2), rng.uniform(-6, 6), rng.uniform(.92, 1.04))
+    m[:, 2] += (rng.uniform(-.06, .06) * w, rng.uniform(-.06, .06) * h)
+    mask = cv2.warpAffine(mask, m, (w, h))
+    t = cv2.GaussianBlur(mask, (0, 0), cfg["sigma_low"])                # 글자의 저주파
     t = t - t.mean()
-    out = base + cfg["high_gain"] * hi - cfg["text_amp"] * t[..., None]
-    return (np.clip(out, 0, 1) * 255).astype(np.uint8)
+    # 위장: 글자와 비슷한 크기의 흐릿한 얼룩을 섞어 글자만 도드라지지 않게
+    noise = np.asarray([[rng.gauss(0, 1) for _ in range(w // 16)] for _ in range(h // 16)], np.float32)
+    camo = cv2.GaussianBlur(cv2.resize(noise, (w, h), interpolation=cv2.INTER_CUBIC), (0, 0), cfg["sigma_low"])
+    camo = camo / (camo.std() + 1e-6) * t.std()
+    out = base + cfg["high_gain"] * hi - cfg["text_amp"] * (t + cfg["camo"] * camo)[..., None]
+    img = (np.clip(out, 0, 1) * 255).astype(np.uint8)
+    return img, mask
+
+
+def text_visibility(img: np.ndarray, mask: np.ndarray) -> float:
+    """멀리서 본 그림(크게 줄인 것)과 글자 모양의 상관. 낮을수록 글자가 덜 드러난다."""
+    g = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY).astype(np.float32)
+    small = cv2.resize(g, (48, 30), interpolation=cv2.INTER_AREA).ravel()
+    ms = cv2.resize(mask, (48, 30), interpolation=cv2.INTER_AREA).ravel()
+    return float(-np.corrcoef(small, ms)[0, 1])  # 글자가 어두우니 부호를 뒤집음
+
+
+def make_image(word: str, scene: str, rng: random.Random, cfg: dict) -> tuple[np.ndarray, float]:
+    """후보를 여러 장 만들어, 글자가 '보이긴 하지만 가장 덜 드러나는' 것을 고른다 (논문의 후보 선택 방식)."""
+    best = None
+    for _ in range(cfg["candidates"]):
+        img, mask = hybrid(word, scene, rng, cfg)
+        v = text_visibility(img, mask)
+        if v < cfg["min_visibility"]:
+            continue  # 너무 안 보이는 후보는 버림 (사람도 못 푸는 문제 방지)
+        if best is None or v < best[1]:
+            best = (img, v)
+    if best is None:  # 모두 너무 안 보이면 가장 잘 보이는 후보
+        img, mask = hybrid(word, scene, rng, cfg)
+        best = (img, text_visibility(img, mask))
+    return best
 
 
 def iter_problems(seed: int, cfg: dict):
@@ -151,10 +202,11 @@ def iter_problems(seed: int, cfg: dict):
     scenes = list(SCENES)
     prev = []
     for q in range(1, cfg["pool_size"] + 1):
-        word = rng.choice([x for x in WORDS if x not in prev])
-        prev = (prev + [word])[-20:]  # 가까운 문제끼리 같은 낱말 안 나오게
+        group = rng.choice([g for g in WORD_SETS if not set(g) & set(prev)])  # 가까운 문제끼리 같은 묶음 안 나오게
+        word = rng.choice(group)
+        prev = (prev + group)[-40:]
         scene = rng.choice(scenes)
-        wrong = rng.sample([x for x in WORDS if x != word], 2)
+        wrong = rng.sample([x for x in group if x != word], 2)
         choices = [word, SCENES[scene]] + wrong
         rng.shuffle(choices)
         yield q, word, scene, choices, rng.getrandbits(32)
@@ -169,10 +221,12 @@ def main() -> None:
         old.unlink()
     questions = []
     for q, word, scene, choices, img_seed in iter_problems(seed, cfg):
-        img = hybrid(word, scene, random.Random(img_seed), cfg)
+        img, vis = make_image(word, scene, random.Random(img_seed), cfg)
         name = f"q{q:03d}.jpg"
         cv2.imwrite(str(img_dir / name), img, [cv2.IMWRITE_JPEG_QUALITY, cfg["jpeg_quality"]])
         questions.append({"q": q, "file": name, "choices": choices, "hash": answer_hash(key, "m2", q, word)})
+        if q % 20 == 0:
+            print(f"  {q}문제 완료", flush=True)
     manifest = {
         "mission": "m2",
         "answer_rule": "4개 선택지 중 그림에 숨은 글자를 고른다 (선택지 글자 그대로 비교)",
