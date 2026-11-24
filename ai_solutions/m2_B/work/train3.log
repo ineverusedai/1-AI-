@@ -1,0 +1,26 @@
+ep0 loss 9.156 val 106 nll 1.1889 maxnll 3.441/300 t 97s
+ep1 loss 8.176 val 104 nll 1.1849 maxnll 3.063/300 t 181s
+ep2 loss 7.545 val 148 nll 1.0454 maxnll 4.437/300 t 261s
+ep3 loss 5.959 val 150 nll 1.1978 maxnll 6.030/300 t 336s
+ep4 loss 4.285 val 204 nll 0.7309 maxnll 5.480/300 t 416s
+ep5 loss 2.822 val 242 nll 0.4401 maxnll 4.187/300 t 487s
+ep6 loss 2.124 val 255 nll 0.3379 maxnll 3.601/300 t 562s
+ep7 loss 1.709 val 288 nll 0.1160 maxnll 2.085/300 t 638s
+ep8 loss 1.512 val 291 nll 0.0590 maxnll 1.452/300 t 709s
+ep9 loss 1.400 val 296 nll 0.0616 maxnll 2.035/300 t 788s
+ep10 loss 1.299 val 298 nll 0.0268 maxnll 1.525/300 t 864s
+ep11 loss 1.244 val 300 nll 0.0155 maxnll 0.510/300 t 940s
+ep12 loss 1.212 val 300 nll 0.0106 maxnll 0.453/300 t 1021s
+ep13 loss 1.160 val 300 nll 0.0176 maxnll 0.376/300 t 1093s
+ep14 loss 1.137 val 300 nll 0.0094 maxnll 0.278/300 t 1164s
+ep15 loss 1.126 val 300 nll 0.0099 maxnll 0.477/300 t 1237s
+ep16 loss 1.098 val 300 nll 0.0093 maxnll 0.302/300 t 1313s
+ep17 loss 1.092 val 300 nll 0.0097 maxnll 0.303/300 t 1392s
+ep18 loss 1.081 val 300 nll 0.0095 maxnll 0.336/300 t 1469s
+ep19 loss 1.074 val 300 nll 0.0091 maxnll 0.289/300 t 1549s
+ep20 loss 1.065 val 300 nll 0.0088 maxnll 0.290/300 t 1618s
+ep21 loss 1.066 val 300 nll 0.0081 maxnll 0.275/300 t 1685s
+ep22 loss 1.064 val 300 nll 0.0077 maxnll 0.298/300 t 1757s
+ep23 loss 1.053 val 300 nll 0.0081 maxnll 0.303/300 t 1833s
+ep24 loss 1.060 val 300 nll 0.0079 maxnll 0.291/300 t 1913s
+train_time 1912.692284822464

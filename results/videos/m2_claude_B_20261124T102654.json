@@ -1,0 +1,301 @@
+{
+ "result": {
+  "title": "인간 인증성공",
+  "time": "2.3초",
+  "streak": "10문제"
+ },
+ "fps": 60,
+ "hover_ms": 150,
+ "size": "1920x1200",
+ "frames": 677,
+ "log": [
+  {
+   "video_ms": 2724,
+   "image": "q001.jpg",
+   "choices": [
+    "포기",
+    "포도",
+    "나뭇잎이 쌓인 땅",
+    "포크"
+   ],
+   "answer": "포도",
+   "solve_ms": 55.61,
+   "think_ms": 73.9,
+   "hover_ms": 150
+  },
+  {
+   "video_ms": 2936,
+   "image": "q002.jpg",
+   "choices": [
+    "꽃이 핀 풀밭",
+    "도장",
+    "도시",
+    "도마"
+   ],
+   "answer": "도마",
+   "solve_ms": 34.51,
+   "think_ms": 44.6,
+   "hover_ms": 150
+  },
+  {
+   "video_ms": 3156,
+   "image": "q003.jpg",
+   "choices": [
+    "나무가 빽빽한 숲",
+    "구두",
+    "구슬",
+    "구름"
+   ],
+   "answer": "구슬",
+   "solve_ms": 41.93,
+   "think_ms": 52.5,
+   "hover_ms": 150
+  },
+  {
+   "video_ms": 3405,
+   "image": "q004.jpg",
+   "choices": [
+    "연기",
+    "연극",
+    "연못",
+    "나무가 빽빽한 숲"
+   ],
+   "answer": "연기",
+   "solve_ms": 56.99,
+   "think_ms": 82.4,
+   "hover_ms": 150
+  },
+  {
+   "video_ms": 3617,
+   "image": "q005.jpg",
+   "choices": [
+    "꽃이 핀 풀밭",
+    "하마",
+    "하늘",
+    "하루"
+   ],
+   "answer": "하늘",
+   "solve_ms": 28.2,
+   "think_ms": 44.8,
+   "hover_ms": 150
+  },
+  {
+   "video_ms": 3832,
+   "image": "q006.jpg",
+   "choices": [
+    "사자",
+    "사고",
+    "꽃이 핀 풀밭",
+    "사기"
+   ],
+   "answer": "사자",
+   "solve_ms": 34.31,
+   "think_ms": 47.6,
+   "hover_ms": 150
+  },
+  {
+   "video_ms": 4060,
+   "image": "q007.jpg",
+   "choices": [
+    "버섯",
+    "나뭇잎이 쌓인 땅",
+    "버스",
+    "버튼"
+   ],
+   "answer": "버섯",
+   "solve_ms": 48.27,
+   "think_ms": 61,
+   "hover_ms": 150
+  },
+  {
+   "video_ms": 4278,
+   "image": "q008.jpg",
+   "choices": [
+    "노을",
+    "노래",
+    "나무가 빽빽한 숲",
+    "노트"
+   ],
+   "answer": "노래",
+   "solve_ms": 39.5,
+   "think_ms": 50.6,
+   "hover_ms": 150
+  },
+  {
+   "video_ms": 4500,
+   "image": "q009.jpg",
+   "choices": [
+    "모래",
+    "모자",
+    "나무가 빽빽한 숲",
+    "모이"
+   ],
+   "answer": "모이",
+   "solve_ms": 39.13,
+   "think_ms": 55.2,
+   "hover_ms": 150
+  },
+  {
+   "video_ms": 4754,
+   "image": "q010.jpg",
+   "choices": [
+    "피망",
+    "나뭇잎이 쌓인 땅",
+    "피부",
+    "피자"
+   ],
+   "answer": "피망",
+   "solve_ms": 72.28,
+   "think_ms": 87.5,
+   "hover_ms": 150
+  }
+ ],
+ "records": {
+  "answers": [
+   {
+    "timestamp": "2026-11-24T10:25:38+00:00",
+    "who": "claude",
+    "mission": "m2",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 1,
+    "submitted": "포도",
+    "correct": 1,
+    "question_ms": 224,
+    "total_ms": 224
+   },
+   {
+    "timestamp": "2026-11-24T10:25:38+00:00",
+    "who": "claude",
+    "mission": "m2",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 2,
+    "submitted": "도마",
+    "correct": 1,
+    "question_ms": 212,
+    "total_ms": 436
+   },
+   {
+    "timestamp": "2026-11-24T10:25:38+00:00",
+    "who": "claude",
+    "mission": "m2",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 3,
+    "submitted": "구슬",
+    "correct": 1,
+    "question_ms": 220,
+    "total_ms": 656
+   },
+   {
+    "timestamp": "2026-11-24T10:25:39+00:00",
+    "who": "claude",
+    "mission": "m2",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 4,
+    "submitted": "연기",
+    "correct": 1,
+    "question_ms": 249,
+    "total_ms": 905
+   },
+   {
+    "timestamp": "2026-11-24T10:25:39+00:00",
+    "who": "claude",
+    "mission": "m2",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 5,
+    "submitted": "하늘",
+    "correct": 1,
+    "question_ms": 212,
+    "total_ms": 1117
+   },
+   {
+    "timestamp": "2026-11-24T10:25:39+00:00",
+    "who": "claude",
+    "mission": "m2",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 6,
+    "submitted": "사자",
+    "correct": 1,
+    "question_ms": 215,
+    "total_ms": 1332
+   },
+   {
+    "timestamp": "2026-11-24T10:25:39+00:00",
+    "who": "claude",
+    "mission": "m2",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 7,
+    "submitted": "버섯",
+    "correct": 1,
+    "question_ms": 228,
+    "total_ms": 1560
+   },
+   {
+    "timestamp": "2026-11-24T10:25:39+00:00",
+    "who": "claude",
+    "mission": "m2",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 8,
+    "submitted": "노래",
+    "correct": 1,
+    "question_ms": 218,
+    "total_ms": 1778
+   },
+   {
+    "timestamp": "2026-11-24T10:25:40+00:00",
+    "who": "claude",
+    "mission": "m2",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 9,
+    "submitted": "모이",
+    "correct": 1,
+    "question_ms": 222,
+    "total_ms": 2000
+   },
+   {
+    "timestamp": "2026-11-24T10:25:40+00:00",
+    "who": "claude",
+    "mission": "m2",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 10,
+    "submitted": "피망",
+    "correct": 1,
+    "question_ms": 254,
+    "total_ms": 2254
+   }
+  ],
+  "summary": [
+   {
+    "timestamp": "2026-11-24T10:25:40+00:00",
+    "who": "claude",
+    "mission": "m2",
+    "mode": "B",
+    "attempt": 1,
+    "success": 1,
+    "answered": 10,
+    "correct": 10,
+    "max_streak": 10,
+    "total_ms": 2254,
+    "first10_correct": 10,
+    "first10_ms": 2254,
+    "correct_in_limit": 10,
+    "note": "성공"
+   }
+  ],
+  "state": {
+   "m2:claude:B": {
+    "next_q": 11,
+    "attempt": 1
+   }
+  }
+ }
+}
