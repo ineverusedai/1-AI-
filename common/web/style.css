@@ -237,6 +237,13 @@ a.row:hover { background: var(--fill); }
 @keyframes eq { 0%, 100% { height: 25%; } 50% { height: 100%; } }
 .refbtn.playing { box-shadow: 0 0 0 4px rgba(49, 130, 246, .35), 0 0 40px rgba(49, 130, 246, .45); }
 
+/* ----- 미션 4: 움직이는 점 영상 + 6지선다 ----- */
+.qcard.m4 { display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: stretch; }
+.qvid { display: block; width: 440px; height: 440px; border-radius: 18px; background: #000; object-fit: contain; }
+.choices.m4 { grid-template-columns: 1fr; grid-template-rows: repeat(6, 1fr); gap: 10px; }
+.choices.m4 .choice { font-family: var(--mono); font-size: 32px; letter-spacing: .14em; }
+.choices.m4 .choice b { font-family: inherit; letter-spacing: 0; }
+
 /* ----- 작은 화면 ----- */
 @media (max-height: 820px) and (min-width: 701px) {
   .timer, .streak { font-size: 100px; }
@@ -258,6 +265,10 @@ a.row:hover { background: var(--fill); }
   .inputrow .btn { width: 100%; height: 64px; font-size: 22px; }
   .fx .burst { width: 170px; height: 170px; }
   .qcard.m2 { grid-template-columns: 1fr; gap: 12px; }
+  .qcard.m4 { grid-template-columns: 1fr; gap: 12px; }
+  .qvid { width: 100%; height: auto; aspect-ratio: 1; }
+  .choices.m4 { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; }
+  .choices.m4 .choice { height: 58px; font-size: 22px; }
   .refbtn { height: 84px; font-size: 24px; padding: 0 20px; gap: 14px; }
   .refbtn .play { width: 48px; height: 48px; }
   .choices.m3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }

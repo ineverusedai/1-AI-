@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0c0f">
+<title>미션 4 · 움직여야 보이는 캡차</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="vignette" id="vignette"></div>
+<div class="fx" id="fx"></div>
+
+<main class="stage m4">
+  <section class="card">
+    <div class="status">
+      <div>
+        <div class="label">남은 시간</div>
+        <div class="timer" id="timer">60.0<small>초</small></div>
+      </div>
+      <div class="streakbox">
+        <div class="label">정답</div>
+        <div class="streak"><b id="streakNum">0</b><span>/<span id="target">6</span></span></div>
+      </div>
+    </div>
+    <div class="timebar" id="timebar"><i id="timefill"></i></div>
+    <div class="segs" id="segs"></div>
+  </section>
+
+  <section class="card qcard m4" id="qcard">
+    <video class="qvid" id="vid" muted loop playsinline autoplay preload="auto" disablepictureinpicture></video>
+    <div class="choices m4" id="choices"></div>
+  </section>
+</main>
+
+<div class="screen enter" id="startScreen">
+  <div class="inner">
+    <div><span class="chip">MISSION 4</span></div>
+    <h1 class="head" id="startHead"></h1>
+    <button class="btn wide" id="startBtn">시작하기</button>
+  </div>
+</div>
+
+<div class="screen" id="resultScreen" hidden>
+  <div class="inner result">
+    <svg class="result-icon" id="resultIcon" viewBox="0 0 180 180"></svg>
+    <h1 class="head" id="resultTitle"></h1>
+    <div class="stats">
+      <div><span>걸린 시간</span><strong id="rTime">-</strong></div>
+      <div><span>최고 연속</span><strong id="rStreak">-</strong></div>
+    </div>
+    <button class="btn wide" id="retryBtn">다시 도전하기</button>
+  </div>
+</div>
+
+<div class="note" id="note"></div>
+
+<script src="../hmac.js"></script>
+<script src="../records.js"></script>
+<script src="data.js"></script>
+<script src="ui.js"></script>
+<script src="engine.js"></script>
+</body>
+</html>

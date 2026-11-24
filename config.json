@@ -46,5 +46,11 @@
     "order": 4,
     "bw_amp": 60,
     "max_hold": 3
+  },
+  "m4": {
+    "title": "움직여야 보이는 캡차",
+    "time_limit_sec": 60,
+    "questions_per_round": 6,
+    "pool_size": 36
   }
 }

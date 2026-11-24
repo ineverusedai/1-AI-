@@ -27,6 +27,14 @@
 - **SciPy** — BSD-3-Clause — https://scipy.org
 - 원본 음성: 사용자 컴퓨터 내장 한국어 TTS (맥 Yuna / 윈도우 한국어 음성). 임시 음성은 **eSpeak NG** (GPL-3.0, 프로그램을 실행해 소리만 만듦)
 
+## 미션 4: 움직여야 보이는 캡차
+- **MVCAP** (Motion Vision CAPTCHA) — 공식 코드 zeyu1998/MVCAP, MIT License — https://github.com/zeyu1998/MVCAP
+  - 논문: **"Invisible in Space, Visible in Time: Motion Vision CAPTCHA against GUI Agents"**, ACM Multimedia 2026 (arXiv:2609.27461) — https://doi.org/10.1145/3767308.3835234
+  - L1 생성기(`third_party/mvcap/MVCAP_code/L1`)를 수정 없이 불러 씀. 기본값 그대로: 488×488, 30fps, 3초, 4글자(헷갈리는 글자 뺀 32자), 정답 + 오답 5개 = 6지선다(A~F로 섞음)
+  - L2·L3는 ShapeNet·BABEL 등 서드파티 자료 약관 때문에 쓰지 않음
+  - 글꼴: DejaVu Sans Bold (공식 코드가 찾는 글꼴 중 리눅스에 있는 것)
+- **OpenCV**, **NumPy**, **Pillow**, **FFmpeg**(libx264) — 공식 코드가 쓰는 라이브러리
+
 ## 공통
 - 로컬 서버·채점·기록: Python 표준 라이브러리 (`http.server`, `hmac`, `hashlib`, `csv`)
 - 브라우저 버전 채점: SHA-256/HMAC을 자바스크립트로 직접 구현 (외부 라이브러리 없음)

@@ -48,7 +48,7 @@ def main() -> None:
     shutil.copytree(ROOT / "common" / "web" / "fonts", OUT / "fonts")
     (OUT / ".nojekyll").write_text("")
 
-    counts = [write_mission(m) for m in ("m1", "m2")] + [write_m3()]
+    counts = [write_mission(m) for m in ("m1", "m2")] + [write_m3(), write_m4()]
     print("docs/ 생성 완료 (" + ", ".join(f"{m}: 문제 {n}개" for m, n in counts) + ")")
 
 
@@ -64,6 +64,20 @@ def write_m3() -> tuple[str, int]:
     }
     (OUT / "m3" / "data.js").write_text("window.M3_DATA = " + json.dumps(data, ensure_ascii=False) + ";\n", encoding="utf-8")
     return "m3", len(data["questions"])
+
+
+def write_m4() -> tuple[str, int]:
+    """미션 4: 영상 폴더와 data.js (규칙 + 선택지 + 정답 해시 + 채점 키)."""
+    cfg = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))["m4"]
+    manifest = json.loads((ROOT / "data" / "m4" / "manifest.json").read_text(encoding="utf-8"))
+    shutil.copytree(ROOT / "data" / "m4" / "videos", OUT / "m4" / "videos")
+    data = {
+        "title": cfg["title"], "time_limit_sec": cfg["time_limit_sec"], "questions_per_round": cfg["questions_per_round"],
+        "answer_rule": manifest["answer_rule"], "key": load_key().hex(),
+        "questions": [{"file": q["file"], "options": q["options"], "hash": q["hash"]} for q in manifest["questions"]],
+    }
+    (OUT / "m4" / "data.js").write_text("window.M4_DATA = " + json.dumps(data, ensure_ascii=False) + ";\n", encoding="utf-8")
+    return "m4", len(data["questions"])
 
 
 def write_mission(m: str) -> tuple[str, int]:

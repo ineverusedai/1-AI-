@@ -73,6 +73,12 @@ python run.py
   - 그다음 `python -m missions.m3_sinewave.generate` → `python -m tools.build_web`
 - 사인파 변환 숫자는 `config.json` 의 `m3` (사인파 개수 `order`, 무작위 붙잡기 `max_hold` 등).
 
+## 미션 4: 움직여야 보이는 캡차
+- 점이 흩뿌려진 영상(3초 반복). 멈춘 화면에서는 점뿐이지만, 배경 점과 글자 속 점이 반대로 움직여서 **4글자**가 보인다.
+- 선택지 6개(A~F) 중 같은 글자를 고른다: 클릭, 키보드 **A~F** 또는 **1~6**.
+- **60초 안에 6문제 모두 정답**이면 성공. 하나라도 틀리거나 시간이 다 되면 실패. (`config.json` 의 `m4`)
+- 영상은 MVCAP 공식 L1 생성기로 만든 그대로다 (488×488, 30fps, 3초). 다시 만들 때만: `python -m missions.m4_motion.generate`
+
 ## 결과 파일
 - `results/answers.csv` — 답 하나당 한 줄: 누가(`human`/`claude`), 미션, 방식, 도전 번호, 문제 번호, 제출한 답, 정답 여부, 그 문제에 걸린 시간(ms), 시작부터 누적 시간(ms)
 - `results/summary.csv` — 도전 하나당 한 줄: 성공 여부, 맞힌 수, 최고 연속, 1~10번 정답 수·시간, 제한 시간 안 정답 수
