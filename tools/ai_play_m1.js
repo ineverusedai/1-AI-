@@ -13,7 +13,11 @@
  * 결과: <out>/m1_claude_<방식>_<시각>.mp4 (+ 프레임별 기록 .json), results/ 에 who=claude 로 기록.
  *
  * 실행 (프로젝트 폴더에서, 먼저 python -m tools.build_web):
- *   node tools/ai_play_m1.js --solver <solver.py 폴더> [--out results/videos] [--mode B] [--font <pretendard 패키지 폴더>]
+ *   node tools/ai_play_m1.js --solver <solver.py 폴더> [--out results/videos] [--mode B] [--char-ms 45] [--hold-ms 200]
+ *
+ * 입력 모습: 답을 낸 뒤 글자를 한 글자씩(--char-ms 간격) 입력칸에 치고, 다 친 답을 --hold-ms 동안 보여 준 뒤 Enter.
+ *   AI의 실제 타자는 몇 밀리초라 영상에서 안 보이므로, 보는 사람이 읽을 수 있게 일부러 이만큼 천천히 친다.
+ *   이 타자 시간은 게임 시계에도 그대로 들어간다 (기록의 think_ms = AI가 실제로 보고 답을 낸 시간).
  */
 const { chromium } = require("playwright");
 const { spawn, execFileSync } = require("child_process");
@@ -28,6 +32,7 @@ const PORT = Number(args.port || 8780);
 const MODE = args.mode || "B";
 const OUT = path.resolve(args.out || path.join(ROOT, "results", "videos"));
 const FPS = Number(args.fps || 60);
+const CHAR_MS = Number(args["char-ms"] || 45), HOLD_MS = Number(args["hold-ms"] || 200);
 const CSS_W = 1440, CSS_H = 900, OUT_W = Number(args.width || 1920);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -55,15 +60,6 @@ function startSolver() {
 
   const browser = await chromium.launch();
   const ctx = await browser.newContext({ viewport: { width: CSS_W, height: CSS_H }, deviceScaleFactor: OUT_W / CSS_W });
-  if (args.font) {  // 글꼴 사이트가 막힌 환경에서도 실제와 같은 글꼴로
-    const base = path.resolve(args.font, "dist", "web", "variable");
-    await ctx.route(/cdn\.jsdelivr\.net\/gh\/orioncactus\/pretendard@v1\.3\.9\/dist\/web\/variable\/(.*)$/, (route) => {
-      const rel = route.request().url().split("/dist/web/variable/")[1].split("?")[0];
-      const file = path.join(base, rel);
-      if (!fs.existsSync(file)) return route.abort();
-      route.fulfill({ path: file, contentType: rel.endsWith(".css") ? "text/css" : "font/woff2" });
-    });
-  }
   const page = await ctx.newPage();
   await page.clock.install({ time: Date.now() });
   // CSS·WAAPI 애니메이션도 페이지 시계에 맞춰 멈췄다가 프레임마다 정확한 위치로 옮긴다
@@ -103,7 +99,8 @@ function startSolver() {
   for (let i = 0; i < 50; i++) { try { await page.goto(`http://127.0.0.1:${PORT}/m1/index.html?who=claude&mode=${MODE}`); break; } catch { await sleep(200); } }
   await page.evaluate(() => { try { localStorage.clear(); } catch {} });  // 이 녹화용 브라우저의 예전 기록 지우기
   await page.reload();
-  await until(() => document.fonts.status === "loaded");
+  await page.evaluate(() => Promise.all([document.fonts.load('700 40px "Pretendard HV"', "가A0"), document.fonts.load('700 40px "JetBrains Mono HV"', "A0")]));
+  await until(() => document.fonts.status === "loaded" && document.fonts.check('700 40px "Pretendard HV"', "가") && document.fonts.check('700 40px "JetBrains Mono HV"', "A"));
   // 페이지 시계를 멈춘다. 이제부터 페이지 시간은 advanceTo 로만 흐른다
   await page.clock.pauseAt((await page.evaluate(() => Date.now())) + 100);
   await advanceTo(2500);                                   // 시작 화면
@@ -125,12 +122,15 @@ function startSolver() {
     const r = await solver.ask(png);
     const thinkMs = performance.now() - t0;
     await advanceTo(vt + thinkMs);
-    const t1 = performance.now();
-    await page.fill("#answer", r.answer);
+    const typeStart = vt;
+    for (const ch of r.answer) {                           // 한 글자씩 쳐서 입력되는 모습이 보이게
+      await page.press("#answer", ch);
+      await advanceTo(vt + CHAR_MS);
+    }
+    await advanceTo(vt + HOLD_MS);                         // 다 친 답을 잠깐 보여 줌
     await page.press("#answer", "Enter");
-    const typeMs = performance.now() - t1;
-    log.push({ video_ms: vt, image: st.src.split("/").pop(), answer: r.answer, solve_ms: r.ms, think_ms: +thinkMs.toFixed(1), type_ms: +typeMs.toFixed(1) });
-    await advanceTo(vt + typeMs);
+    log.push({ video_ms: vt, image: st.src.split("/").pop(), answer: r.answer, solve_ms: r.ms, think_ms: +thinkMs.toFixed(1), type_ms: vt - typeStart });
+    await advanceTo(vt + 1000 / FPS);
     if (vt > 70000) break;
   }
   await advanceTo(vt + 6500);                              // 결과 화면 + 꽃가루
@@ -147,7 +147,8 @@ function startSolver() {
   execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-framerate", String(FPS), "-i", path.join(framesDir, "%06d.png"),
     "-c:v", "libx264", "-preset", "slow", "-crf", "14", "-pix_fmt", "yuv420p", "-movflags", "+faststart", base + ".mp4"]);
   fs.rmSync(framesDir, { recursive: true, force: true });
-  fs.writeFileSync(base + ".json", JSON.stringify({ result, fps: FPS, size: `${OUT_W}x${Math.round(OUT_W * CSS_H / CSS_W)}`, frames: frame, log, records }, null, 1));
+  fs.writeFileSync(base + ".json", JSON.stringify({ result, fps: FPS, char_ms: CHAR_MS, hold_ms: HOLD_MS, size: `${OUT_W}x${Math.round(OUT_W * CSS_H / CSS_W)}`, frames: frame, log, records }, null, 1));
   execFileSync("python3", ["-m", "tools.import_web_records", base + ".json"], { cwd: ROOT, stdio: "inherit" });
   console.log(JSON.stringify({ result, answered: log.length, frames: frame, video: base + ".mp4" }, null, 1));
+  process.exit(0);  // 풀이 프로그램·웹 서버 자식 프로세스까지 정리하고 끝냄
 })().catch((e) => { console.error(e); process.exit(1); });

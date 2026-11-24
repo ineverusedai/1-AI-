@@ -13,3 +13,8 @@
 - 브라우저 버전 채점: SHA-256/HMAC을 자바스크립트로 직접 구현 (외부 라이브러리 없음)
 - 정답 저장: HMAC-SHA256 해시만 저장 (평문 정답 없음)
 - 코드: 이 프로젝트용으로 Claude Code가 작성
+
+## 화면 글꼴 (common/web/fonts/, 사이트에 직접 포함)
+- **Pretendard** v1.3.9 (가변 글꼴) — Kil Hyung-jin, SIL Open Font License 1.1 — https://github.com/orioncactus/pretendard
+- **JetBrains Mono** (가변 글꼴, 라틴 부분, @fontsource-variable/jetbrains-mono 5.1.1) — JetBrains, SIL Open Font License 1.1 — https://github.com/JetBrains/JetBrainsMono
+- 맥·윈도우·녹화 영상에서 똑같은 글씨체가 나오도록 외부 글꼴 사이트 대신 파일을 직접 넣었다.

@@ -1,4 +1,7 @@
 /* 공통 디자인: 다크 모드, 큰 숫자, 화면 녹화용 */
+/* 글꼴은 사이트에 직접 넣어 둔다 → 맥·윈도우·녹화 영상 어디서나 똑같은 글씨체 */
+@font-face { font-family: "Pretendard HV"; src: url("fonts/PretendardVariable.woff2") format("woff2-variations"), url("fonts/PretendardVariable.woff2") format("woff2"); font-weight: 45 920; font-display: block; }
+@font-face { font-family: "JetBrains Mono HV"; src: url("fonts/JetBrainsMono-latin.woff2") format("woff2-variations"), url("fonts/JetBrainsMono-latin.woff2") format("woff2"); font-weight: 100 800; font-display: block; }
 :root {
   --bg: #0c0c0f;
   --card: #17171c;
@@ -18,7 +21,7 @@
   --radius: 28px;
   --ease: cubic-bezier(.2, .8, .2, 1);
   --spring: cubic-bezier(.2, 1.5, .4, 1);
-  --mono: "SF Mono", Menlo, Consolas, "Cascadia Mono", ui-monospace, monospace;
+  --mono: "JetBrains Mono HV", "SF Mono", Menlo, Consolas, "Cascadia Mono", ui-monospace, monospace;
   color-scheme: dark;
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -26,7 +29,7 @@ html, body { margin: 0; min-height: 100%; }
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
+  font-family: "Pretendard HV", "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   letter-spacing: -0.02em;
   word-break: keep-all;
@@ -105,7 +108,7 @@ a { color: inherit; text-decoration: none; }
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none;
   font-size: 30px; font-weight: 700; color: #8b95a1; letter-spacing: -0.02em; transition: opacity .12s;
 }
-.field:not(:placeholder-shown) + .ph { opacity: 0; }
+.field:not(:placeholder-shown) + .ph { opacity: 0; transition: none; }  /* 치는 순간 바로 사라짐 */
 .field {
   flex: 1; min-width: 0; height: 104px; border: 0; outline: none; padding: 0; line-height: 104px;
   border-radius: 22px; background: var(--fill); color: var(--text);
@@ -121,17 +124,15 @@ a { color: inherit; text-decoration: none; }
 
 /* ----- 정답/오답 효과 ----- */
 /* 위쪽 카드 가운데(남은 시간과 연속 정답 사이)에 뜬다. 문제 이미지는 가리지 않음 */
-.fx { position: absolute; left: 0; right: 0; top: 32px; height: 156px; padding-left: 100px; display: grid; place-items: center; pointer-events: none; z-index: 5; }
-.fx .burst { display: flex; align-items: center; gap: 18px; }
-.fx svg { width: 112px; height: 112px; overflow: visible; filter: drop-shadow(0 10px 40px rgba(0, 0, 0, .5)); }
+/* 정답·오답: 화면 정가운데에 큰 기호만 */
+.fx { position: fixed; inset: 0; display: grid; place-items: center; pointer-events: none; z-index: 20; }
+.fx .burst { width: 300px; height: 300px; }
+.fx svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 18px 60px rgba(0, 0, 0, .6)); }
 .fx circle.bg { fill: var(--green); }
 .fx.bad circle.bg { fill: var(--red); }
 .fx circle.ring { fill: none; stroke: var(--green); stroke-width: 4; transform-origin: center; transform-box: fill-box; }
 .fx.bad circle.ring { stroke: var(--red); }
 .fx path { fill: none; stroke: #fff; stroke-width: 13; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 120; stroke-dashoffset: 120; }
-.fx .word { font-size: 56px; font-weight: 800; letter-spacing: -0.03em; text-shadow: 0 4px 30px rgba(0, 0, 0, .7); }
-.fx.ok .word { color: var(--green); }
-.fx.bad .word { color: var(--red); }
 .spark { position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; pointer-events: none; z-index: 4; }
 
 .vignette { position: fixed; inset: 0; pointer-events: none; z-index: 15; opacity: 0; box-shadow: inset 0 0 220px 40px var(--red-glow); }
@@ -186,9 +187,7 @@ a.row:hover { background: var(--fill); }
 /* ----- 작은 화면 ----- */
 @media (max-height: 820px) and (min-width: 701px) {
   .timer, .streak { font-size: 100px; }
-  .fx { top: 26px; height: 128px; }
-  .fx svg { width: 92px; height: 92px; }
-  .fx .word { font-size: 44px; }
+  .fx .burst { width: 240px; height: 240px; }
   .timebar { margin-top: 20px; }
   .card { padding: 26px; }
 }
@@ -204,9 +203,7 @@ a.row:hover { background: var(--fill); }
   .field { height: 76px; line-height: 76px; font-size: 36px; letter-spacing: .12em; }
   .ph { font-size: 22px; }
   .inputrow .btn { width: 100%; height: 64px; font-size: 22px; }
-  .fx { top: 20px; height: 90px; padding-left: 40px; }
-  .fx svg { width: 64px; height: 64px; }
-  .fx .word { display: none; }
+  .fx .burst { width: 170px; height: 170px; }
   .head, .result .head { font-size: 40px; }
   .result-icon { width: 120px; height: 120px; }
   .stats strong { font-size: 40px; }

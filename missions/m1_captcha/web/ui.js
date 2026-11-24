@@ -125,9 +125,8 @@
     fx.className = "fx " + (ok ? "ok" : "bad");
     fx.innerHTML =
       `<div class="burst"><svg viewBox="0 0 168 168"><circle class="ring" cx="84" cy="84" r="80"/>` +
-      `<g class="core"><circle class="bg" cx="84" cy="84" r="80"/><path d="${ok ? CHECK : CROSS}"/></g></svg>` +
-      `<div class="word">${ok ? "정답이에요" : "틀렸어요"}</div></div>`;
-    const dur = ok ? 780 : 1050;
+      `<g class="core"><circle class="bg" cx="84" cy="84" r="80"/><path d="${ok ? CHECK : CROSS}"/></g></svg></div>`;
+    const dur = ok ? 640 : 1000;
     fx.querySelector(".burst").animate([
       { opacity: 0, transform: "scale(.5)" },
       { opacity: 1, transform: "scale(1.08)", offset: .22 },
@@ -155,7 +154,7 @@
       s.className = "spark";
       s.style.background = i % 3 ? "var(--green)" : "#ffffff";
       const ang = (i / n) * Math.PI * 2 + Math.random() * .35;
-      const dist = 140 + Math.random() * 110;
+      const dist = 200 + Math.random() * 150;
       host.appendChild(s);
       s.animate([
         { transform: "translate(0,0) scale(1)", opacity: 1 },

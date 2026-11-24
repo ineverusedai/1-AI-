@@ -3,7 +3,7 @@
 실행: python -m tools.build_web
 
 docs/ 구조
-  index.html, style.css, hmac.js, records.js
+  index.html, style.css, fonts/, hmac.js, records.js
   m1/index.html, m1/data.js (규칙 + 정답 해시 + 채점 키), m1/images/
 
 주의: 정적 페이지는 브라우저 안에서 채점해야 해서 채점 키가 m1/data.js 에 들어간다.
@@ -45,6 +45,7 @@ def main() -> None:
         shutil.rmtree(OUT)
     shutil.copytree(SRC, OUT)
     shutil.copy2(ROOT / "common" / "web" / "style.css", OUT / "style.css")
+    shutil.copytree(ROOT / "common" / "web" / "fonts", OUT / "fonts")
     (OUT / ".nojekyll").write_text("")
 
     cfg = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))["m1"]
