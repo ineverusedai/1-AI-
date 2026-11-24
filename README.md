@@ -62,6 +62,17 @@ python run.py
 - 문제는 이미 `data/m2/` 에 있다. 다시 만들 때만: `python -m missions.m2_illusion.generate` (그 뒤 `python -m tools.build_web`)
 - 그림 만드는 숫자는 `config.json` 의 `m2`: 글자 진하기 `text_amp`(올리면 쉬워짐), 위장 얼룩 `camo`(올리면 어려워짐), 후보 수 `candidates`, 최소 보임 정도 `min_visibility`.
 
+## 미션 3: 소리 착시 캡차
+- **원본 듣기**(또는 Space)로 깨끗한 목소리를 듣고, 사인파로 바꾼 소리 4개 중 같은 문장을 고른다.
+  소리 타일을 누르거나 키보드 **1~4**를 누르면 그 소리가 나오면서 선택되고, **확인**(또는 Enter)으로 제출.
+- 한 판에 5문제, **하나라도 틀리면 실패**. 시간 제한은 없고 걸린 시간이 기록된다.
+- 문장 20개는 모두 9글자(3어절 × 3글자)이고, 오답은 정답과 낱말이 겹치는 문장을 먼저 고른다.
+- **원본 음성 바꾸기 (내 컴퓨터 목소리):** 지금 들어 있는 목소리는 임시(리눅스 espeak-ng)다.
+  - 맥: 터미널에서 프로젝트 폴더로 가서 `bash tools/make_tts_mac.sh` (맥 내장 한국어 음성 Yuna)
+  - 윈도우: PowerShell에서 `powershell -ExecutionPolicy Bypass -File tools\make_tts_windows.ps1` (윈도우 내장 한국어 음성)
+  - 그다음 `python -m missions.m3_sinewave.generate` → `python -m tools.build_web`
+- 사인파 변환 숫자는 `config.json` 의 `m3` (사인파 개수 `order`, 무작위 붙잡기 `max_hold` 등).
+
 ## 결과 파일
 - `results/answers.csv` — 답 하나당 한 줄: 누가(`human`/`claude`), 미션, 방식, 도전 번호, 문제 번호, 제출한 답, 정답 여부, 그 문제에 걸린 시간(ms), 시작부터 누적 시간(ms)
 - `results/summary.csv` — 도전 하나당 한 줄: 성공 여부, 맞힌 수, 최고 연속, 1~10번 정답 수·시간, 제한 시간 안 정답 수

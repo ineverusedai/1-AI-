@@ -17,6 +17,16 @@
 - **NumPy** — BSD-3-Clause — https://numpy.org
 - 배경 그림(나뭇잎·숲·풀밭)은 OpenCV 도형 그리기로 직접 생성, 숨은 글자는 Pretendard 글꼴로 그림
 
+## 미션 3: 소리 착시 캡차
+- 방식 참고: **"Robust CAPTCHA Using Audio Illusions in the Era of Large Language Models: from Evaluation to Advances"** (IllusionAudio), arXiv:2601.08516 (2026) — https://arxiv.org/abs/2601.08516
+  - 따른 것: 사인파 음성 착시, 깨끗한 원본 음성을 먼저 들려줌, 사인파 변환 뒤 되돌릴 수 없는 무작위 다운샘플링(논문이 값을 공개하지 않아 '분석 프레임 무작위 붙잡기'로 구현)
+  - 다른 것: 문제 방식(원본 듣고 4개 중 고르기, 5문제 하나라도 틀리면 실패)은 이 프로젝트 사양
+- 사인파 음성 변환: **johnhw/sinewave_speech** — John Williamson, MIT License (LPC 부분 Cournapeau David, MIT) — https://github.com/johnhw/sinewave_speech
+  (`third_party/sinewave_speech/`에 수정 없이 넣고 함수만 불러 씀)
+- 사인파 음성: Remez, Rubin, Pisoni, Carrell, **"Speech perception without traditional speech cues"**, Science 212 (1981)
+- **SciPy** — BSD-3-Clause — https://scipy.org
+- 원본 음성: 사용자 컴퓨터 내장 한국어 TTS (맥 Yuna / 윈도우 한국어 음성). 임시 음성은 **eSpeak NG** (GPL-3.0, 프로그램을 실행해 소리만 만듦)
+
 ## 공통
 - 로컬 서버·채점·기록: Python 표준 라이브러리 (`http.server`, `hmac`, `hashlib`, `csv`)
 - 브라우저 버전 채점: SHA-256/HMAC을 자바스크립트로 직접 구현 (외부 라이브러리 없음)

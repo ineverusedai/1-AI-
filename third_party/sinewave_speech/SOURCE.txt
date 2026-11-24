@@ -1,0 +1,1 @@
+johnhw/sinewave_speech @ 6c5569d1d8ac60859e8a276ba5806204b53f64b6 (MIT). 파일은 수정하지 않고 그대로 복사함.

@@ -33,5 +33,18 @@
     "camo": 0.4,
     "candidates": 4,
     "min_visibility": 0.68
+  },
+  "m3": {
+    "title": "소리 착시 캡차",
+    "questions_per_round": 5,
+    "pool_size": 20,
+    "decimate": 2,
+    "low": 250,
+    "high": 3400,
+    "window": 200,
+    "overlap": 0.25,
+    "order": 4,
+    "bw_amp": 60,
+    "max_hold": 3
   }
 }

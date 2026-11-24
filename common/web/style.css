@@ -206,6 +206,37 @@ a.row:hover { background: var(--fill); }
 .choice.hit b { color: #fff; background: rgba(255, 255, 255, .2); }
 @keyframes hit { 0% { transform: scale(1); } 40% { transform: scale(.95); } 100% { transform: scale(1); } }
 
+/* ----- 미션 3: 원본 듣기 + 사인파 음성 4개 ----- */
+.stage.m3 .segs { margin-top: 26px; }
+.qcard.m3 { display: flex; flex-direction: column; gap: 16px; }
+.refbtn {
+  display: flex; align-items: center; gap: 18px; height: 116px; padding: 0 32px; border: 0; border-radius: 24px; cursor: pointer;
+  font: inherit; font-size: 34px; font-weight: 800; letter-spacing: -0.03em; color: #fff;
+  background: linear-gradient(135deg, #3182f6, #1b64da); transition: transform .12s var(--ease), filter .15s;
+}
+.refbtn:hover { filter: brightness(1.08); }
+.refbtn:active { transform: scale(.98); }
+.refbtn:disabled { opacity: .4; cursor: default; }
+.refbtn:focus { outline: none; }
+.refbtn .play { width: 64px; height: 64px; border-radius: 50%; background: rgba(255, 255, 255, .2); display: grid; place-items: center; flex: none; }
+.refbtn .play svg { width: 30px; height: 30px; fill: #fff; margin-left: 4px; }
+.refbtn .t { flex: 1; text-align: left; }
+.choices.m3 { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; }
+.choice.snd { position: relative; height: 104px; font-size: 30px; }
+.choice.snd .bars { position: absolute; right: 22px; top: 50%; margin-top: -17px; }
+.choice.snd span:not(.bars) { flex: 1; }
+.choice.sel { background: var(--blue-soft); box-shadow: inset 0 0 0 3px var(--blue); }
+.choice.sel b { color: #fff; background: var(--blue); }
+.bars { display: inline-flex; align-items: flex-end; gap: 5px; height: 34px; opacity: 0; transition: opacity .15s; }
+.bars i { width: 6px; height: 30%; border-radius: 3px; background: currentColor; }
+.playing .bars { opacity: 1; }
+.playing .bars i { animation: eq .9s ease-in-out infinite; }
+.playing .bars i:nth-child(2) { animation-delay: -.3s; }
+.playing .bars i:nth-child(3) { animation-delay: -.6s; }
+.playing .bars i:nth-child(4) { animation-delay: -.15s; }
+@keyframes eq { 0%, 100% { height: 25%; } 50% { height: 100%; } }
+.refbtn.playing { box-shadow: 0 0 0 4px rgba(49, 130, 246, .35), 0 0 40px rgba(49, 130, 246, .45); }
+
 /* ----- 작은 화면 ----- */
 @media (max-height: 820px) and (min-width: 701px) {
   .timer, .streak { font-size: 100px; }
@@ -227,6 +258,12 @@ a.row:hover { background: var(--fill); }
   .inputrow .btn { width: 100%; height: 64px; font-size: 22px; }
   .fx .burst { width: 170px; height: 170px; }
   .qcard.m2 { grid-template-columns: 1fr; gap: 12px; }
+  .refbtn { height: 84px; font-size: 24px; padding: 0 20px; gap: 14px; }
+  .refbtn .play { width: 48px; height: 48px; }
+  .choices.m3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .choice.snd { height: 72px; font-size: 21px; }
+  .choice.snd .bars { right: 12px; height: 22px; margin-top: -11px; gap: 3px; }
+  .choice.snd .bars i { width: 4px; }
   .choices { grid-template-columns: 1fr 1fr; grid-template-rows: none; gap: 10px; }
   .choice { height: 64px; font-size: 20px; padding: 0 14px; gap: 10px; }
   .choice b { width: 30px; height: 30px; font-size: 16px; border-radius: 9px; }

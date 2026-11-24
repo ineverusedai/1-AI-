@@ -1,0 +1,107 @@
+{
+ "mission": "m3",
+ "voice": "espeak-ng",
+ "answer_rule": "원본(ref.wav)과 같은 문장의 사인파 음성 번호(1~4)를 고른다",
+ "questions": [
+  {
+   "q": 1,
+   "dir": "q01",
+   "hash": "42d73c01e8371e59515244baab33d5e89aa02b2a23fddf0d373f30a79b060437"
+  },
+  {
+   "q": 2,
+   "dir": "q02",
+   "hash": "70c9b864968f4c1ec4792155c6a937a8441ec283f93dd5ca2bc0e0c43c957ee1"
+  },
+  {
+   "q": 3,
+   "dir": "q03",
+   "hash": "4bf27065b66ed4ba5f48a044814f524e1cdd05d611b7123579d839bbe15c5e40"
+  },
+  {
+   "q": 4,
+   "dir": "q04",
+   "hash": "6fd9173fa4d916476b4ee0859873b994fd8457fc305050ece146e1fa74b7d9e1"
+  },
+  {
+   "q": 5,
+   "dir": "q05",
+   "hash": "672d0d2268466672aca5bc2457dff7772d753af42b4b7ef1bbde499ac002576f"
+  },
+  {
+   "q": 6,
+   "dir": "q06",
+   "hash": "952cff5b0054df06f94be65b7c694f3cd755e87a0f35ed10a14584bdffbd0d87"
+  },
+  {
+   "q": 7,
+   "dir": "q07",
+   "hash": "eb27cf6d03be9fad446c6c6af5e2e8ce2d4c1dd707b29de72cbcea615b0e104a"
+  },
+  {
+   "q": 8,
+   "dir": "q08",
+   "hash": "9577e1343db50f1ac4e78666c57ecad540bd2ea63859fbf69cc2c1b9bed37adb"
+  },
+  {
+   "q": 9,
+   "dir": "q09",
+   "hash": "10b739799049a54550fd74e86c1412d1d4638af9342ff77c2a80cb15078e1777"
+  },
+  {
+   "q": 10,
+   "dir": "q10",
+   "hash": "2400eaf08487ad3820b9fda5e8d38bba9549feb3b2db48c335f0cba8586d64a4"
+  },
+  {
+   "q": 11,
+   "dir": "q11",
+   "hash": "b447aacb02c60cd8e34bc270c515d2b83be5b4038520055df1eae74b599b15e3"
+  },
+  {
+   "q": 12,
+   "dir": "q12",
+   "hash": "06e5e157a305d7cb9b2cfc865aa8dafb3baac43d7b00dac90620d27f4aaed46f"
+  },
+  {
+   "q": 13,
+   "dir": "q13",
+   "hash": "40fb4839b7156c99ba560b6c30c25e3798c5396113d39f472307a5701d8bd2b6"
+  },
+  {
+   "q": 14,
+   "dir": "q14",
+   "hash": "e20b3fd67ae73f3a6a74630b78ab37db063f44bb255c4c5a403da39ae80ee73e"
+  },
+  {
+   "q": 15,
+   "dir": "q15",
+   "hash": "661b6353c9af8546c55b44173b4fff9b87da33947cfc356d21d2ad6886a60405"
+  },
+  {
+   "q": 16,
+   "dir": "q16",
+   "hash": "8275970e5f49df9621f3a37da37dfe4c0beb4edf01c90b82e0a55069cc3e5d75"
+  },
+  {
+   "q": 17,
+   "dir": "q17",
+   "hash": "93782955a1d7dff26136035a9f6f55cb94ac12a2cce36d7a79051ab8897c9d0a"
+  },
+  {
+   "q": 18,
+   "dir": "q18",
+   "hash": "7ff87034e0841a2c9130a56342882e0e323ce1e4d114116c3340502fd55f9886"
+  },
+  {
+   "q": 19,
+   "dir": "q19",
+   "hash": "a80cc1873691e5866e653ccdcddca76b24c86be6fbedf947bc79d209ed85e550"
+  },
+  {
+   "q": 20,
+   "dir": "q20",
+   "hash": "cc62c603dd15591246636e2813f92afa8ff90531dec438268306b6910a9718b1"
+  }
+ ]
+}
