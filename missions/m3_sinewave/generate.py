@@ -147,6 +147,20 @@ def iter_problems(seed: int, cfg: dict):
         yield q, target, opts, rng.getrandbits(32)
 
 
+def write_question(d: Path, target: int, opts: list[int], clip_seed: int, originals, cfg: dict) -> int:
+    """문제 하나(ref.wav + opt1~4.wav)를 d 폴더에 쓰고 정답 번호(1~4)를 돌려준다."""
+    rng = random.Random(clip_seed)
+    d.mkdir(parents=True)
+    # 길이로 정답이 드러나지 않게: 소리 4개를 모두 같은 길이로 맞추고, 앞 무음 길이를 무작위로 (원본도 따로 무작위)
+    clips = [sinewave(originals[s], cfg, rng) for s in opts]
+    total = max(len(c) for c in clips) + int(SR * cfg["pad_max_sec"])
+    for n, c in enumerate(clips, 1):
+        write_wav(d / f"opt{n}.wav", pad_to(c, total, rng, cfg))
+    ref = originals[target]
+    write_wav(d / "ref.wav", pad_to(ref, len(ref) + int(SR * cfg["pad_max_sec"]), rng, cfg))
+    return opts.index(target) + 1
+
+
 def main() -> None:
     cfg, seed = load_cfg_and_seed()
     missing = [i for i in range(len(SENTENCES)) if not (ORIG / f"s{i + 1:02d}.wav").exists()]
@@ -159,17 +173,8 @@ def main() -> None:
         shutil.rmtree(OUT)
     questions = []
     for q, target, opts, clip_seed in iter_problems(seed, cfg):
-        rng = random.Random(clip_seed)
         d = OUT / "audio" / f"q{q:02d}"
-        d.mkdir(parents=True)
-        # 길이로 정답이 드러나지 않게: 소리 4개를 모두 같은 길이로 맞추고, 앞 무음 길이를 무작위로 (원본도 따로 무작위)
-        clips = [sinewave(originals[s], cfg, rng) for s in opts]
-        total = max(len(c) for c in clips) + int(SR * cfg["pad_max_sec"])
-        for n, c in enumerate(clips, 1):
-            write_wav(d / f"opt{n}.wav", pad_to(c, total, rng, cfg))
-        ref = originals[target]
-        write_wav(d / "ref.wav", pad_to(ref, len(ref) + int(SR * cfg["pad_max_sec"]), rng, cfg))
-        correct = opts.index(target) + 1
+        correct = write_question(d, target, opts, clip_seed, originals, cfg)
         questions.append({"q": q, "dir": f"q{q:02d}", "hash": answer_hash(key, "m3", q, str(correct))})
         print(f"  q{q:02d} 완료", flush=True)
     manifest = {"mission": "m3", "voice": voice,
