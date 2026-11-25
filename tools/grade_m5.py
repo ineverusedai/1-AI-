@@ -31,6 +31,14 @@ def main() -> None:
                             "submitted": f"{arc_play.GAMES[i][0]} {g['levels']}/{g['win']}단계 행동{g['count']}회",
                             "correct": int(g["state"] == "WIN"), "question_ms": "", "total_ms": total_ms})
     note = f"깬 단계 {lv}/{allv}; " + ", ".join(f"{arc_play.GAMES[i][0]} {g['levels']}/{g['win']} 행동{g['count']}" for i, g in enumerate(st["games"]))
+    if arc_play.OFFICIAL:
+        # 단계별 행동 수 (사람 기준과 비교) + 30분 시점에 깬 단계
+        per = "; ".join(f"{arc_play.GAMES[i][0]} 단계별 행동 {g['per_level']} (사람 기준 {arc_play.BASE[arc_play.GAMES[i][0]][:len(g['per_level'])]})"
+                        + (" 상한 초과로 끝" if arc_play.budget_out(i, g) else "") for i, g in enumerate(st["games"]))
+        cut = t0 + arc_play.CFG.get("checkpoint_min", 30) * 60
+        st30 = arc_play.replay([e for e in log if e["t"] <= cut])
+        lv30 = sum(g["levels"] for g in st30["games"])
+        note += f"; 공식 방식(단계별 행동 상한 = 사람 기준 × {arc_play.MULT}); {per}; 30분 시점 깬 단계 {lv30}/{allv}"
     summary = {"who": "claude", "mission": "m5", "mode": a.mode, "attempt": 1,
                "success": int(all(g["state"] == "WIN" for g in st["games"])), "answered": len(acts),
                "correct": sum(g["state"] == "WIN" for g in st["games"]), "max_streak": lv, "total_ms": total_ms,

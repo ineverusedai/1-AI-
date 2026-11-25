@@ -63,6 +63,10 @@
       "ft09",
       "vc33"
     ],
-    "ai_max_actions": 300
+    "ai_max_actions": 300,
+    "ai_rule": "official",
+    "ai_level_budget_x": 5,
+    "ai_time_limit_min": 120,
+    "checkpoint_min": 30
   }
 }

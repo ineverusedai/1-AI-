@@ -7,8 +7,12 @@
 사용법 (작업 폴더에서):
   python3 arc_play.py status                 지금 화면을 frame.png 로 저장하고 상태 출력
   python3 arc_play.py switch <1|2|3>         게임 바꾸기 (ls20 / ft09 / vc33)
-  python3 arc_play.py act <행동> [<행동> ...]  한 번에 최대 5개. 행동: up down left right space undo reset click:X,Y (X,Y = 0~63 칸)
-규칙: 30분 시간 제한, 행동 횟수 상한(config.json m5.ai_max_actions). 넘으면 더 받지 않는다.
+  python3 arc_play.py act <행동> [<행동> ...]  한 번에 최대 10개. 행동: up down left right space undo reset click:X,Y (X,Y = 0~63 칸)
+규칙 (config.json m5):
+  - ai_rule "official": ARC-AGI-3 공식 방식. 시간 제한 없음, 단계마다 행동 상한 = 사람 기준 행동 수(게임 파일의 baseline_actions) × 5.
+    상한을 넘으면 그 게임은 끝 (다른 게임은 계속). 단, 작업 시간은 ai_time_limit_min 으로 끊고, 30분 시점 기록을 따로 남긴다.
+  - ai_rule "cap": 예전 방식. 전체 행동 ai_max_actions 번 + time_limit_min 분.
+  행동은 게임 상태를 바꾸는 입력만 센다 (reset 포함, 화면 보기·게임 바꾸기는 안 셈).
 """
 import json
 import sys
@@ -31,8 +35,16 @@ COLORS = ["#FFFFFF", "#CCCCCC", "#999999", "#666666", "#333333", "#000000", "#E5
           "#F93C31", "#1E93FF", "#88D8F1", "#FFDC00", "#FF851B", "#921231", "#4FCC30", "#A356D6"]
 RGB = np.array([[int(h[i:i + 2], 16) for i in (1, 3, 5)] for h in COLORS], np.uint8)
 CFG = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))["m5"]
-LIMIT_S = CFG["time_limit_min"] * 60
-MAX_ACTIONS = CFG["ai_max_actions"]
+OFFICIAL = CFG.get("ai_rule", "cap") == "official"
+LIMIT_S = (CFG["ai_time_limit_min"] if OFFICIAL else CFG["time_limit_min"]) * 60
+MAX_ACTIONS = None if OFFICIAL else CFG["ai_max_actions"]
+MULT = CFG.get("ai_level_budget_x", 5)
+BASE = {g: json.loads((WEB / "games" / f"{g}.json").read_text(encoding="utf-8"))["baseline_actions"] for g, _ in GAMES}
+
+
+def level_budget(i: int, level: int) -> int:
+    b = BASE[GAMES[i][0]]
+    return MULT * b[min(level, len(b) - 1)]
 
 
 def load_log():
@@ -58,8 +70,18 @@ def replay(log):
 
 def _apply(meta, frames, prev, e=None):
     arr = np.frombuffer(frames, np.uint8).reshape(meta["n"], meta["h"], meta["w"]) if meta["n"] else None
+    lvl_n = prev.get("lvl_actions", 0) + (1 if e else 0)
+    per = list(prev.get("per_level", []))
+    if e and meta["levels"] > prev.get("levels", 0):   # 단계 통과: 그 단계에 쓴 행동 수 기록, 새 단계는 0부터
+        per.append(lvl_n)
+        lvl_n = 0
     return {"levels": meta["levels"], "win": meta["win"], "state": meta["state"], "actions": meta["actions"],
-            "frame": arr[-1] if arr is not None else prev.get("frame"), "count": prev.get("count", 0) + (1 if e else 0)}
+            "frame": arr[-1] if arr is not None else prev.get("frame"), "count": prev.get("count", 0) + (1 if e else 0),
+            "lvl_actions": lvl_n, "per_level": per}
+
+
+def budget_out(i: int, g: dict) -> bool:
+    return OFFICIAL and g["state"] != "WIN" and g["lvl_actions"] >= level_budget(i, g["levels"])
 
 
 def render(frame, path, scale=8):
@@ -88,11 +110,14 @@ def report(st, log):
     g = st["games"][st["cur"]]
     render(g["frame"], WORK / "frame.png")
     used = sum(x["count"] for x in st["games"])
-    out = {"current_game": f"{st['cur'] + 1}:{GAMES[st['cur']][0]}", "state": g["state"],
+    i = st["cur"]
+    out = {"current_game": f"{i + 1}:{GAMES[i][0]}", "state": "BUDGET_OUT (이 게임 끝)" if budget_out(i, g) else g["state"],
            "levels": f"{g['levels']}/{g['win']}", "available_actions": [k for k, v in NAMES.items() if v in g["actions"] or v == 0]
            + (["click:X,Y"] if 6 in g["actions"] else []),
-           "all_games": {GAMES[i][0]: f"{x['levels']}/{x['win']} {x['state']}" for i, x in enumerate(st["games"])},
-           "actions_used": f"{used}/{MAX_ACTIONS}", "elapsed_sec": round(elapsed(log)), "time_limit_sec": LIMIT_S,
+           "all_games": {GAMES[k][0]: f"{x['levels']}/{x['win']} {'BUDGET_OUT' if budget_out(k, x) else x['state']}" for k, x in enumerate(st["games"])},
+           "actions_used": used if OFFICIAL else f"{used}/{MAX_ACTIONS}",
+           **({"level_actions_left": max(0, level_budget(i, g["levels"]) - g["lvl_actions"])} if OFFICIAL and g["state"] != "WIN" else {}),
+           "elapsed_sec": round(elapsed(log)), "time_limit_sec": LIMIT_S,
            "screen": str(WORK / "frame.png")}
     print(json.dumps(out, ensure_ascii=False, indent=1))
 
@@ -108,7 +133,7 @@ def main(argv):
         append({"t": time.time(), "kind": "start"})
         log = load_log()
     if elapsed(log) > LIMIT_S:
-        print("시간 제한(30분)이 끝났습니다. 더 입력할 수 없습니다.")
+        print(f"작업 시간 제한({LIMIT_S // 60}분)이 끝났습니다. 더 입력할 수 없습니다.")
         return report(replay(log), log)
     cmd = argv[0] if argv else "status"
     st = replay(log)
@@ -117,9 +142,12 @@ def main(argv):
         append({"t": time.time(), "kind": "switch", "game": i})
     elif cmd == "act":
         used = sum(x["count"] for x in st["games"])
-        tokens = argv[1:6]
+        tokens = argv[1:11]
         for tok in tokens:
-            if used >= MAX_ACTIONS:
+            if budget_out(st["cur"], st["games"][st["cur"]]):
+                print("이 단계의 행동 상한(사람 기준 × 5)을 넘어서 이 게임은 끝났습니다. 다른 게임을 하세요.")
+                break
+            if MAX_ACTIONS is not None and used >= MAX_ACTIONS:
                 print(f"행동 횟수 상한({MAX_ACTIONS})에 도달했습니다.")
                 break
             if tok.startswith("click:"):
