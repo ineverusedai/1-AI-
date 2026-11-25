@@ -1,7 +1,8 @@
 /* 미션 3 화면과 효과 (원본 듣기 → 사인파 음성 4개 중 고르기). 채점·기록은 engine.js 가 맡는다.
  * 재생 순서 (IllusionAudio 방식): 문제가 나오면 깨끗한 원본 → 사인파 소리 1 → 2 → 3 → 4 가 자동으로 차례로 나온다.
  * 조작: 소리 1~4 클릭 또는 키보드 1~4 로 고르기(고르기만, 재생 안 함), 확인 버튼 또는 Enter. 다 나온 뒤 '다시 듣기'(Space)로 처음부터 다시.
- * 시간 제한 없음: 걸린 시간이 올라간다.
+ * 시간 제한 없음 (논문·사양 모두 통과/실패로 평가). 보조 기록으로 '고르는 시간'을 잰다:
+ * 소리가 나오는 동안(차례 재생·다시 듣기, 사이 쉬는 시간 포함)은 멈추고, 소리가 없을 때만 올라간다.
  *
  * 숨은 단축키 (시작·결과 화면에서만)
  *   Shift + R : 1번 문제부터 다시
@@ -57,24 +58,35 @@
   UI.setStreak = (n) => renderStreak(n, true);
 
   /* ---------- 시간 ---------- */
+  let think = 0, lastTick = 0, listening = false;
   function drawTimer(ms) {
-    $("timer").firstChild.nodeValue = (Math.max(0, ms) / 1000).toFixed(1);  // 걸린 시간 (올라감)
+    $("timer").firstChild.nodeValue = (Math.max(0, ms) / 1000).toFixed(1);  // 고르는 시간 (소리 나오는 동안 멈춤)
+    $("timer").classList.toggle("paused", listening);
   }
-  UI.elapsed = () => performance.now() - t0;
+  function tick() {  // 소리가 없을 때만 고르는 시간을 더한다
+    const now = performance.now();
+    if (clockOn && !listening) think += now - lastTick;
+    lastTick = now;
+  }
+  UI.elapsed = () => performance.now() - t0;      // 전체 경과 (소리 포함)
+  UI.thinkMs = () => { tick(); return think; };   // 고르는 시간
+  function setListening(v) { tick(); listening = v; drawTimer(think); }
   function startClock(onTimeout) {
-    t0 = performance.now();
+    t0 = lastTick = performance.now();
+    think = 0;
     clockOn = true;
     lastSec = null;
     cancelAnimationFrame(raf);
     const loop = () => {
       if (!clockOn) return;
-      const ms = performance.now() - t0;
-      drawTimer(ms);
+      tick();
+      drawTimer(think);
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
   }
   UI.stopClock = (finalMs) => {
+    tick();
     clockOn = false;
     cancelAnimationFrame(raf);
     if (finalMs != null) drawTimer(finalMs);
@@ -100,6 +112,7 @@
   function unmark() { document.querySelectorAll(".playing").forEach((e) => e.classList.remove("playing")); }
   function stop() {
     seqId += 1; clearTimeout(seqTimer);
+    if (listening) setListening(false);
     audio.onended = audio.onerror = null;
     audio.pause();
     unmark();
@@ -109,13 +122,14 @@
     if (!cur) return;
     stop();
     const id = seqId, tiles = $("choices").children;
+    setListening(true);
     const items = [[$("refBtn"), cur.ref, "원본 소리"], ...cur.opts.map((src, i) => [tiles[i], src, `소리 ${i + 1} 나오는 중`])];
     $("refBtn").disabled = true;
     let k = 0;
     const next = () => {
       if (id !== seqId) return;
       unmark();
-      if (k >= items.length) { refLabel("다시 듣기"); $("refBtn").classList.remove("dim"); $("refBtn").disabled = locked; window.__seqDone = true; return; }
+      if (k >= items.length) { setListening(false); refLabel("다시 듣기"); $("refBtn").classList.remove("dim"); $("refBtn").disabled = locked; window.__seqDone = true; return; }
       const [el, src, label] = items[k++];
       refLabel(label);
       el.classList.add("playing");
@@ -204,7 +218,7 @@
       icon.innerHTML = `<circle class="ring" cx="90" cy="90" r="86"/><g class="core"><circle class="bg" cx="90" cy="90" r="86"/>` +
         `<path d="${success ? "M52 92 L79 119 L130 64" : "M64 64 L116 116 M116 64 L64 116"}"/></g>`;
       $("resultTitle").innerHTML = success ? "인간 인증<br><em style=\"color:var(--green)\">성공</em>" : "인간 인증<br><em style=\"color:var(--red)\">실패</em>";
-      countUp($("rTime"), totalMs / 1000, 1, "초");
+      countUp($("rTime"), totalMs / 1000, 1, "초");  // 미션 3: 고르는 시간
       countUp($("rStreak"), maxStreak, 0, "문제");
       show("resultScreen");
       $("retryBtn").focus();

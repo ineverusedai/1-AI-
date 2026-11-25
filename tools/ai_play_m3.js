@@ -4,7 +4,7 @@
  * AI의 "손과 귀": 차례 재생이 끝날 때까지 기다린 뒤 → 원본과 사인파 소리 4개의 파일을 solver.py 에 넘겨 답(1~4)을 받고
  * → 그 소리 칸을 누르고 → 확인. solver.py 는 소리 바이트만 받는다 (정답·시드·키를 모름).
  * 소리: 페이지의 재생 요청을 시각과 함께 기록해 두었다가, 녹화가 끝난 뒤 같은 시각에 그 소리 파일을 깔아 영상에 합친다.
- * 영상 속 시간 = 실제로 재생한 소리 길이 + AI가 실제로 계산한 시간.
+ * 화면의 '고르는 시간' = AI가 실제로 계산한 시간 + 마우스로 칸·확인을 누르는 간격(--gap-ms × 3). 소리 나오는 동안은 멈춤.
  *
  * 실행 (프로젝트 폴더에서, 먼저 python -m tools.build_web):
  *   node tools/ai_play_m3.js --solver <solver.py 폴더> [--out results/videos] [--mode B]
@@ -22,7 +22,7 @@ const PORT = Number(args.port || 8782);
 const MODE = args.mode || "B";
 const OUT = path.resolve(args.out || path.join(ROOT, "results", "videos"));
 const FPS = Number(args.fps || 60);
-const GAP_MS = Number(args["gap-ms"] || 250);
+const GAP_MS = Number(args["gap-ms"] || 120);  // 마우스를 올리고 누르는 데 쓰는 짧은 간격 (고르는 시간에 들어감)
 const CSS_W = 1440, CSS_H = 900, OUT_W = Number(args.width || 1920);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -133,7 +133,6 @@ function startSolver() {
     const center = async (sel) => page.evaluate((sel) => { const b = document.querySelector(sel).getBoundingClientRect(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; }, sel);
     // 1) 화면이 원본 → 소리 1~4 를 차례로 다 틀 때까지 (페이지 시계로) 기다림
     for (let i = 0; i < 6000 && !(await page.evaluate(() => window.__seqDone)); i++) await advanceTo(vt + 1000 / FPS);
-    await advanceTo(vt + GAP_MS);
     // 2) AI가 실제로 분석한 시간만큼
     const t0 = performance.now();
     const buf = async (u) => Buffer.from(await (await ctx.request.get(`http://127.0.0.1:${PORT}/m3/${u}`)).body());

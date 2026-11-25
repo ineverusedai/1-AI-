@@ -1,5 +1,6 @@
 /* 미션 3 웹 버전 채점·기록 (서버 없음). 고른 번호(1~4)를 HMAC 해시로 비교.
- * 규칙: 한 판에 5문제, 하나라도 틀리면 바로 실패. 시간 제한 없음 (걸린 시간 기록).
+ * 규칙: 한 판에 5문제, 하나라도 틀리면 바로 실패. 시간 제한 없음 (IllusionAudio 논문도 통과율로 평가).
+ * 시간 기록: question_ms·total_ms = '고르는 시간'(소리 나오는 동안 뺀 시간), 전체 경과는 note 에.
  * 다시 도전하면 다음 번호 문제부터 (문제 20개, 다 쓰면 1번부터). Shift+R = 1번부터. */
 (function () {
   const D = window.M3_DATA, R = HV.records, MISSION = "m3";
@@ -27,7 +28,7 @@
 
   UI.on("submit", (val) => {
     if (!a || a.done) return;
-    const totalMs = Math.round(UI.elapsed());
+    const totalMs = Math.round(UI.thinkMs());
     const qNo = a.q;
     const ok = HV.answerHash(D.key, MISSION, qNo, val) === D.questions[qNo - 1].hash;
     a.count += 1; a.correct += ok ? 1 : 0;
@@ -47,10 +48,11 @@
     if (!a || a.done) return;
     a.done = true;
     UI.stopClock(totalMs);
+    const wallMs = Math.round(UI.elapsed());
     R.logSummary({ who: WHO, mission: MISSION, mode: MODE, attempt: a.attempt,
       success: success ? 1 : 0, answered: a.count, correct: a.correct, max_streak: a.correct,
       total_ms: totalMs, first10_correct: "", first10_ms: "", correct_in_limit: a.correct,
-      note: success ? "성공" : `${a.count}번째 문제에서 틀림` });
+      note: (success ? "성공" : `${a.count}번째 문제에서 틀림`) + `; 고르는 시간 ${(totalMs / 1000).toFixed(1)}초, 전체 경과 ${(wallMs / 1000).toFixed(1)}초(소리 재생 포함)` });
     UI.showResult({ success, totalMs, maxStreak: a.correct });
   }
 
