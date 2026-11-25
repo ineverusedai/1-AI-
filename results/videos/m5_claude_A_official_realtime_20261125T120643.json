@@ -1,0 +1,43 @@
+{
+ "status": {
+  "cur": 2,
+  "games": [
+   {
+    "id": "ls20",
+    "levels": 7,
+    "win": 7,
+    "state": "WIN",
+    "actions": [
+     1,
+     2,
+     3,
+     4
+    ],
+    "count": 428
+   },
+   {
+    "id": "ft09",
+    "levels": 6,
+    "win": 6,
+    "state": "WIN",
+    "actions": [
+     6
+    ],
+    "count": 75
+   },
+   {
+    "id": "vc33",
+    "levels": 7,
+    "win": 7,
+    "state": "WIN",
+    "actions": [
+     6
+    ],
+    "count": 218
+   }
+  ]
+ },
+ "actions_in_video": 721,
+ "minutes": 1000000000,
+ "shots": 20286
+}

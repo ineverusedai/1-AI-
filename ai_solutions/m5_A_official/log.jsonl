@@ -1,0 +1,724 @@
+{"t": 1795603141.6701634, "kind": "start"}
+{"t": 1795603165.3492057, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603170.1094244, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603170.207542, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603170.3085887, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603170.4109893, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603170.521511, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603170.640195, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603170.7495177, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603175.7720044, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603175.899133, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603176.0198076, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603176.1278057, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603176.2378037, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603176.371875, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603176.4836497, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603203.0171032, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603203.1124313, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603203.2011504, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603203.288997, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603203.380401, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603203.4727094, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603203.563289, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603203.666621, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603203.7581267, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603203.8492239, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603218.142923, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603218.250009, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603218.3466506, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603218.4948566, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603218.6544638, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603218.8163426, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603218.9846146, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603226.404225, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603226.5673287, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603226.6910183, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603230.7209473, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603230.8436046, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603230.9519548, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603231.066362, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603231.191288, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603235.8839836, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603235.9913604, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603236.0983398, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603236.2078004, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603236.3140526, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603236.4224205, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603236.5929987, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603236.7747498, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603236.9437332, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603237.045522, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603237.7161484, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603237.863987, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603237.9692397, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603238.0733654, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603238.1881638, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603240.982803, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603241.093733, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603241.2177196, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603241.3287065, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603241.4585836, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603294.2315912, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603294.4077804, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603294.596913, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603294.794158, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603294.9969819, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603295.1965353, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603295.392342, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603295.5756187, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603295.7642338, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603295.9662642, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603322.9722128, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603323.0971968, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603323.2168765, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603323.3374324, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603323.4628322, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603323.5828087, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603323.7091737, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603323.8353345, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603323.9654396, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603324.0924246, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603329.1483042, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603337.1372216, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603337.2655866, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603337.4004815, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603337.5503924, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603337.6885998, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603337.8540556, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603337.986741, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603338.130665, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603338.3218482, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603338.5079577, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603343.907445, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603344.1952906, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603344.483519, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603344.7770476, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603345.0771801, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603345.3675704, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603345.669531, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603345.984303, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603346.2888973, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603346.5966907, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603351.4974582, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603359.2601156, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603531.6850867, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603531.8758311, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603532.0524812, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603532.231312, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603532.4153779, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603532.592846, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603532.8252172, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603537.6807332, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603537.8490696, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603538.0056179, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603538.212335, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603538.3849025, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603538.5485303, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603550.1128874, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603550.380931, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603550.6503305, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603550.9174113, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603557.3353736, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603557.6261175, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603557.9202833, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603558.2134767, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603558.5058312, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603558.6792896, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603558.8883617, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603559.1846504, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603559.3919141, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603559.6301322, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603564.6752958, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603564.8672957, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603565.0481722, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603565.2277343, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603565.4202518, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603571.984355, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603572.1767273, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603572.3673518, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603572.564196, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603572.917457, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603573.2433186, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603573.488296, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603573.6909983, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603573.890086, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603574.1012166, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603578.4859881, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603578.8237367, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603579.0158749, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603579.2156172, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603579.4137814, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603620.3515508, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603620.5708797, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603620.7957633, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603621.1393359, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603621.3560994, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603621.5552084, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603621.7549882, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603621.9818938, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603622.1941826, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603622.4041042, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603629.1704793, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603629.5292876, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603629.800565, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603630.058995, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603630.2991326, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603635.6579423, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603635.8769863, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603636.1247232, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603642.0226593, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603642.3510582, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603642.6266398, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603642.86808, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603643.1999996, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603643.4893978, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603643.7241762, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603643.9659166, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603649.2645683, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603649.5322156, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603662.2513137, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603662.4953904, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603662.749722, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603663.0016303, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603663.4274082, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603663.8551345, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603681.8656342, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603694.7670028, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603695.0359316, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603695.330255, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603695.6385622, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603701.921285, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603703.386253, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603708.2581263, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603708.573944, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603708.927699, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603709.318977, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603709.6195612, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603710.0442824, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603710.3231049, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603710.6059158, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603710.9019868, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603711.3222187, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603719.1989758, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603760.654442, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603767.3290308, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603790.295537, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603791.7973032, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603796.9151978, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603810.523377, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603810.7840056, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603811.0423408, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603816.2188969, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603821.7933178, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603828.388435, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603828.7653842, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603829.0257623, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603829.3520942, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603829.6898687, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603830.0049965, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603830.3295949, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603830.632027, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603830.9844484, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603831.2700162, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603845.5682473, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603851.7526495, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603869.4337256, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603869.7111726, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603869.9717464, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603870.2456841, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603870.6607594, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603871.1277492, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603871.5948186, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603872.011772, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603876.5785916, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603876.8829463, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603877.1910298, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603891.4775941, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603891.906899, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603892.3319342, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603892.7594557, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603900.4955757, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603900.9666517, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603901.4516473, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603901.9608345, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603902.460906, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603907.7450533, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603916.2595978, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603921.7934093, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603927.147932, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603932.5687745, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603975.3049824, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603975.6108437, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603975.9596577, "kind": "act", "game": 0, "action": 3}
+{"t": 1795603976.3488917, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603976.8193192, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603977.3308444, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603977.8504539, "kind": "act", "game": 0, "action": 2}
+{"t": 1795603978.36909, "kind": "act", "game": 0, "action": 4}
+{"t": 1795603991.5273173, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603991.8496358, "kind": "act", "game": 0, "action": 1}
+{"t": 1795603992.3266053, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604014.5332634, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604015.0909514, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604021.298981, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604021.6916466, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604028.119949, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604028.4677737, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604028.7933033, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604029.1079702, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604029.4914417, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604029.9514787, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604030.360232, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604037.3802173, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604039.1983273, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604045.843559, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604057.4395177, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604057.9449027, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604058.4458792, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604058.950939, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604059.4845583, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604060.000291, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604060.5234404, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604061.0624611, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604061.573157, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604062.1054173, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604069.0225627, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604069.346386, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604069.7522764, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604070.2068498, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604070.61215, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604071.0175903, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604071.379403, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604071.7249696, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604072.2879133, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604072.756102, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604077.794559, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604078.3137226, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604078.9075992, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604079.682489, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604080.490797, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604081.2383158, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604097.3685896, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604097.7446148, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604098.1138284, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604098.4837725, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604098.8400846, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604099.2022033, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604119.96788, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604120.4178236, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604120.8048131, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604130.5636857, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604131.1650186, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604131.7701545, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604132.3959603, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604162.0036507, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604162.56227, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604162.960213, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604163.3064857, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604171.6590226, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604172.1096976, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604172.5713694, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604172.9298704, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604209.7623115, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604210.3639078, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604210.9985428, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604211.6679413, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604218.8523195, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604219.4850025, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604220.1676674, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604220.8618426, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604221.5018456, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604222.1698768, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604222.8472605, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604223.5157087, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604224.145014, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604224.821102, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604232.9753509, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604233.5686452, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604233.949165, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604234.540957, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604234.9654331, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604235.3767982, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604256.5095258, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604257.0719433, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604257.7215848, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604258.126102, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604258.5531185, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604258.9922748, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604265.5380702, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604271.9433923, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604300.3239064, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604300.74767, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604301.1888087, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604301.606491, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604302.0938857, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604302.7984836, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604303.2339065, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604303.7824733, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604304.4295452, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604305.140067, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604311.181052, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604319.7600653, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604320.2091575, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604320.6306417, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604321.0643072, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604321.5028155, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604321.9492214, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604366.2982657, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604374.5247855, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604381.1068661, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604388.7927222, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604398.773152, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604399.2664297, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604399.9044611, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604400.6783879, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604401.5552132, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604402.2640114, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604402.7825396, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604403.6052144, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604404.4271922, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604405.227502, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604413.9372528, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604414.571629, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604420.4135773, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604420.9211817, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604421.429157, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604422.0080535, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604422.5942137, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604423.151895, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604423.7579136, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604424.3141131, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604425.1319287, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604433.9455872, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604434.773118, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604435.6228447, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604436.2931957, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604436.8363175, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604437.5639198, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604438.2187195, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604439.0479486, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604439.9841912, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604440.9190085, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604448.725922, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604449.4723222, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604450.2100434, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604450.9545007, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604451.611907, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604452.1768434, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604452.7266357, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604461.3465092, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604462.279883, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604463.2632375, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604464.2574453, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604464.9239311, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604465.6840212, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604473.0292118, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604473.614885, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604474.3574944, "kind": "act", "game": 0, "action": 3}
+{"t": 1795604474.9969318, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604475.5679271, "kind": "act", "game": 0, "action": 1}
+{"t": 1795604476.2432857, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604476.955874, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604477.5027604, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604478.1598394, "kind": "act", "game": 0, "action": 4}
+{"t": 1795604478.8607638, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604484.8594983, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604485.4586575, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604486.0880003, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604486.6718414, "kind": "act", "game": 0, "action": 2}
+{"t": 1795604493.7396529, "kind": "switch", "game": 1}
+{"t": 1795604512.5058188, "kind": "act", "game": 1, "action": 6, "x": 38, "y": 38}
+{"t": 1795604519.906035, "kind": "act", "game": 1, "action": 6, "x": 38, "y": 46}
+{"t": 1795604520.5545473, "kind": "act", "game": 1, "action": 6, "x": 54, "y": 46}
+{"t": 1795604521.12975, "kind": "act", "game": 1, "action": 6, "x": 38, "y": 54}
+{"t": 1795604540.3955772, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 16}
+{"t": 1795604546.0971098, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 24}
+{"t": 1795604546.759572, "kind": "act", "game": 1, "action": 6, "x": 38, "y": 24}
+{"t": 1795604547.3812125, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 32}
+{"t": 1795604548.0801103, "kind": "act", "game": 1, "action": 6, "x": 38, "y": 32}
+{"t": 1795604549.0642533, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 48}
+{"t": 1795604549.7743914, "kind": "act", "game": 1, "action": 6, "x": 30, "y": 48}
+{"t": 1795604570.6118658, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 6}
+{"t": 1795604577.9856217, "kind": "act", "game": 1, "action": 6, "x": 30, "y": 6}
+{"t": 1795604578.9039264, "kind": "act", "game": 1, "action": 6, "x": 38, "y": 6}
+{"t": 1795604579.5972798, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 14}
+{"t": 1795604580.195784, "kind": "act", "game": 1, "action": 6, "x": 30, "y": 22}
+{"t": 1795604581.053752, "kind": "act", "game": 1, "action": 6, "x": 14, "y": 22}
+{"t": 1795604581.80661, "kind": "act", "game": 1, "action": 6, "x": 14, "y": 30}
+{"t": 1795604582.5247583, "kind": "act", "game": 1, "action": 6, "x": 30, "y": 38}
+{"t": 1795604583.1988356, "kind": "act", "game": 1, "action": 6, "x": 46, "y": 30}
+{"t": 1795604583.9143167, "kind": "act", "game": 1, "action": 6, "x": 46, "y": 38}
+{"t": 1795604584.6012523, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 46}
+{"t": 1795604587.726576, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 54}
+{"t": 1795604588.6147938, "kind": "act", "game": 1, "action": 6, "x": 30, "y": 54}
+{"t": 1795604589.305321, "kind": "act", "game": 1, "action": 6, "x": 38, "y": 54}
+{"t": 1795604609.8621514, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 16}
+{"t": 1795604618.2463038, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 16}
+{"t": 1795604619.2714927, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 32}
+{"t": 1795604620.021137, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 32}
+{"t": 1795604620.8566875, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 48}
+{"t": 1795604621.7437143, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 48}
+{"t": 1795604622.7399752, "kind": "act", "game": 1, "action": 6, "x": 30, "y": 48}
+{"t": 1795604623.816473, "kind": "act", "game": 1, "action": 6, "x": 30, "y": 48}
+{"t": 1795604624.6813803, "kind": "act", "game": 1, "action": 6, "x": 38, "y": 48}
+{"t": 1795604625.5390363, "kind": "act", "game": 1, "action": 6, "x": 38, "y": 48}
+{"t": 1795604626.2599282, "kind": "act", "game": 1, "action": 6, "x": 30, "y": 16}
+{"t": 1795604628.8937445, "kind": "act", "game": 1, "action": 6, "x": 30, "y": 24}
+{"t": 1795604629.9314108, "kind": "act", "game": 1, "action": 6, "x": 30, "y": 32}
+{"t": 1795604630.7659183, "kind": "act", "game": 1, "action": 6, "x": 38, "y": 32}
+{"t": 1795604631.3408878, "kind": "act", "game": 1, "action": 6, "x": 46, "y": 16}
+{"t": 1795604632.0143511, "kind": "act", "game": 1, "action": 6, "x": 46, "y": 24}
+{"t": 1795604668.6935158, "kind": "act", "game": 1, "action": 6, "x": 24, "y": 14}
+{"t": 1795604692.821915, "kind": "act", "game": 1, "action": 6, "x": 24, "y": 6}
+{"t": 1795604693.6897588, "kind": "act", "game": 1, "action": 6, "x": 16, "y": 14}
+{"t": 1795604694.2862465, "kind": "act", "game": 1, "action": 6, "x": 32, "y": 14}
+{"t": 1795604695.2329254, "kind": "act", "game": 1, "action": 6, "x": 32, "y": 6}
+{"t": 1795604696.1324315, "kind": "act", "game": 1, "action": 6, "x": 32, "y": 22}
+{"t": 1795604697.1278083, "kind": "act", "game": 1, "action": 6, "x": 48, "y": 22}
+{"t": 1795604697.831346, "kind": "act", "game": 1, "action": 6, "x": 16, "y": 22}
+{"t": 1795604698.6116748, "kind": "act", "game": 1, "action": 6, "x": 16, "y": 38}
+{"t": 1795604699.2275324, "kind": "act", "game": 1, "action": 6, "x": 32, "y": 38}
+{"t": 1795604699.9009259, "kind": "act", "game": 1, "action": 6, "x": 48, "y": 38}
+{"t": 1795604702.4551086, "kind": "act", "game": 1, "action": 6, "x": 16, "y": 54}
+{"t": 1795604703.0849295, "kind": "act", "game": 1, "action": 6, "x": 32, "y": 54}
+{"t": 1795604703.9266136, "kind": "act", "game": 1, "action": 6, "x": 24, "y": 30}
+{"t": 1795604704.596667, "kind": "act", "game": 1, "action": 6, "x": 16, "y": 30}
+{"t": 1795604705.2155519, "kind": "act", "game": 1, "action": 6, "x": 32, "y": 30}
+{"t": 1795604705.8539789, "kind": "act", "game": 1, "action": 6, "x": 40, "y": 46}
+{"t": 1795604706.4823222, "kind": "act", "game": 1, "action": 6, "x": 40, "y": 38}
+{"t": 1795604707.2920434, "kind": "act", "game": 1, "action": 6, "x": 32, "y": 46}
+{"t": 1795604708.0700278, "kind": "act", "game": 1, "action": 6, "x": 48, "y": 46}
+{"t": 1795604708.8984134, "kind": "act", "game": 1, "action": 6, "x": 40, "y": 54}
+{"t": 1795604746.2810824, "kind": "act", "game": 1, "action": 6, "x": 48, "y": 40}
+{"t": 1795604756.4450963, "kind": "act", "game": 1, "action": 6, "x": 6, "y": 16}
+{"t": 1795604757.245794, "kind": "act", "game": 1, "action": 6, "x": 6, "y": 8}
+{"t": 1795604758.038207, "kind": "act", "game": 1, "action": 6, "x": 14, "y": 32}
+{"t": 1795604758.797308, "kind": "act", "game": 1, "action": 6, "x": 14, "y": 24}
+{"t": 1795604759.4883645, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 40}
+{"t": 1795604760.4203558, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 24}
+{"t": 1795604761.2969186, "kind": "act", "game": 1, "action": 6, "x": 22, "y": 16}
+{"t": 1795604761.9994547, "kind": "act", "game": 1, "action": 6, "x": 30, "y": 32}
+{"t": 1795604762.7900918, "kind": "act", "game": 1, "action": 6, "x": 38, "y": 32}
+{"t": 1795604763.4827588, "kind": "act", "game": 1, "action": 6, "x": 38, "y": 16}
+{"t": 1795604765.8008573, "kind": "act", "game": 1, "action": 6, "x": 46, "y": 32}
+{"t": 1795604766.4836533, "kind": "act", "game": 1, "action": 6, "x": 54, "y": 40}
+{"t": 1795604773.8813903, "kind": "switch", "game": 2}
+{"t": 1795604787.1467166, "kind": "act", "game": 2, "action": 6, "x": 48, "y": 46}
+{"t": 1795604799.0364904, "kind": "act", "game": 2, "action": 6, "x": 16, "y": 10}
+{"t": 1795604813.0291862, "kind": "act", "game": 2, "action": 6, "x": 38, "y": 29}
+{"t": 1795604826.373181, "kind": "act", "game": 2, "action": 6, "x": 48, "y": 12}
+{"t": 1795604839.2865658, "kind": "act", "game": 2, "action": 6, "x": 50, "y": 46}
+{"t": 1795604857.3782215, "kind": "act", "game": 2, "action": 6, "x": 58, "y": 50}
+{"t": 1795604867.8778248, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 50}
+{"t": 1795604875.1222131, "kind": "act", "game": 2, "action": 6, "x": 25, "y": 29}
+{"t": 1795604882.5211387, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 25}
+{"t": 1795604898.011591, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 33}
+{"t": 1795604944.7101598, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 33}
+{"t": 1795604945.452694, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 33}
+{"t": 1795604954.444986, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 33}
+{"t": 1795604979.6746166, "kind": "act", "game": 2, "action": 6, "x": 1, "y": 45}
+{"t": 1795604993.0631952, "kind": "act", "game": 2, "action": 6, "x": 1, "y": 25}
+{"t": 1795605034.2933693, "kind": "act", "game": 2, "action": 6, "x": 1, "y": 25}
+{"t": 1795605035.1153202, "kind": "act", "game": 2, "action": 6, "x": 1, "y": 45}
+{"t": 1795605035.759455, "kind": "act", "game": 2, "action": 6, "x": 1, "y": 45}
+{"t": 1795605036.5482192, "kind": "act", "game": 2, "action": 6, "x": 1, "y": 45}
+{"t": 1795605043.5373363, "kind": "act", "game": 2, "action": 6, "x": 1, "y": 45}
+{"t": 1795605075.6870694, "kind": "act", "game": 2, "action": 6, "x": 50, "y": 56}
+{"t": 1795605091.2140362, "kind": "act", "game": 2, "action": 6, "x": 46, "y": 56}
+{"t": 1795605118.5859666, "kind": "act", "game": 2, "action": 6, "x": 12, "y": 56}
+{"t": 1795605119.4904644, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 56}
+{"t": 1795605120.116857, "kind": "act", "game": 2, "action": 6, "x": 12, "y": 56}
+{"t": 1795605120.739335, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 56}
+{"t": 1795605121.3475852, "kind": "act", "game": 2, "action": 6, "x": 12, "y": 56}
+{"t": 1795605129.7081418, "kind": "act", "game": 2, "action": 6, "x": 34, "y": 56}
+{"t": 1795605130.401319, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 56}
+{"t": 1795605131.1488283, "kind": "act", "game": 2, "action": 6, "x": 12, "y": 56}
+{"t": 1795605132.1196978, "kind": "act", "game": 2, "action": 6, "x": 34, "y": 56}
+{"t": 1795605132.878529, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 56}
+{"t": 1795605133.750208, "kind": "act", "game": 2, "action": 6, "x": 12, "y": 56}
+{"t": 1795605134.5768807, "kind": "act", "game": 2, "action": 6, "x": 34, "y": 56}
+{"t": 1795605135.2070756, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 56}
+{"t": 1795605136.0421128, "kind": "act", "game": 2, "action": 6, "x": 12, "y": 56}
+{"t": 1795605143.44226, "kind": "act", "game": 2, "action": 6, "x": 46, "y": 56}
+{"t": 1795605144.199578, "kind": "act", "game": 2, "action": 6, "x": 46, "y": 56}
+{"t": 1795605144.91821, "kind": "act", "game": 2, "action": 6, "x": 46, "y": 56}
+{"t": 1795605145.5419548, "kind": "act", "game": 2, "action": 6, "x": 46, "y": 56}
+{"t": 1795605146.4965522, "kind": "act", "game": 2, "action": 6, "x": 46, "y": 56}
+{"t": 1795605147.5114703, "kind": "act", "game": 2, "action": 6, "x": 46, "y": 56}
+{"t": 1795605148.269346, "kind": "act", "game": 2, "action": 6, "x": 46, "y": 56}
+{"t": 1795605148.964305, "kind": "act", "game": 2, "action": 6, "x": 46, "y": 56}
+{"t": 1795605170.0646608, "kind": "act", "game": 2, "action": 6, "x": 10, "y": 62}
+{"t": 1795605183.4655683, "kind": "act", "game": 2, "action": 6, "x": 28, "y": 40}
+{"t": 1795605194.8893423, "kind": "act", "game": 2, "action": 6, "x": 40, "y": 62}
+{"t": 1795605213.6296556, "kind": "act", "game": 2, "action": 6, "x": 52, "y": 62}
+{"t": 1795605214.3031812, "kind": "act", "game": 2, "action": 6, "x": 52, "y": 62}
+{"t": 1795605214.9841554, "kind": "act", "game": 2, "action": 6, "x": 40, "y": 62}
+{"t": 1795605215.6175194, "kind": "act", "game": 2, "action": 6, "x": 40, "y": 62}
+{"t": 1795605223.3041375, "kind": "act", "game": 2, "action": 6, "x": 40, "y": 62}
+{"t": 1795605245.1155224, "kind": "act", "game": 2, "action": 6, "x": 16, "y": 62}
+{"t": 1795605251.7878284, "kind": "act", "game": 2, "action": 6, "x": 16, "y": 62}
+{"t": 1795605252.46915, "kind": "act", "game": 2, "action": 6, "x": 16, "y": 62}
+{"t": 1795605263.2383225, "kind": "act", "game": 2, "action": 6, "x": 13, "y": 48}
+{"t": 1795605276.1023562, "kind": "act", "game": 2, "action": 6, "x": 16, "y": 62}
+{"t": 1795605277.0040145, "kind": "act", "game": 2, "action": 6, "x": 16, "y": 62}
+{"t": 1795605277.8579423, "kind": "act", "game": 2, "action": 6, "x": 16, "y": 62}
+{"t": 1795605278.701447, "kind": "act", "game": 2, "action": 6, "x": 46, "y": 62}
+{"t": 1795605287.0011437, "kind": "act", "game": 2, "action": 6, "x": 28, "y": 40}
+{"t": 1795605293.8667123, "kind": "act", "game": 2, "action": 6, "x": 52, "y": 62}
+{"t": 1795605294.5293257, "kind": "act", "game": 2, "action": 6, "x": 52, "y": 62}
+{"t": 1795605295.153575, "kind": "act", "game": 2, "action": 6, "x": 52, "y": 62}
+{"t": 1795605295.835382, "kind": "act", "game": 2, "action": 6, "x": 52, "y": 62}
+{"t": 1795605296.433482, "kind": "act", "game": 2, "action": 6, "x": 40, "y": 62}
+{"t": 1795605297.1324465, "kind": "act", "game": 2, "action": 6, "x": 40, "y": 62}
+{"t": 1795605298.0670283, "kind": "act", "game": 2, "action": 6, "x": 40, "y": 62}
+{"t": 1795605298.8348677, "kind": "act", "game": 2, "action": 6, "x": 40, "y": 62}
+{"t": 1795605299.490114, "kind": "act", "game": 2, "action": 6, "x": 40, "y": 62}
+{"t": 1795605377.9414413, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605384.4533381, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605385.0793, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605385.975514, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605386.6305494, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605387.4841256, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605388.0988922, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605388.742095, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605389.4995325, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 36}
+{"t": 1795605390.1307023, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 36}
+{"t": 1795605399.0377219, "kind": "act", "game": 2, "action": 6, "x": 33, "y": 15}
+{"t": 1795605405.7734249, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605406.5594008, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605407.2247677, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 36}
+{"t": 1795605407.8510966, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 36}
+{"t": 1795605408.467963, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 36}
+{"t": 1795605417.4290087, "kind": "act", "game": 2, "action": 6, "x": 30, "y": 50}
+{"t": 1795605420.0024598, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 12}
+{"t": 1795605420.7226949, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605421.4496696, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605422.1416125, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605422.8163433, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605423.5090482, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605438.493278, "kind": "act", "game": 2, "action": 6, "x": 45, "y": 33}
+{"t": 1795605447.5615985, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605448.3750236, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605449.44066, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605450.185054, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605450.9433832, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605451.7579532, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605452.6899092, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605453.4991605, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605454.3059683, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605461.6229959, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 30}
+{"t": 1795605462.7388127, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 47}
+{"t": 1795605463.8309104, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 47}
+{"t": 1795605464.669882, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 47}
+{"t": 1795605465.3979282, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 47}
+{"t": 1795605466.3112266, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 47}
+{"t": 1795605467.071738, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 47}
+{"t": 1795605467.879921, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 47}
+{"t": 1795605468.8096883, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 47}
+{"t": 1795605469.78815, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 47}
+{"t": 1795605479.9477098, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 30}
+{"t": 1795605502.277523, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 12}
+{"t": 1795605503.0750265, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 30}
+{"t": 1795605503.9035316, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 18}
+{"t": 1795605530.4131362, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605531.3423452, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605532.075835, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605532.8576536, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605533.5929213, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 36}
+{"t": 1795605541.5197372, "kind": "act", "game": 2, "action": 6, "x": 30, "y": 50}
+{"t": 1795605547.9322217, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 12}
+{"t": 1795605548.659992, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 12}
+{"t": 1795605549.3509512, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 12}
+{"t": 1795605550.1168976, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 12}
+{"t": 1795605551.314116, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 12}
+{"t": 1795605552.4977777, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 12}
+{"t": 1795605553.5976553, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 12}
+{"t": 1795605554.336641, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 30}
+{"t": 1795605555.0417287, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 30}
+{"t": 1795605555.7254186, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 30}
+{"t": 1795605562.2399125, "kind": "act", "game": 2, "action": 6, "x": 33, "y": 15}
+{"t": 1795605570.6016524, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 12}
+{"t": 1795605572.1060567, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 12}
+{"t": 1795605573.0950832, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 12}
+{"t": 1795605574.2906172, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 12}
+{"t": 1795605575.3105361, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 12}
+{"t": 1795605576.2766392, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 12}
+{"t": 1795605577.0761383, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 36}
+{"t": 1795605577.8162243, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 36}
+{"t": 1795605583.9854572, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605584.9694238, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605585.6880548, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605586.584318, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605587.3891578, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605588.1088867, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605588.8383694, "kind": "act", "game": 2, "action": 6, "x": 61, "y": 53}
+{"t": 1795605628.6886103, "kind": "act", "game": 2, "action": 6, "x": 1, "y": 28}
+{"t": 1795605635.366017, "kind": "act", "game": 2, "action": 6, "x": 25, "y": 28}
+{"t": 1795605636.2669547, "kind": "act", "game": 2, "action": 6, "x": 25, "y": 28}
+{"t": 1795605637.2784035, "kind": "act", "game": 2, "action": 6, "x": 25, "y": 28}
+{"t": 1795605647.2448199, "kind": "act", "game": 2, "action": 6, "x": 11, "y": 31}
+{"t": 1795605650.2455652, "kind": "act", "game": 2, "action": 6, "x": 25, "y": 34}
+{"t": 1795605651.0377686, "kind": "act", "game": 2, "action": 6, "x": 25, "y": 34}
+{"t": 1795605652.2336733, "kind": "act", "game": 2, "action": 6, "x": 25, "y": 34}
+{"t": 1795605653.3229332, "kind": "act", "game": 2, "action": 6, "x": 25, "y": 34}
+{"t": 1795605654.0993283, "kind": "act", "game": 2, "action": 6, "x": 25, "y": 34}
+{"t": 1795605654.9807024, "kind": "act", "game": 2, "action": 6, "x": 25, "y": 34}
+{"t": 1795605656.0562947, "kind": "act", "game": 2, "action": 6, "x": 1, "y": 34}
+{"t": 1795605656.9520257, "kind": "act", "game": 2, "action": 6, "x": 1, "y": 34}
+{"t": 1795605666.5011306, "kind": "act", "game": 2, "action": 6, "x": 35, "y": 31}
+{"t": 1795605670.165396, "kind": "act", "game": 2, "action": 6, "x": 25, "y": 28}
+{"t": 1795605670.9155831, "kind": "act", "game": 2, "action": 6, "x": 25, "y": 28}
+{"t": 1795605671.6624591, "kind": "act", "game": 2, "action": 6, "x": 25, "y": 28}
+{"t": 1795605672.4656065, "kind": "act", "game": 2, "action": 6, "x": 25, "y": 28}
+{"t": 1795605673.2093837, "kind": "act", "game": 2, "action": 6, "x": 25, "y": 28}
+{"t": 1795605674.064078, "kind": "act", "game": 2, "action": 6, "x": 25, "y": 28}
+{"t": 1795605723.5161495, "kind": "act", "game": 2, "action": 6, "x": 42, "y": 8}
+{"t": 1795605731.2623768, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 8}
+{"t": 1795605740.3402388, "kind": "act", "game": 2, "action": 6, "x": 40, "y": 20}
+{"t": 1795605781.4247794, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 8}
+{"t": 1795605782.2970922, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 8}
+{"t": 1795605783.3199081, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 8}
+{"t": 1795605784.1730487, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 8}
+{"t": 1795605785.0494742, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 8}
+{"t": 1795605785.8622305, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 8}
+{"t": 1795605786.8546686, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 8}
+{"t": 1795605787.8020792, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 8}
+{"t": 1795605788.7277753, "kind": "act", "game": 2, "action": 6, "x": 38, "y": 32}
+{"t": 1795605796.619088, "kind": "act", "game": 2, "action": 6, "x": 38, "y": 32}
+{"t": 1795605797.3892355, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 32}
+{"t": 1795605806.8711603, "kind": "act", "game": 2, "action": 6, "x": 22, "y": 41}
+{"t": 1795605819.8634422, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 32}
+{"t": 1795605820.8717747, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 32}
+{"t": 1795605821.6658072, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 32}
+{"t": 1795605822.501612, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 32}
+{"t": 1795605823.6229296, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 32}
+{"t": 1795605824.454696, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 32}
+{"t": 1795605825.3701355, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 8}
+{"t": 1795605826.3092785, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 8}
+{"t": 1795605827.1508873, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 8}
+{"t": 1795605828.0784962, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 8}
+{"t": 1795605831.3410535, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 8}
+{"t": 1795605838.6812634, "kind": "act", "game": 2, "action": 6, "x": 40, "y": 20}
+{"t": 1795605847.8493602, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 8}
+{"t": 1795605848.8413796, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 8}
+{"t": 1795605850.241377, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 8}
+{"t": 1795605851.2819483, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 8}
+{"t": 1795605852.1106398, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 8}
+{"t": 1795605853.1704671, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 8}
+{"t": 1795605854.1578236, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 32}
+{"t": 1795605855.0317051, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 32}
+{"t": 1795605855.8534362, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 32}
+{"t": 1795605856.7807648, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 32}
+{"t": 1795605859.8309, "kind": "act", "game": 2, "action": 6, "x": 24, "y": 32}
+{"t": 1795605866.1249754, "kind": "act", "game": 2, "action": 6, "x": 40, "y": 41}
+{"t": 1795605873.8190944, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 32}
+{"t": 1795605874.664955, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 32}
+{"t": 1795605875.5326784, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 32}
+{"t": 1795605876.4512424, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 32}
+{"t": 1795605877.3158214, "kind": "act", "game": 2, "action": 6, "x": 20, "y": 32}
+{"t": 1795605878.2823493, "kind": "act", "game": 2, "action": 6, "x": 42, "y": 8}
+{"t": 1795605879.6396348, "kind": "act", "game": 2, "action": 6, "x": 42, "y": 8}
+{"t": 1795605880.632729, "kind": "act", "game": 2, "action": 6, "x": 42, "y": 8}
+{"t": 1795605881.6930497, "kind": "act", "game": 2, "action": 6, "x": 42, "y": 8}
+{"t": 1795605882.5729053, "kind": "act", "game": 2, "action": 6, "x": 42, "y": 8}
