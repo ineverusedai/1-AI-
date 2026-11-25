@@ -16,7 +16,9 @@
   const params = new URLSearchParams(location.search);
   const WHO = params.get("who") === "claude" ? "claude" : "human";
   const MODE = WHO === "claude" ? (params.get("mode") || "A") : "human";
-  const LIMIT_MS = 30 * 60 * 1000;
+  // ?rule=official : ARC-AGI-3 공식 방식 (시간 제한 없음, 경과 시간 표시). AI 공식 플레이 리플레이용. 기본은 사람용 30분 타이머
+  const OFFICIAL = params.get("rule") === "official";
+  const LIMIT_MS = OFFICIAL ? Infinity : 30 * 60 * 1000;
   const GAMES = [{ id: "ls20", cls: "Ls20" }, { id: "ft09", cls: "Ft09" }, { id: "vc33", cls: "Vc33" }];
   const COLORS = ["#FFFFFF", "#CCCCCC", "#999999", "#666666", "#333333", "#000000", "#E53AA3", "#FF7BCC",
                   "#F93C31", "#1E93FF", "#88D8F1", "#FFDC00", "#FF851B", "#921231", "#4FCC30", "#A356D6"];  // toolkit COLOR_MAP
@@ -136,9 +138,14 @@
   /* ---------- 시간 ---------- */
   const elapsed = () => performance.now() - t0;
   function drawTimer(ms) {
+    if (OFFICIAL) {  // 경과 시간 (시:분:초)
+      const s = Math.floor(ms / 1000), h = Math.floor(s / 3600);
+      $("timer").textContent = (h ? `${h}:` : "") + `${String(Math.floor(s / 60) % 60).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+      return;
+    }
     const left = Math.max(0, LIMIT_MS - ms);
     const s = Math.ceil(left / 1000);
-    const el = $("timer");
+    const el = $("timer");  // 남은 시간
     el.textContent = `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
     el.classList.toggle("low", left <= 5 * 60000 && left > 60000);
     el.classList.toggle("crit", left <= 60000);
@@ -264,6 +271,7 @@
   $("retryBtn").onclick = start;
 
   // 녹화·AI 플레이용 (화면과 같은 입력 경로를 쓴다)
+  if (OFFICIAL) document.addEventListener("DOMContentLoaded", () => { const l = $("timer").previousElementSibling; if (l) l.textContent = "경과 시간"; });
   window.M5 = { ready: () => !!W, busy: () => busy, running: () => !!run && !run.done,
                 status: () => run && { cur, games: run.games.map((g, i) => ({ id: GAMES[i].id, levels: g.levels, win: g.win, state: g.state, actions: g.actions, count: g.count })) } };
 
