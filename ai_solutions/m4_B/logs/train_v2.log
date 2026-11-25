@@ -1,0 +1,20 @@
+train (5750, 3, 56, 122) dev (250, 3, 56, 122)
+ep 0 loss 3.344 dev_seq 0.000 dev_char 0.2080 dev_6way 0.896 t 90s
+ep 1 loss 1.465 dev_seq 0.836 dev_char 0.9570 dev_6way 1.000 t 183s
+ep 2 loss 0.592 dev_seq 1.000 dev_char 1.0000 dev_6way 1.000 t 276s
+ep 3 loss 0.514 dev_seq 1.000 dev_char 1.0000 dev_6way 1.000 t 369s
+ep 4 loss 0.488 dev_seq 1.000 dev_char 1.0000 dev_6way 1.000 t 464s
+ep 5 loss 0.473 dev_seq 1.000 dev_char 1.0000 dev_6way 1.000 t 557s
+ep 6 loss 0.460 dev_seq 1.000 dev_char 1.0000 dev_6way 1.000 t 650s
+ep 7 loss 0.454 dev_seq 1.000 dev_char 1.0000 dev_6way 1.000 t 742s
+ep 8 loss 0.447 dev_seq 1.000 dev_char 1.0000 dev_6way 1.000 t 837s
+ep 9 loss 0.441 dev_seq 1.000 dev_char 1.0000 dev_6way 1.000 t 932s
+ep 10 loss 0.436 dev_seq 1.000 dev_char 1.0000 dev_6way 1.000 t 1027s
+ep 11 loss 0.432 dev_seq 1.000 dev_char 1.0000 dev_6way 1.000 t 1121s
+ep 12 loss 0.429 dev_seq 1.000 dev_char 1.0000 dev_6way 1.000 t 1215s
+ep 13 loss 0.426 dev_seq 1.000 dev_char 1.0000 dev_6way 1.000 t 1312s
+ep 14 loss 0.424 dev_seq 1.000 dev_char 1.0000 dev_6way 1.000 t 1406s
+ep 15 loss 0.422 dev_seq 1.000 dev_char 1.0000 dev_6way 1.000 t 1495s
+ep 16 loss 0.421 dev_seq 1.000 dev_char 1.0000 dev_6way 1.000 t 1591s
+ep 17 loss 0.421 dev_seq 1.000 dev_char 1.0000 dev_6way 1.000 t 1694s
+train_time 1693.9571216106415

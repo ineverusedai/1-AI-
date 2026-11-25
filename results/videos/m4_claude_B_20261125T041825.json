@@ -1,0 +1,209 @@
+{
+ "result": {
+  "title": "인간 인증성공",
+  "time": "4.8초",
+  "streak": "6문제"
+ },
+ "fps": 60,
+ "hover_ms": 150,
+ "size": "1920x1200",
+ "frames": 827,
+ "log": [
+  {
+   "video_ms": 3380,
+   "image": "q01.mp4",
+   "choices": [
+    "Y3MV",
+    "RBXC",
+    "85NM",
+    "PH3T",
+    "KWWK",
+    "MRCZ"
+   ],
+   "answer": "RBXC",
+   "solve_ms": 640.64,
+   "think_ms": 729.8,
+   "hover_ms": 150
+  },
+  {
+   "video_ms": 4143,
+   "image": "q02.mp4",
+   "choices": [
+    "E8L6",
+    "2VLV",
+    "PAQF",
+    "BG6C",
+    "93P4",
+    "YAEW"
+   ],
+   "answer": "PAQF",
+   "solve_ms": 535.21,
+   "think_ms": 595.6,
+   "hover_ms": 150
+  },
+  {
+   "video_ms": 4915,
+   "image": "q03.mp4",
+   "choices": [
+    "ZDKF",
+    "F9GV",
+    "3JUY",
+    "M3TP",
+    "XUNU",
+    "7NAE"
+   ],
+   "answer": "XUNU",
+   "solve_ms": 555.22,
+   "think_ms": 604.5,
+   "hover_ms": 150
+  },
+  {
+   "video_ms": 5657,
+   "image": "q04.mp4",
+   "choices": [
+    "WSSC",
+    "8SEN",
+    "634B",
+    "W4Q9",
+    "AB3F",
+    "EQCD"
+   ],
+   "answer": "8SEN",
+   "solve_ms": 526.22,
+   "think_ms": 575.4,
+   "hover_ms": 150
+  },
+  {
+   "video_ms": 6454,
+   "image": "q05.mp4",
+   "choices": [
+    "VATA",
+    "AMST",
+    "A882",
+    "MNFL",
+    "4RSG",
+    "WC2J"
+   ],
+   "answer": "AMST",
+   "solve_ms": 573.36,
+   "think_ms": 630.1,
+   "hover_ms": 150
+  },
+  {
+   "video_ms": 7254,
+   "image": "q06.mp4",
+   "choices": [
+    "T8KN",
+    "F57Q",
+    "HFK9",
+    "53L8",
+    "QGT6",
+    "VV65"
+   ],
+   "answer": "HFK9",
+   "solve_ms": 573.08,
+   "think_ms": 633,
+   "hover_ms": 150
+  }
+ ],
+ "records": {
+  "answers": [
+   {
+    "timestamp": "2026-11-25T04:16:39+00:00",
+    "who": "claude",
+    "mission": "m4",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 1,
+    "submitted": "RBXC",
+    "correct": 1,
+    "question_ms": 880,
+    "total_ms": 880
+   },
+   {
+    "timestamp": "2026-11-25T04:16:40+00:00",
+    "who": "claude",
+    "mission": "m4",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 2,
+    "submitted": "PAQF",
+    "correct": 1,
+    "question_ms": 763,
+    "total_ms": 1643
+   },
+   {
+    "timestamp": "2026-11-25T04:16:41+00:00",
+    "who": "claude",
+    "mission": "m4",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 3,
+    "submitted": "XUNU",
+    "correct": 1,
+    "question_ms": 772,
+    "total_ms": 2415
+   },
+   {
+    "timestamp": "2026-11-25T04:16:42+00:00",
+    "who": "claude",
+    "mission": "m4",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 4,
+    "submitted": "8SEN",
+    "correct": 1,
+    "question_ms": 742,
+    "total_ms": 3157
+   },
+   {
+    "timestamp": "2026-11-25T04:16:42+00:00",
+    "who": "claude",
+    "mission": "m4",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 5,
+    "submitted": "AMST",
+    "correct": 1,
+    "question_ms": 797,
+    "total_ms": 3954
+   },
+   {
+    "timestamp": "2026-11-25T04:16:43+00:00",
+    "who": "claude",
+    "mission": "m4",
+    "mode": "B",
+    "attempt": 1,
+    "q_no": 6,
+    "submitted": "HFK9",
+    "correct": 1,
+    "question_ms": 800,
+    "total_ms": 4754
+   }
+  ],
+  "summary": [
+   {
+    "timestamp": "2026-11-25T04:16:43+00:00",
+    "who": "claude",
+    "mission": "m4",
+    "mode": "B",
+    "attempt": 1,
+    "success": 1,
+    "answered": 6,
+    "correct": 6,
+    "max_streak": 6,
+    "total_ms": 4754,
+    "first10_correct": "",
+    "first10_ms": "",
+    "correct_in_limit": 6,
+    "note": "성공"
+   }
+  ],
+  "state": {
+   "m4:claude:B": {
+    "next_q": 7,
+    "attempt": 1
+   }
+  }
+ }
+}
