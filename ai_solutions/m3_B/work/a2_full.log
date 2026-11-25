@@ -1,0 +1,6 @@
+init val 102 min margin -0.0189
+ep 0 loss 0.0282 time 95s
+ep 1 loss 0.0005 time 97s
+ep 2 loss 0.0003 time 97s
+ep 3 loss 0.0002 time 93s
+train time 390.5s

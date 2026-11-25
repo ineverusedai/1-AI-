@@ -1,0 +1,4 @@
+import time 1.72s
+held-out acc 400/400 = 1.0000
+solve time mean 87.3 ms, median 56.2 ms, max 442.9 ms
+wrong []

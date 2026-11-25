@@ -1,0 +1,10 @@
+init val 153 min margin -0.0191
+ep 0 loss 0.0375 time 36s | inner-val 320/320 min margin 0.0237 p5 0.0275
+ep 1 loss 0.0006 time 35s | inner-val 320/320 min margin 0.0264 p5 0.0305
+ep 2 loss 0.0003 time 35s | inner-val 320/320 min margin 0.0279 p5 0.0326
+ep 3 loss 0.0002 time 33s | inner-val 320/320 min margin 0.0291 p5 0.0336
+ep 4 loss 0.0002 time 37s | inner-val 320/320 min margin 0.0300 p5 0.0347
+ep 5 loss 0.0001 time 35s | inner-val 320/320 min margin 0.0308 p5 0.0354
+ep 6 loss 0.0001 time 35s | inner-val 320/320 min margin 0.0315 p5 0.0362
+ep 7 loss 0.0001 time 37s | inner-val 320/320 min margin 0.0323 p5 0.0370
+train time 331.5s
