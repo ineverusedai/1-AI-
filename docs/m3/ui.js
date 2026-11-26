@@ -118,7 +118,24 @@
     unmark();
   }
   function refLabel(t) { $("refBtn").querySelector(".t").textContent = t; }
-  function startSeq() {  // 원본 → 소리 1 → 2 → 3 → 4
+  // 0.35초 무음 (소리 장치를 먼저 깨워 첫 소리 앞부분이 잘리지 않게)
+  const SILENCE = (() => {
+    const sr = 22050, n = Math.round(sr * 0.35), b = new ArrayBuffer(44 + n * 2), v = new DataView(b);
+    const w = (o, t) => [...t].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+    w(0, "RIFF"); v.setUint32(4, 36 + n * 2, true); w(8, "WAVE"); w(12, "fmt "); v.setUint32(16, 16, true);
+    v.setUint16(20, 1, true); v.setUint16(22, 1, true); v.setUint32(24, sr, true); v.setUint32(28, sr * 2, true);
+    v.setUint16(32, 2, true); v.setUint16(34, 16, true); w(36, "data"); v.setUint32(40, n * 2, true);
+    return URL.createObjectURL(new Blob([b], { type: "audio/wav" }));
+  })();
+  function playWhenReady(src, after) {  // 파일을 다 받은 뒤에 재생 (받는 중에 재생을 시작해 앞이 잘리는 것 방지)
+    audio.onended = after; audio.onerror = after;
+    audio.src = src;
+    let started = false;
+    const go = () => { if (started) return; started = true; audio.oncanplaythrough = null; const p = audio.play(); if (p && p.catch) p.catch(after); };
+    if (audio.readyState >= 4) go();
+    else { audio.oncanplaythrough = go; setTimeout(go, 1500); audio.load(); }
+  }
+  function startSeq() {  // (무음 0.35초) → 원본 → 소리 1 → 2 → 3 → 4
     if (!cur) return;
     stop();
     const id = seqId, tiles = $("choices").children;
@@ -135,13 +152,15 @@
       el.classList.add("playing");
       if (k > 1) $("refBtn").classList.add("dim");
       const after = () => { if (id !== seqId) return; el.classList.remove("playing"); seqTimer = setTimeout(next, k === 1 ? 700 : 450); };
-      audio.onended = after; audio.onerror = after;
-      audio.src = src;
-      const p = audio.play(); if (p && p.catch) p.catch(after);
+      playWhenReady(src, after);
     };
     window.__seqDone = false;
     $("refBtn").classList.remove("dim");
-    next();
+    refLabel("원본 소리");
+    // 먼저 무음을 틀어 소리 장치를 깨운 뒤 차례 재생 (첫 재생은 시작 버튼을 누른 그 순간이라 사파리도 허락)
+    audio.onended = audio.onerror = () => { if (id === seqId) next(); };
+    audio.src = SILENCE;
+    const p = audio.play(); if (p && p.catch) p.catch(() => { if (id === seqId) next(); });
   }
 
   /* ---------- 라운드 ---------- */

@@ -60,10 +60,10 @@ function startSolver() {
   // 소리 재생을 가로채서 시각을 기록하고, 실제 재생 대신 페이지 시계로 소리 길이만큼 뒤에 'ended' 를 보낸다
   await page.addInitScript((DUR) => {
     window.__plays = [];
-    const key = (src) => src.slice(src.indexOf("audio/"));
+    const key = (src) => (src.includes("audio/") ? src.slice(src.indexOf("audio/")) : src);
     HTMLMediaElement.prototype.play = function () {
       if (this.__rec && this.__rec.end === null) this.__rec.end = performance.now();
-      const k = key(this.src), d = DUR[k] || 0;
+      const k = key(this.src), d = this.src.startsWith("blob:") ? 0.35 : (DUR[k] || 0);
       window.__plays.push({ src: k, t: performance.now(), end: null });
       this.__rec = window.__plays[window.__plays.length - 1];
       clearTimeout(this.__t);
@@ -165,7 +165,8 @@ function startSolver() {
   const stamp = new Date().toISOString().replace(/[-:]/g, "").slice(0, 15);
   const base = path.join(OUT, `m3_claude_${MODE}_${stamp}`);
   // 소리 트랙: 재생 기록대로 소리 파일을 깔아 한 개의 wav 로 만든 뒤 영상과 합친다
-  const plays = result.plays.map((p) => ({ src: path.join(ROOT, "docs", "m3", p.src), start: (p.t - pageT0) / 1000, end: p.end == null ? null : (p.end - pageT0) / 1000 }));
+  const plays = result.plays.filter((p) => p.src.startsWith("audio/"))  // 장치를 깨우는 무음은 빼고
+    .map((p) => ({ src: path.join(ROOT, "docs", "m3", p.src), start: (p.t - pageT0) / 1000, end: p.end == null ? null : (p.end - pageT0) / 1000 }));
   delete result.plays;
   const plan = path.join(framesDir, "plays.json"), mix = path.join(framesDir, "mix.wav");
   fs.writeFileSync(plan, JSON.stringify({ plays, total: frame / FPS }));
