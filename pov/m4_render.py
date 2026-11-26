@@ -63,8 +63,8 @@ def heat(a, c):
     return Image.fromarray((a[..., None] ** 0.8 * np.array(c)).clip(0, 255).astype(np.uint8))
 
 PX, PY, PS = 130, 250, 760      # 큰 화면 위치·크기
-T = {"boot": (0, 150), "raw": (150, 480), "acc": (480, 1200), "read": (1200, 1680), "opt": (1680, 1980), "train": (1980, 2370), "end": (2370, 2460)}
-N = 2460
+T = {"boot": (0, 60), "raw": (60, 300), "acc": (300, 780), "read": (780, 1080), "opt": (1080, 1320), "train": (1320, 1620), "end": (1620, 1680)}
+N = 1680
 
 def kfor(t):  # 누적 장면: 프레임 쌍 1→89, 처음엔 천천히
     return int(round(1 + 88 * (ease(t) ** 1.6)))
@@ -76,7 +76,7 @@ ff = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "
 for f in range(N):
     sec = f / FPS
     im = base.copy(); dr = ImageDraw.Draw(im)
-    a0 = ease(f / 90)
+    a0 = ease(f / 60)
     # 상단 HUD
     dr.text((60, 40), "M4 // MOTION-DEFINED TEXT", font=F16, fill=tuple(int(c * a0) for c in CY))
     dr.text((60, 64), "MVCAP-L1  488x488  30FPS  90F", font=F12, fill=tuple(int(c * a0) for c in DIM))
@@ -84,7 +84,7 @@ for f in range(N):
     dr.line([(60, 96), (60 + int((W - 120) * a0), 96)], fill=DIM, width=1)
     bracket(dr, 40, 24, W - 40, H - 24, c=tuple(int(c * a0) for c in DIM), L=40)
     if f < T["boot"][1]:  # 부팅: 훑는 선
-        y = int(H * (f / 150)); dr.line([(0, y), (W, y)], fill=CY, width=2)
+        y = int(H * (f / 60)); dr.line([(0, y), (W, y)], fill=CY, width=2)
 
     vf = (f // 2) % 90  # 영상 프레임 (30fps)
     # ---------- 큰 화면 ----------
@@ -142,7 +142,7 @@ for f in range(N):
             dr.text((1380, 512), f"{con:+.3f}", font=F16, fill=CY)
     # ---------- 읽기: 네 자리 확률 ----------
     if T["read"][0] <= f < T["opt"][1]:
-        t = (f - T["read"][0]) / 300; j = int(round(88 * ease(t)))  # 프레임 쌍 2→90장 기준 모델 출력
+        t = (f - T["read"][0]) / 200; j = int(round(88 * ease(t)))  # 프레임 쌍 2→90장 기준 모델 출력
         pr = probs[j]
         al = min(1, (f - T["read"][0]) / 30)
         y0 = 640
@@ -156,7 +156,7 @@ for f in range(N):
                 yy2 = y0 + 70 + r * 30
                 dr.text((x, yy2), AL[idx], font=F16, fill=tuple(int(c * al) for c in DIM if False) or (120, 150, 165))
                 dr.rectangle([x + 20, yy2 + 4, x + 20 + int(80 * pr[pos][idx]), yy2 + 16], fill=CY if r == 0 else (30, 70, 90))
-        if f >= T["read"][0] + 300:
+        if f >= T["read"][0] + 200:
             dr.rectangle([1370, y0 - 6, 1370 + 4 * 118, y0 + 60], outline=AMB, width=2)
     # ---------- 선택지 점수 ----------
     if T["opt"][0] <= f < T["train"][0] + 30:
