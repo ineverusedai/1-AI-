@@ -8,7 +8,7 @@
   const WHO = params.get("who") === "claude" ? "claude" : "human";
   const MODE = WHO === "claude" ? (["A", "B"].includes(params.get("mode")) ? params.get("mode") : "B") : "human";
   const state = R.state(WHO === "human" ? MISSION : `${MISSION}:${WHO}:${MODE}`);
-  const src = (q) => "videos/" + D.questions[q - 1].file;
+  const src = (q) => "tex/" + D.questions[q - 1].file.replace(".mp4", ".png");  // 영상 대신 재료 (화면에서 직접 그림)
   const show = (q, last) => UI.setQuestion(src(q), q < last ? src(q + 1) : null, D.questions[q - 1].options);
   let a = null;
 

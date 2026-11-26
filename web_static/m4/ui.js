@@ -94,27 +94,68 @@
   /* ---------- 문제 ---------- */
   let choices = [], locked = true;
   const LABELS = "ABCDEF";
-  let pre = null;
-  /* 영상 미리 받기: 한 판(6문제) 영상을 통째로 받아 메모리에 두고 그걸 재생 (문제마다 받느라 까만 화면이 되는 것 방지) */
-  const cache = new Map();   // 주소 → { p: Promise<blob 주소>, url }
+  /* 움직이는 점 그리기: 공식 MVCAP L1 생성기와 같은 계산을 브라우저에서 한다 (영상 파일 대신 재료 PNG 한 장).
+   * 프레임 k (30fps, 3초 = 90프레임 반복): 배경 점 무늬를 오른쪽으로 2k px, 글자 모양 안은 전경 점 무늬를 왼쪽으로 2k px (np.roll 과 같음).
+   * 재료 PNG: R = 배경, G = 전경, B = 글자 모양 XOR 의사난수(xorshift32, tools/build_m4_textures.py 와 같음). */
+  const FPS = 30, NFRAMES = 90, SHIFT = 2;
+  const cache = new Map();   // 주소 → { p: Promise, d: {w, h, bg, fg, mask} }
+  function decode(u) {
+    return fetch(u).then((r) => { if (!r.ok) throw new Error(r.status); return r.blob(); })
+      .then((b) => createImageBitmap(b))
+      .then((bmp) => {
+        const c = document.createElement("canvas"); c.width = bmp.width; c.height = bmp.height;
+        const x = c.getContext("2d", { willReadFrequently: true }); x.drawImage(bmp, 0, 0);
+        const px = x.getImageData(0, 0, c.width, c.height).data, n = c.width * c.height;
+        const bg = new Uint8Array(n), fg = new Uint8Array(n), mask = new Uint8Array(n);
+        const q = +(u.match(/q(\d+)\.png/) || [0, 0])[1];
+        let s = (2463534242 ^ ((q * 2654435761) % 4294967296)) >>> 0;
+        for (let i = 0; i < n; i++) {
+          s ^= s << 13; s >>>= 0; s ^= s >>> 17; s ^= s << 5; s >>>= 0;
+          bg[i] = px[i * 4] > 127 ? 255 : 0; fg[i] = px[i * 4 + 1] > 127 ? 255 : 0;
+          mask[i] = (px[i * 4 + 2] > 127 ? 1 : 0) ^ (s >>> 31);
+        }
+        return { w: c.width, h: c.height, bg, fg, mask };
+      });
+  }
   UI.prefetch = (urls, onProgress) => {
     let done = 0;
     return Promise.all(urls.map((u) => {
-      if (!cache.has(u)) {
-        const e = { url: null };
-        e.p = fetch(u).then((r) => { if (!r.ok) throw new Error(r.status); return r.blob(); })
-          .then((b) => (e.url = URL.createObjectURL(b))).catch(() => (e.url = u));  // 실패하면 원래 주소로
-        cache.set(u, e);
-      }
+      if (!cache.has(u)) { const e = {}; e.p = decode(u).then((d) => (e.d = d)); cache.set(u, e); }
       return cache.get(u).p.then(() => { done += 1; onProgress && onProgress(done, urls.length); });
     }));
   };
+  let anim = { d: null, t0: 0, k: -1, raf: 0, img: null };
+  function drawFrame(now) {
+    const a = anim, d = a.d;
+    if (!d) return;
+    const k = Math.floor((now - a.t0) / (1000 / FPS)) % NFRAMES;
+    if (k !== a.k) {
+      a.k = k;
+      const W = d.w, out = a.img.data, sb = (SHIFT * k) % W, sf = (SHIFT * k) % W;  // np.roll(bg, +2k)[x] = bg[x-2k], np.roll(fg, -2k)[x] = fg[x+2k]
+      for (let y = 0; y < d.h; y++) {
+        const r = y * W;
+        for (let x = 0; x < W; x++) {
+          const i = r + x;
+          const v = d.mask[i] ? d.fg[r + (x + sf) % W] : d.bg[r + (x - sb + W) % W];
+          const o = i * 4; out[o] = out[o + 1] = out[o + 2] = v; out[o + 3] = 255;
+        }
+      }
+      $("vid").getContext("2d").putImageData(a.img, 0, 0);
+    }
+    a.raf = requestAnimationFrame(drawFrame);
+  }
+  UI.ready = () => !!anim.d;  // 녹화 도구용
   UI.setQuestion = (src, preload, list) => {
-    const v = $("vid");
-    const c = cache.get(src);
-    v.src = (c && c.url) || src;
-    const p = v.play(); if (p && p.catch) p.catch(() => {});
-    if (preload) { pre = document.createElement("video"); pre.preload = "auto"; pre.muted = true; pre.src = preload; }
+    cancelAnimationFrame(anim.raf);
+    anim = { d: null, t0: 0, k: -1, raf: 0, img: null, src };
+    UI.prefetch([src]).then(() => {
+      if (anim.src !== src) return;
+      const d = cache.get(src).d, cv = $("vid");
+      if (cv.width !== d.w) { cv.width = d.w; cv.height = d.h; }
+      anim.d = d; anim.img = cv.getContext("2d").createImageData(d.w, d.h); anim.t0 = performance.now();
+      anim.raf = requestAnimationFrame(drawFrame);
+    });
+    if (preload) UI.prefetch([preload]);
     choices = list;
     const box = $("choices");
     box.innerHTML = list.map((c, i) => `<button class="choice" data-i="${i}"><b>${LABELS[i]}</b><span>${c}</span></button>`).join("");

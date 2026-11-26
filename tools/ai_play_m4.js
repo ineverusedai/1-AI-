@@ -4,7 +4,7 @@
  *   화면에 뜬 영상 파일과 선택지 6개를 가져와 → AI가 만든 solver.py 에 넘기고 → 돌아온 답의 선택지에 마우스를 올렸다가 클릭.
  *   solver.py 는 영상 바이트와 선택지 글자만 받는다 (정답·시드·키·페이지 소스를 모름).
  *
- * 영상(<video>)도 페이지 시계에 맞춰 멈춘 뒤 프레임마다 정확한 위치로 옮겨 찍는다 (반복 재생 3초).
+ * 화면의 점 그림은 페이지 시계(requestAnimationFrame·performance.now)로 그려져서 프레임마다 정확히 맞는다.
  * 녹화 방식은 ai_play_m1.js 와 같다 (페이지 시계를 쥐고 1/60초씩 넘기며 매 프레임 촬영, 영상 속 시간 = AI가 실제로 걸린 시간).
  * 고르는 모습: 답을 낸 뒤 그 선택지에 마우스를 --hover-ms 동안 올려 두었다가 클릭 (보는 사람이 어떤 걸 골랐는지 보이게).
  *
@@ -48,7 +48,8 @@ function startSolver() {
   const solver = startSolver();
   children.push(web, solver.proc);
   await solver.ready;
-  const warm = JSON.parse(fs.readFileSync(path.join(ROOT, "data", "m4", "manifest.json"), "utf8")).questions.slice(-1)[0];
+  const M4Q = JSON.parse(fs.readFileSync(path.join(ROOT, "data", "m4", "manifest.json"), "utf8")).questions;
+  const warm = M4Q.slice(-1)[0];
   await solver.ask(fs.readFileSync(path.join(ROOT, "data", "m4", "videos", warm.file)), warm.options);  // 예열 (게임 밖, 마지막 문제)
 
   const browser = await chromium.launch();
@@ -119,15 +120,17 @@ function startSolver() {
   while (true) {
     const st = await until((prev) => {
       if (!document.getElementById("resultScreen").hidden || UI.locked()) return { done: true };
-      const v = document.getElementById("vid");
       const choices = [...document.querySelectorAll("#choices .choice span")].map((e) => e.textContent);
-      return v.src && v.src !== prev && v.readyState >= 2 && choices.length === 6 ? { src: v.src, choices } : false;
+      const key = choices.join("|");
+      return UI.ready() && key !== prev && choices.length === 6 ? { src: key, choices } : false;
     }, prevSrc);
     if (st.done) break;
     prevSrc = st.src;
     // ---- 여기서부터 AI가 실제로 걸린 시간을 재서 그만큼 영상 시간을 흘린다 ----
     const t0 = performance.now();
-    const png = Buffer.from(await (await ctx.request.get(st.src)).body());  // 화면에 뜬 그 이미지
+    // 화면은 공식 생성기와 같은 계산으로 직접 그린 것. AI에게는 같은 문제의 공식 mp4 (AI 테스트와 같은 파일)를 넘긴다
+    const qrec = M4Q.find((q) => q.options.join("|") === st.src);
+    const png = fs.readFileSync(path.join(ROOT, "data", "m4", "videos", qrec.file));
     const r = await solver.ask(png, st.choices);
     const thinkMs = performance.now() - t0;
     await advanceTo(vt + thinkMs);

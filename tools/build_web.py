@@ -67,10 +67,10 @@ def write_m3() -> tuple[str, int]:
 
 
 def write_m4() -> tuple[str, int]:
-    """미션 4: 영상 폴더와 data.js (규칙 + 선택지 + 정답 해시 + 채점 키)."""
+    """미션 4: 재료(점 무늬·글자 모양) 폴더와 data.js (규칙 + 선택지 + 정답 해시 + 채점 키). 화면이 공식 생성기와 같은 계산으로 직접 그린다."""
     cfg = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))["m4"]
     manifest = json.loads((ROOT / "data" / "m4" / "manifest.json").read_text(encoding="utf-8"))
-    shutil.copytree(ROOT / "data" / "m4" / "videos", OUT / "m4" / "videos")
+    shutil.copytree(ROOT / "data" / "m4" / "tex", OUT / "m4" / "tex")  # 영상 대신 재료 (tools/build_m4_textures.py)
     data = {
         "title": cfg["title"], "time_limit_sec": cfg["time_limit_sec"], "questions_per_round": cfg["questions_per_round"],
         "answer_rule": manifest["answer_rule"], "key": load_key().hex(),
