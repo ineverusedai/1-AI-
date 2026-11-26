@@ -95,9 +95,24 @@
   let choices = [], locked = true;
   const LABELS = "ABCDEF";
   let pre = null;
+  /* 영상 미리 받기: 한 판(6문제) 영상을 통째로 받아 메모리에 두고 그걸 재생 (문제마다 받느라 까만 화면이 되는 것 방지) */
+  const cache = new Map();   // 주소 → { p: Promise<blob 주소>, url }
+  UI.prefetch = (urls, onProgress) => {
+    let done = 0;
+    return Promise.all(urls.map((u) => {
+      if (!cache.has(u)) {
+        const e = { url: null };
+        e.p = fetch(u).then((r) => { if (!r.ok) throw new Error(r.status); return r.blob(); })
+          .then((b) => (e.url = URL.createObjectURL(b))).catch(() => (e.url = u));  // 실패하면 원래 주소로
+        cache.set(u, e);
+      }
+      return cache.get(u).p.then(() => { done += 1; onProgress && onProgress(done, urls.length); });
+    }));
+  };
   UI.setQuestion = (src, preload, list) => {
     const v = $("vid");
-    v.src = src;
+    const c = cache.get(src);
+    v.src = (c && c.url) || src;
     const p = v.play(); if (p && p.catch) p.catch(() => {});
     if (preload) { pre = document.createElement("video"); pre.preload = "auto"; pre.muted = true; pre.src = preload; }
     choices = list;

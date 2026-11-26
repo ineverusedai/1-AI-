@@ -14,13 +14,24 @@
 
   UI.config({ limitSec: D.time_limit_sec, streakTarget: per });
 
+  // 한 판의 영상 6개를 먼저 다 받은 뒤에 시작 (받는 시간이 제한 시간에 들어가지 않게)
+  const roundUrls = () => { const s0 = state.next_q + per - 1 > total ? 1 : state.next_q; return Array.from({ length: per }, (_, i) => src(s0 + i)); };
+  let loading = false;
+  const btns = () => [document.getElementById("startBtn"), document.getElementById("retryBtn")];
+  UI.prefetch(roundUrls());  // 페이지를 열자마자 다음 판을 미리 받기 시작
   UI.on("start", () => {
-    if (a && !a.done) return;
+    if ((a && !a.done) || loading) return;
     if (state.next_q + per - 1 > total) state.next_q = 1;
-    state.attempt += 1; R.saveState();
-    a = { attempt: state.attempt, q: state.next_q, last: state.next_q + per - 1, count: 0, correct: 0, lastMs: 0, done: false };
-    show(a.q, a.last);
-    UI.beginRound(() => finish(false, limitMs, "timeout"));
+    loading = true;
+    const labels = btns().map((b) => b.textContent);
+    UI.prefetch(roundUrls(), (n, m) => btns().forEach((b) => { b.textContent = `영상 불러오는 중 ${n}/${m}`; })).then(() => {
+      btns().forEach((b, i) => { b.textContent = labels[i]; });
+      loading = false;
+      state.attempt += 1; R.saveState();
+      a = { attempt: state.attempt, q: state.next_q, last: state.next_q + per - 1, count: 0, correct: 0, lastMs: 0, done: false };
+      show(a.q, a.last);
+      UI.beginRound(() => finish(false, limitMs, "timeout"));
+    });
   });
 
   UI.on("submit", (val) => {
@@ -51,6 +62,7 @@
       total_ms: totalMs, first10_correct: "", first10_ms: "", correct_in_limit: a.correct,
       note: success ? "성공" : reason === "timeout" ? "시간 초과" : `${a.count}번째 문제에서 틀림` });
     UI.showResult({ success, totalMs, maxStreak: a.correct });
+    UI.prefetch(roundUrls());  // 다음 판 미리 받기
   }
 
   UI.on("reset", () => { state.next_q = 1; R.saveState(); UI.note("1번 문제부터 다시 시작해요"); });
